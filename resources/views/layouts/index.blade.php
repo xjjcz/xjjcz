@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}"/>
     <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}"/>
 
-
     <!--<link rel="stylesheet" type="text/css" href="{{ asset("/css/glabol.css") }}">-->
     <script type="text/javascript" language="JavaScript" src="{{ asset("/js/jquery-3.2.1.min.js") }}"></script>
     <script type="text/javascript" language="JavaScript" src="{{ asset("/js/bootstrap.min.js") }}"></script>
@@ -147,47 +146,7 @@
             }
         }
 
-        function login() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            $.post("ajax/User/login.do", {facNo: email, password: password}, function (data) {
-                var json = eval("(" + data + ")");
-                //alert(json.login);
-                if (json.login == "01") {
-                    //document.getElementById("warnInfo").innerHTML = "用户名或密码错误 <a href='getPwd.jsp'>找回</a>";
-                    alert("用户名或密码错误 ");
-                    //$('#alertBox').show();
-                }
-                else if (json.login == "02") {
-                    alert("没有验证邮箱");
-                    //document.getElementById("warnInfo").innerHTML = "没有验证邮箱";
-                    //$('#alertBox').show();
-                }
-                else if (json.login == "03") {
-                    alert("账户在审核中");
-                    //document.getElementById("warnInfo").innerHTML = "账户在审核中";
-                    //$('#alertBox').show();
-                }
-                else if (json.login == "04") {
-                    //alert(${sessionScope["UserInfo"].roleId});
-                    //document.getElementById("warnInfo").innerHTML = "ok";
-                    window.location.href = "pages/Factory/clientlist.do";
-                    //$('#alertBox').show();
-                }
-                else if (json.login == "05") {
-                    alert("用户名密码不可为空");
-                    //document.getElementById("warnInfo").innerHTML = "用户名密码不可为空";
-                    //$('#alertBox').show();
-                }
-                else if (json.login == "06") {
-                    //  document.getElementById("warnInfo").innerHTML = "用户名密码不可为空";
-                    alert("填报还未开启！");
 
-                    //$('#alertBox').show();
-                }
-            });
-
-        }
     </script>
 
 
@@ -197,6 +156,7 @@
      style="position: absolute; width: 100%; height: 100%; z-index: -1;">
     <img src="img/bg.png" height="100%" width="100%"/>
 </div>
+<form action="auth/login" method="post">
 <div class="login-box-warp"
      style="background-color: #003E3E; opacity: 0.9;margin-top:-80px;">
     <table style="margin: 20px;">
@@ -208,14 +168,14 @@
         </tr>
         <tr>
             <td>
-                <div style="position:relative;background-color:white;width: 100%;height: 40px;  margin-top: 15px;border: 1px solid white;-webkit-border-radius: 6px;  border-radius: 6px;padding:0px 5px;">
+                <div style="position:relative;background-color:white;height: 40px;  margin-top: 15px;border: 1px solid white;-webkit-border-radius: 6px;  border-radius: 6px;padding:0px 5px;">
 					<span style="display:block;width:39px;height:39px;position:absolute;top:1px;left:1px;">
 						<img src="img/icon15.png" style="width:90%;height:90%;"/>
 					</span>
-                    <input onkeypress="keydown();" type="text" id="email" value="请输入用户名"
+                    <input onkeypress="keydown();" type="text" name="fac_no" value="请输入用户名"
                            onfocus="if(value=='请输入用户名') {value=''}"
                            onblur="if (value=='') {value='请输入用户名'}"
-                           style=" height: 38px; line-height:38px; width: 90%;border:0px;padding:0px 0px 0px 45px">
+                           style=" height: 38px; line-height:38px; width:80%;border:0px;padding:0px 0px 0px 45px"/>
                 </div>
 
             </td>
@@ -223,14 +183,15 @@
         <tr>
 
             <td>
-                <div style="position:relative;background-color:white;width: 100%;height: 40px;  margin-top: 15px;border: 1px solid white;-webkit-border-radius: 6px;  border-radius: 6px;padding:0px 5px">
+                <div style="position:relative;background-color:white;height: 40px;  margin-top: 15px;border: 1px solid white;-webkit-border-radius: 6px;  border-radius: 6px;padding:0px 5px">
 					<span style="display:block;width:39px;height:39px;;position:absolute;top:1px;left:1px;">
 						<img src="img/icon14.png" style="width:80%;height:90%;"/>
 					</span>
-                    <input onkeypress="keydown();" type="password" id="password" value="请输入密码"
+                    <input onkeypress="keydown();" type="password" name="password" value="请输入密码"
                            onfocus="if(value=='请输入密码') {value=''}"
                            onblur="if (value=='') {value='请输入密码'}"
-                           style=" height: 38px; line-height:38px; width: 90%;border:0px;padding:0px 0px 0px 45px">
+                           style=" height: 38px; line-height:38px;width:80%;border:0px;padding:0px 0px 0px 45px">
+                    <input type="hidden" name="_token"  value="{{csrf_token()}}"/>
                 </div>
 
             </td>
@@ -244,12 +205,10 @@
 
         <tr>
             <td>
-                <button type="button" class="btn btn-success" onclick="login();"
-                        style=" margin: 15px 0px 5px 0px;width: 100%">
-                    <div style="font-size: 20px;">
-                        登录
-                    </div>
-                </button>
+                <input type="submit" class="btn btn-success" onclick="login();"
+                        style=" margin: 15px 0px 5px 0px;width: 100%;font-size: 20px" value="登录">
+
+                </input>
             </td>
         </tr>
         <tr style="color:white">
@@ -261,6 +220,7 @@
     </table>
 
 </div>
+</form>
 
 <script type="text/javascript">
     $("#alertBox").alert('close');
