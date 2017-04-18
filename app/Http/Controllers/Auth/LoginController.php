@@ -44,13 +44,14 @@ class LoginController extends Controller
     }
 
     public function getLogin(Request $request){
-        $username = $request->input("username");
+        $fac_no = $request->input("fac_no");
         $password = $request->input("password");
         //$status =  DB::select("select * from user where username=? and password=?",[$username,$password]);
         //$status = Auth::attempt(["username"=>$username,"password"=>$password]);
-        $status = User::where(["username"=>$username,"password"=>$password])->first();
+        $status = User::where(["fac_no"=>$fac_no,"password"=>$password])->first();
         if($status){
-            return redirect('/test');
+            //return redirect('/test');
+            return view("layouts.success");
         }else{
             return redirect('/');
         }

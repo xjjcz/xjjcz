@@ -69,7 +69,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div>
-                    <label>用户名：</label><input type="text" name="username"/><br/>
+                    <label>用户名：</label><input type="text" name="fac_no"/><br/>
                     <label>密  码 ：</label><input type="text" name="password"/><br/>
                     <input type="hidden" name="_token"  value="{{csrf_token()}}"/>
 
