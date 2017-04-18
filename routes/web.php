@@ -11,9 +11,7 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');hha11
-//});
+
 Route::get('/', "IndexController@index");
 Route::get('/register', function(){
     return view('layouts.register');
