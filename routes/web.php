@@ -11,6 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');hha11
+//});
+Route::get('/', "IndexController@index");
+Route::get('/register', function(){
+    return view('layouts.register');
 });
+Route::post('/auth/login', 'Auth\LoginController@getLogin');
+Route::post('/auth/register', 'Auth\RegisterController@postRegister');
+Route::get('/welcome', function (){
+    return view("welcome");
+});
+Route::post('/information', "XjjczController@show");
+Route::get('/test', function (){
+    return view('layouts.test');
+});
+
