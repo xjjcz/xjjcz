@@ -24,7 +24,7 @@
 
 
     <!-- ace styles -->
-    <script src="assets/js/ace-extra.min.js"></script>
+    <script src="{{ asset("/js/ace-extra.min.js") }}"></script>
     <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}"/>
     <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}"/>
     <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}"/>
