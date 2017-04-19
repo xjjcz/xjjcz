@@ -13,7 +13,7 @@
 
 
 
-    <!-- page specific plugin styles -->
+    <!-- page specific plugin styles 谢-->
 
     <link rel="stylesheet" href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}"/>
     <link rel="stylesheet" href="{{ asset("/css/chosen.css") }}"/>
