@@ -1,0 +1,490 @@
+ <style type="text/css">
+    body {  
+    width: 610px;  
+      
+     height:100%;  
+	color:#000;
+    }  
+      
+    table {  
+    *border-collapse: collapse; /* IE7 and lower */  
+    border-spacing: 0;  
+    width: 100%;
+	color:black;
+	font-family: 'trebuchet MS', 'Lucida sans', Arial;  
+    font-size: 14px;
+  
+	
+    }  
+      
+       
+      
+    .bordered tr:hover {  
+    background: #fbf8e9;  
+    -o-transition: all 0.1s ease-in-out;  
+    -webkit-transition: all 0.1s ease-in-out;  
+    -moz-transition: all 0.1s ease-in-out;  
+    -ms-transition: all 0.1s ease-in-out;  
+    transition: all 0.1s ease-in-out;  
+    }  
+      
+    .bordered td, .bordered th {  
+     
+    padding: 10px;  
+    text-align: center;  
+    }  
+      
+    .bordered th {  
+    background-color: #dce9f9;  
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));  
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -moz-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -ms-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -o-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: linear-gradient(top, #ebf3fc, #dce9f9);  
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    border-top: none;  
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);  
+    }  
+      
+    .bordered td:first-child, .bordered th:first-child {  
+    border-left: none;  
+    }  
+      
+    .bordered th:first-child {  
+    -moz-border-radius: 6px 0 0 0;  
+    -webkit-border-radius: 6px 0 0 0;  
+    border-radius: 6px 0 0 0;  
+    }  
+      
+    .bordered th:last-child {  
+    -moz-border-radius: 0 6px 0 0;  
+    -webkit-border-radius: 0 6px 0 0;  
+    border-radius: 0 6px 0 0;  
+    }  
+      
+    .bordered th:only-child{  
+    -moz-border-radius: 6px 6px 0 0;  
+    -webkit-border-radius: 6px 6px 0 0;  
+    border-radius: 6px 6px 0 0;  
+    }  
+      
+    .bordered tr:last-child td:first-child {  
+    -moz-border-radius: 0 0 0 6px;  
+    -webkit-border-radius: 0 0 0 6px;  
+    border-radius: 0 0 0 6px;  
+    }  
+      
+    .bordered tr:last-child td:last-child {  
+    -moz-border-radius: 0 0 6px 0;  
+    -webkit-border-radius: 0 0 6px 0;  
+    border-radius: 0 0 6px 0;  
+    }  
+      
+    /*----------------------*/  
+     .bordered2 tr:hover {  
+    background: #fbf8e9;  
+    -o-transition: all 0.1s ease-in-out;  
+    -webkit-transition: all 0.1s ease-in-out;  
+    -moz-transition: all 0.1s ease-in-out;  
+    -ms-transition: all 0.1s ease-in-out;  
+    transition: all 0.1s ease-in-out;  
+    }  
+      
+    .bordered2 td, .bordered2 th {  
+     
+    padding: 10px 10px 10px 60px;
+   
+    }  
+      
+    .bordered2 th {  
+    background-color: #dce9f9;  
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));  
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -moz-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -ms-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: -o-linear-gradient(top, #ebf3fc, #dce9f9);  
+    background-image: linear-gradient(top, #ebf3fc, #dce9f9);  
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    border-top: none;  
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);  
+    }  
+      
+    .bordered2 td:first-child, .bordered2 th:first-child {  
+    border-left: none;  
+    }  
+      
+    .bordered2 th:first-child {  
+    -moz-border-radius: 6px 0 0 0;  
+    -webkit-border-radius: 6px 0 0 0;  
+    border-radius: 6px 0 0 0;  
+    }  
+      
+    .bordered2 th:last-child {  
+    -moz-border-radius: 0 6px 0 0;  
+    -webkit-border-radius: 0 6px 0 0;  
+    border-radius: 0 6px 0 0;  
+    }  
+      
+    .bordered2 th:only-child{  
+    -moz-border-radius: 6px 6px 0 0;  
+    -webkit-border-radius: 6px 6px 0 0;  
+    border-radius: 6px 6px 0 0;  
+    }  
+      
+    .bordered2 tr:last-child td:first-child {  
+    -moz-border-radius: 0 0 0 6px;  
+    -webkit-border-radius: 0 0 0 6px;  
+    border-radius: 0 0 0 6px;  
+    }  
+      
+    .bordered2 tr:last-child td:last-child {  
+    -moz-border-radius: 0 0 6px 0;  
+    -webkit-border-radius: 0 0 6px 0;  
+    border-radius: 0 0 6px 0;  
+    }  
+    /*----------------------*/
+    .zebra {
+		margin-top:10px;
+		padding-left:10px;
+		
+		}
+    .zebra td, .zebra th {  
+    text-align: left; 
+    padding: 2px;  
+    border-bottom: 1px solid #f2f2f2;  
+    }  
+      
+    .zebra tbody tr:nth-child(even) {  
+    background: #f5f5f5;  
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    }  
+      
+    .zebra th {  
+     
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);  
+    border-bottom: 1px solid #ccc;  
+    background-color: #dce9f9;  
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#eee));  
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #eee);  
+    background-image: -moz-linear-gradient(top, #f5f5f5, #eee);  
+    background-image: -ms-linear-gradient(top, #f5f5f5, #eee);  
+    background-image: -o-linear-gradient(top, #f5f5f5, #eee);  
+    background-image: linear-gradient(top, #f5f5f5, #eee);  
+    }  
+      
+    
+ .zebra th:first-child {  
+    -moz-border-radius: 6px 0 0 0;  
+    -webkit-border-radius: 6px 0 0 0;  
+    border-radius: 6px 0 0 0;  
+    }  
+      
+    .zebra th:last-child {  
+    -moz-border-radius: 0 6px 0 0;  
+    -webkit-border-radius: 0 6px 0 0;  
+    border-radius: 0 6px 0 0;  
+    }  
+      
+    .zebra th:only-child{  
+    -moz-border-radius: 6px 6px 0 0;  
+    -webkit-border-radius: 6px 6px 0 0;  
+    border-radius: 6px 6px 0 0;  
+    }  
+      
+    .zebra tfoot td {  
+    border-bottom: 0;  
+    border-top: 1px solid #fff;  
+    background-color: #f1f1f1;  
+
+    }  
+      
+    .zebra tfoot td:first-child {  
+    -moz-border-radius: 0 0 0 6px;  
+    -webkit-border-radius: 0 0 0 6px;  
+    border-radius: 0 0 0 6px;  
+    }  
+      
+    .zebra tfoot td:last-child {  
+    -moz-border-radius: 0 0 6px 0;  
+    -webkit-border-radius: 0 0 6px 0;  
+    border-radius: 0 0 6px 0;  
+    }  
+      
+    .zebra tfoot td:only-child{  
+    -moz-border-radius: 0 0 6px 6px;  
+    -webkit-border-radius: 0 0 6px 6px; 
+    border-radius: 0 0 6px 6px;
+    }  
+ 
+    .wrap{
+	padding:5px 0px 5px 0px;
+ height:100%;
+	
+	
+ 
+	}
+	.wrap table{
+		border-collapse:collapse;
+		 
+		
+	}
+	.wrap td{
+		text-align:left;
+		
+		
+	}
+	 
+	.wrap UL {
+		font-size:12px;width:160px;
+		margin:0px 0px 0px 0px; padding:0px;
+	}
+	.wrap LI {
+		list-style-type: none;padding:0px 0px 0px 10px;
+	}
+	.wrap LI A,.wrap LI A:active,.wrap LI A:visited{
+		font-size:14px; font-weight:normal; font-family:宋体;
+		text-align:left; line-height:28px; width:200px;
+		text-decoration: none; color:#0058B3; 
+		padding:5px 0px 0px 30px;
+		
+		background-repeat:no-repeat;
+	}
+	.intro {
+		padding:2px; border-left:0px;
+		height:380px;
+	}
+	.intro div {	
+		padding:10px; height:373px;
+		font-size:13px;line-height:22px;text-align:left;color:#3169B5;
+		background-image:url("images/bg_top.gif");background-repeat:repeat-x;
+	}
+	.intro div h4{
+          font-size:15px;	
+	}
+	.intro div span {	
+		height:0px;text-align:right;display:block;padding:0px;margin:0px;
+	}
+	.intro span a,.intro span a:visited,.intro span a:active{	
+		color:#f40;text-decoration:underline;
+	}
+	.intro span a:hover{	
+		color:#369;text-decoration:underline;
+	}
+	.wrap span {
+		font-size:16px;font-weight:bold;
+	}
+	.title{
+		padding:8px;font-size:16px;font-weight:normal;color:#FE673F;font-family:黑体; text-align:center;
+		
+	 
+	}
+	.title a,.title a:visited,.title a:active{
+		font-size:16px;font-weight:normal;color:#FE673F;font-family:黑体;
+	}
+	.title a:hover{
+		font-size:16px;font-weight:normal;color:#169;font-family:黑体;
+	}
+	.line1 {
+		
+		line-height:2px;width:95%	
+	}
+  
+	
+	
+	.button {
+        display:inline-block;
+        padding:0 15px;
+        margin-left:2px;
+        margin-bottom:2px;
+        font-size:14px;
+        line-height:25px;
+        width:101px;
+        color:#000;
+        border:0 solid #fff;
+		background-image:url(../images/buttons/1012501.png);
+        box-shadow:0 0 2px #bbb;
+        cursor:pointer;
+    }
+    .button:hover { 
+        color:#fff;
+        background-image:url(../images/buttons/1012502.png);
+    }
+    .button1 {
+        display:inline-block;
+        padding:0 15px;
+        margin-left:2px;
+        margin-bottom:2px;
+        font-size:14px;
+        line-height:25px;
+        width:100px;
+        color:#fff;
+        border:1px solid #fff;
+        background:url(../images/button-tail.gif) 0 0 repeat-x #f2f2f2;
+        box-shadow:0 0 2px #bbb;
+        cursor:pointer;
+    }
+    .button1:hover {background:#4876FF;color:#fff}
+    
+    .button2 {position:relative;margin-bottom:-30px;font-size:17px;width:110px;text-transform:uppercase;color:#fff;line-height:32px;text-decoration:none;background:url(../images/button2_bg.gif) top repeat-x;display:inline-block}
+.button2 span {display:block;background:url(../images/button2_left.jpg) top left no-repeat}
+.button2 span span {padding:0 18px;height:47px;background:url(../images/button2_right.jpg) top right no-repeat}
+.button2:hover {color:#000}
+	.queryPanel{
+		padding-left:20px;
+	}
+	.queryPanel h3 {
+		text-align:left; padding-top:20px;  padding-bottom:20px; color:#000;
+	}
+	
+	.main-top {
+		padding-top:10px;padding-bottom:15px; border-top:1px solid #CCC; 
+	}
+	.main-bottom {
+		padding-top:10px;padding-bottom:15px; border-top:1px solid #CCC;
+	}
+	.handleControl {
+		padding-top:20px;
+	}
+	
+	
+	
+*{margin:0;padding:0;list-style-type:none;}
+/* reveal-modal */
+.reveal-modal-bg
+{
+	position:fixed;height:100%;width:100%;background-color:#000;z-index:100;display:none;top:0;left:0;
+	}
+.reveal-modal
+{
+	visibility:hidden;top:185px;left:50%;margin-left:-230px;width:420px;
+	background:#eee url(modal-gloss.png) no-repeat -200px -80px;
+position:absolute;z-index:101;
+padding:15px 15px 15px 15px;
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px;-moz-box-shadow:0 0 10px rgba(0,0,0,.4);
+-webkit-box-shadow:0 0 10px rgba(0,0,0,.4);-box-shadow:0 0 10px rgba(0,0,0,.4);
+}
+.reveal-modal .close-reveal-modal 
+{
+font-size:22px;line-height:.5;position:absolute;top:8px;right:11px;color:#aaa;
+text-shadow:0 -1px 1px rbga(0,0,0,.6);font-weight:bold;cursor:pointer;
+} 
+.reveal-modal h2
+{
+	font-size:18px;color:#990000;padding:0 0 20px 0;height:15px; width:420px;
+	}
+.reveal-modal p
+{
+	padding:0 0 0 0;
+}
+
+
+
+
+ul,
+li
+{
+margin:0;
+padding:0;  /* 清除浏览器默认的margin和padding值 */
+}
+ul,
+li {
+list-style:none outside;  /* 清除浏览器中列表项默认的占位 */
+}
+
+
+/* 选项卡整体外观定义 */
+.zzjs_net {
+width:600px;
+height:100%;
+overflow:hidden;
+}
+.zzjs_net .tabBox {
+height:100%;
+width:600px;
+position:relative;
+
+}
+.zzjs_net .tabBox li {
+float:left;
+width:20%;
+text-align:center;
+}
+.zzjs_net h5 {
+margin:0;
+height:26px;
+font-size:12px;
+line-height:20px;
+}
+
+.zzjs_net .tabContentBox li{
+width:auto;
+margin-top:0;
+}
+.zzjs_net .tabContentBox {
+width:100%;
+height:1000px;
+
+text-align:left;
+overflow:hidden;
+background:#fff;
+position:absolute;
+top:22px;
+left:0;
+display:none;
+margin:4px;
+}
+.zzjs_net li:hover .tabContentBox,
+.zzjs_net .tabOn .tabContentBox {
+display:block;
+}
+/* 以下是对各项内容的CSS定义 */
+.zzjs_net .tabContentBox .blog,
+.zzjs_net .tabContentBox .group {
+color:#999;
+line-height:2em;
+margin:5px;
+}
+
+.zzjs_net .tabContentBox .album li,
+.zzjs_net .tabContentBox .share li{
+width:24.9%;
+float:left;
+padding-top:15px;
+text-align:center;
+}
+-->
+
+
+/* 选项页面表格样式  */
+.zebra1 {
+		margin-top:10px;
+		padding-left:10px;
+		
+		}
+    .zebra1 td {  
+    text-align: left; 
+    padding: 8px; 
+    width:90;
+    border-bottom: 1px solid #f2f2f2;  
+    }  
+      
+    .zebra1 tbody tr:nth-child { 
+    background: #f5f5f5;  
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+    }  
+      
+    
+
+
+ </style>
