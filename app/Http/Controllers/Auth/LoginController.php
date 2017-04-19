@@ -50,8 +50,8 @@ class LoginController extends Controller
         //$status = Auth::attempt(["username"=>$username,"password"=>$password]);
         $status = User::where(["fac_no"=>$fac_no,"password"=>$password])->first();
         if($status){
-            //return redirect('/test');
-            return view("layouts.success");
+            return redirect('/home');
+            //return view("layouts.companyinfo");
         }else{
             return redirect('/');
         }

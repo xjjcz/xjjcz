@@ -1,0 +1,57 @@
+.re-box {
+border: 3px solid #627;
+position: absolute;
+width: 600px;
+top: 50%;
+left: 50%;
+margin-top: -180px;
+margin-left: -300px;
+background: white;
+z-index: 102;
+display: block;
+}
+#re-bg {
+position: fixed;
+top: 0;
+left: 0;
+height: 100%;
+width: 100%;
+z-index: 110;
+display: none;
+background: rgba(0, 0, 0, 0.6);
+}
+.re-btn:hover {
+color: white;
+background-color: #24A5E2;
+}
+a:hover {
+text-decoration: none;
+color: #D14836;
+}
+.re-btn {
+height: 30px;
+width: 100px;
+background: #24A5E2;
+float: right;
+display: block;
+border: none;
+color: white;
+font-size: 14px;
+margin-top: 5px;
+line-height: 30px;
+vertical-align: middle;
+margin-right: 10px;
+text-align: center;
+}
+.edui-default .edui-toolbar {
+cursor: default;
+-webkit-user-select: none;
+-moz-user-select: none;
+padding: 1px;
+overflow: hidden;
+zoom: 1;
+}
+.edui-default .edui-toolbar {
+position: relative;
+}
+
