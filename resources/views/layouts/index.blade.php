@@ -1,4 +1,11 @@
+
 <!DOCTYPE html>
+<?php
+session_start();
+// store session data
+$_SESSION['fac_no']='1';
+?>
+
 <html>
 
 <head>
@@ -222,7 +229,9 @@
 
 <script type="text/javascript">
     $("#alertBox").alert('close');
+    alert($_SESSION['fac_no']);
 </script>
 
 </body>
 </html>
+

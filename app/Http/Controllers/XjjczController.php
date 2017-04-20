@@ -7,7 +7,10 @@ use App\Model\Information;
 class XjjczController extends Controller
 {
     public function show(){
-        $information = Information::all()->first()->toArray();
+        $a = $_POST["id"];
+        //$information = Information::all()->first()->toArray();
+        $information = Information::where('id','=',2)->first();
+        var_dump($information->information);
         return $information;
     }
 }

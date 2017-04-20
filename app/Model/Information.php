@@ -13,7 +13,7 @@ class Information extends Model
      * @var array
      */
     public $timestamps = false;
-    protected $table = "information";
+    protected $table = "city1";
 
     protected $fillable=['information'];
 }
