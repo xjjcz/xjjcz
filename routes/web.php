@@ -28,7 +28,7 @@ Route::get('/test', function (){
     return view('layouts.changepsd');
 });
 Route::get('/home', function (){
-    return view('layouts.companyinfo');
+    return view('layouts.companyinfo1');
 });
 Route::get('/changepsd', function (){
     return view('layouts.changepsd');
