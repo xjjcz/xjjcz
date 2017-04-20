@@ -25,9 +25,14 @@ Route::get('/welcome', function (){
 });
 Route::post('/information', "XjjczController@show");
 Route::get('/test', function (){
-    return view('layouts.test');
+    return view('layouts.changepsd');
 });
 Route::get('/home', function (){
     return view('layouts.companyinfo');
 });
+Route::get('/changepsd', function (){
+    return view('layouts.changepsd');
+});
+Route::post('/changepsddo', "UserController@dochange");
+
 
