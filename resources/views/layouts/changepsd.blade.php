@@ -168,7 +168,7 @@ try {
 					<ul class="breadcrumb">
 						<li>
 							<i class="icon-home home-icon"></i>
-							<a href="#">${item.factoryName}</a>
+							<a href="#">{{ session("factory")["factory_name"] }}</a>
 						</li>
 
 
