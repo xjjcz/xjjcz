@@ -192,10 +192,10 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
-                        <a href="#"></a>
+                        <a href="#">{{ session("factory")["factory_name"] }}</a>
                     </li>
                     <li>
-                        <a href=>>企业信息</a>
+                        <a href=>企业信息</a>
                     </li>
                 </ul>
                 <!-- .breadcrumb -->
@@ -231,7 +231,7 @@
                                     <div class="col-md-8">
                                         <label id='factotyno'
                                                style="font-size: 15px; margin-top: 3px;">
-
+                                            {{ session("factory")["factory_no1"] }}
                                         </label>
                                     </div>
                                 </div>
@@ -247,7 +247,7 @@
                                     <div class="col-md-8">
                                         <label id='factoryName'
                                                style="font-size: 15px; margin-top: 3px;">
-
+                                            {{ session("factory")["factory_name"] }}
                                         </label>
                                     </div>
                                 </div>

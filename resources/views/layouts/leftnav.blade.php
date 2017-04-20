@@ -368,7 +368,7 @@
         </li>
 
         <li id='info'>
-            <a href=> <i
+            <a href="{{ url("/home") }}"> <i
                         class=""><img src="img\qiye.png"
                                       style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px; background-image: url({{ asset("/img/zuo_bg.png") }})">
                 </i> <span class="menu-text">企业信息</span> </a>
@@ -648,7 +648,7 @@
             <ul class="submenu" id="pasd">
                 <li id="lipsd">
                     <a
-                            href=>
+                            href="{{ url("/changepsd") }}">
                         <i class=""><img src="img\qiye.png"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 密码修改</span> </a>

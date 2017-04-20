@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
+use App\Model\Factory;
 use App\Model\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -49,7 +50,11 @@ class LoginController extends Controller
         //$status =  DB::select("select * from user where username=? and password=?",[$username,$password]);
         //$status = Auth::attempt(["username"=>$username,"password"=>$password]);
         $status = User::where(["fac_no"=>$fac_no,"password"=>$password])->first();
+
         if($status){
+            $factory = Factory::where("factory_no1",$fac_no)->first()->toArray();
+            $request->session()->put("factory",$factory);
+            $request->session()->put("clientfactoryid",$factory["factory_id"]);
             return redirect('/home');
             //return view("layouts.companyinfo");
         }else{
