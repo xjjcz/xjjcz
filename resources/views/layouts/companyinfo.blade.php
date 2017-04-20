@@ -1096,26 +1096,100 @@
 
     </div>
     <!-- /.main-container-inner -->
+    <script type="text/javascript">
+        window.jQuery
+        || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<"
+            + "/script>");
+    </script>
+    <script type="text/javascript">
+        if ("ontouchend" in document)
+            document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<"
+                + "/script>");
+    </script>
+    <script src="{{ asset("/js/bootstrap.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/typeahead-bs2.min.js") }}">
+    </script>
+
+    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
+    </script>
+    <script src="{{ asset("js/jquery.maskedinput.min.js") }}">
+    </script>
+
+    <script src="{{ asset("/js/jquery-ui-1.10.3.custom.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jquery.ui.touch-punch.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/chosen.jquery.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/fuelux/fuelux.spinner.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/date-time/bootstrap-timepicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/date-time/moment.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/date-time/daterangepicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/bootstrap-colorpicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jquery.knob.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jquery.autosize.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jquery.inputlimiter.1.3.1.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jquery.maskedinput.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/bootstrap-tag.min.js") }}">
+    </script>
+    <!-- ace scripts -->
+
+    <script src="{{ asset("/js/ace-elements.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/ace.min.js") }}">
+    </script>
 
 
-    <!-- /.main-container -->
+    <script type="text/javascript">
+        jQuery(function($) {
+            $.mask.definitions['~'] = '[+-]';
+            $('.input-mask-date').mask('9999/99/99');
+            $('.input-mask-phone').mask('(999) 999-9999');//可以校验电话
+            $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+            $(".input-mask-product").mask("a*-999-a999", {
+                placeholder : " ",
+                completed : function() {
+                    alert("You typed the following: " + this.val());
+                }
+            });
 
-    <!-- basic scripts -->
-
-    <!--[if !IE]> -->
-
-
-    <!-- <![endif]-->
-
-    <!--[if IE]>
-    <![endif]-->
-
-    <!--[if !IE]> -->
+        });
+    </script>
+    <script src="{{ asset("/js/bootstrap.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/typeahead-bs2.min.js") }}">
+    </script>
 
 
+    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
+    </script>
+    <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
+    </script>
 
 
-    <!-- <![endif]-->
+    <div style="display: none">
+        <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
+                language='JavaScript' charset='gb2312'>
+        </script>
+    </div>
 </div>
 </body>
 </html>
