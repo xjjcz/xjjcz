@@ -1,62 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>工厂信息</title>
-    <meta name="keywords" content=""/>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
     <!-- basic styles -->
 
     <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset("/css/font-awesome.min.css") }}"/>
+    <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
+    <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
 
 
 
-    <!-- page specific plugin styles -->
 
-    <link rel="stylesheet" href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/chosen.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/datepicker.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/bootstrap-timepicker.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/daterangepicker.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/colorpicker.css") }}"/>
 
-    <!-- fonts -->
+    <link href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300"/>
 
-    <!-- ace styles -->
+    <link href="{{ asset("/css/chosen.css") }}" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}"/>
-    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}"/>
-    <script type="text/javascript" language="JavaScript" src="{{ asset("/js/client.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("/js/simpletable.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("/js/jquery-3.2.1.min.js") }}"></script>
-    <script type="text/javascript" language="JavaScript" src="{{ asset("/js/bootstrap.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("/js/checkhelp.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("/js/autoNumeric.js") }}"></script>
 
-    <script type="text/javascript">
-        jQuery(function ($) {
-            $('.check1').focus(function () {
-                $('.check1').autoNumeric();
-            });
-        });
+    <link href="{{ asset("/css/datepicker.css") }}" rel="stylesheet"/>
+
+
+    <link href="{{ asset("/css/bootstrap-timepicker.css") }}" rel="stylesheet"/>
+
+
+    <link href="{{ asset("/css/daterangepicker.css") }}" rel="stylesheet"/>
+
+
+    <link href="{{ asset("/css/colorpicker.css") }}" rel="stylesheet"/>
+
+
+    <link href="{{ asset("/css/ui.jqgrid.css") }}" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}" />
+    <script src="{{ asset("/js/client.js") }}">
     </script>
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="{{ asset("/css/ace-ie.min.css") }}"/>
-    <![endif]-->
+    <script src="{{ asset("/js/savehelp.js") }}">
+    </script>
 
-    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}" />
 
-    <!-- ace settings handler -->
-    <script type="text/javascript" src="{{ asset("/js/ace-extra.min.js") }}"></script>
+
+    <script src="{{ asset("/js/ace-extra.min.js") }}">
+    </script>
+
+
+    <script src="{{ asset("/js/html5shiv.js") }}"></script>
+    <script src="{{ asset("/js/respond.min.js") }}"></script>
 
 
     <script type="text/javascript">
-
 
 
         function addsaveinfo(page, target) {
@@ -195,7 +191,7 @@
                         <a href="#"></a>
                     </li>
                     <li>
-                        <a href=>>企业信息</a>
+                        <a href=''>企业信息</a>
                     </li>
                 </ul>
                 <!-- .breadcrumb -->
@@ -219,8 +215,6 @@
                       action="">
                     <div class="row" style="height: 40px;">
                         <div class="col-md-12">
-                            <!-- PAGE CONTENT BEGINS -->
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-md-4 control-label no-padding-right"
@@ -229,8 +223,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <label id='factotyno'
-                                               style="font-size: 15px; margin-top: 3px;">
+                                        <label id='factotyno' style="font-size: 15px; margin-top: 3px;">
 
                                         </label>
                                     </div>
@@ -1085,37 +1078,110 @@
                             <input type="hidden" name="malert" id="malert" value='0'>
                         </div>
                     </div>
-                    <!-- /.page-footer -->
                 </form>
 
 
             </div>
-            <!-- /.page-content -->
         </div>
-        <!-- /.main-content -->
 
     </div>
-    <!-- /.main-container-inner -->
+</div>
+<script type="text/javascript">
+    window.jQuery
+    || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<"
+        + "/script>");
+</script>
+<script type="text/javascript">
+    if ("ontouchend" in document)
+        document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<"
+            + "/script>");
+</script>
+<script src="{{ asset("/js/bootstrap.min.js") }}">
+</script>
+<script src="{{ asset("/js/typeahead-bs2.min.js") }}">
+</script>
+
+<script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
+</script>
+<script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
+</script>
+<script src="{{ asset("js/jquery.maskedinput.min.js") }}">
+</script>
+
+<script src="{{ asset("/js/jquery-ui-1.10.3.custom.min.js") }}">
+</script>
+<script src="{{ asset("/js/jquery.ui.touch-punch.min.js") }}">
+</script>
+<script src="{{ asset("/js/chosen.jquery.min.js") }}">
+</script>
+<script src="{{ asset("/js/fuelux/fuelux.spinner.min.js") }}">
+</script>
+<script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/date-time/bootstrap-timepicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/date-time/moment.min.js") }}">
+</script>
+<script src="{{ asset("/js/date-time/daterangepicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/bootstrap-colorpicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/jquery.knob.min.js") }}">
+</script>
+<script src="{{ asset("/js/jquery.autosize.min.js") }}">
+</script>
+<script src="{{ asset("/js/jquery.inputlimiter.1.3.1.min.js") }}">
+</script>
+<script src="{{ asset("/js/jquery.maskedinput.min.js") }}">
+</script>
+<script src="{{ asset("/js/bootstrap-tag.min.js") }}">
+</script>
+<!-- ace scripts -->
+
+<script src="{{ asset("/js/ace-elements.min.js") }}">
+</script>
+<script src="{{ asset("/js/ace.min.js") }}">
+</script>
+
+<script type="text/javascript">
+    $("#pasd").toggle();
+    document.getElementById("lipsd").setAttribute("class", "active");
+</script>
+<script type="text/javascript">
+    jQuery(function($) {
+        $.mask.definitions['~'] = '[+-]';
+        $('.input-mask-date').mask('9999/99/99');
+        $('.input-mask-phone').mask('(999) 999-9999');//可以校验电话
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+        $(".input-mask-product").mask("a*-999-a999", {
+            placeholder : " ",
+            completed : function() {
+                alert("You typed the following: " + this.val());
+            }
+        });
+
+    });
+</script>
+<script src="{{ asset("/js/bootstrap.min.js") }}">
+</script>
+<script src="{{ asset("/js/typeahead-bs2.min.js") }}">
+</script>
 
 
-    <!-- /.main-container -->
-
-    <!-- basic scripts -->
-
-    <!--[if !IE]> -->
-
-
-    <!-- <![endif]-->
-
-    <!--[if IE]>
-    <![endif]-->
-
-    <!--[if !IE]> -->
+<script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
+</script>
+<script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
+</script>
+<script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
+</script>
 
 
-
-
-    <!-- <![endif]-->
+<div style="display: none">
+    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
+            language='JavaScript' charset='gb2312'>
+    </script>
 </div>
 </body>
 </html>

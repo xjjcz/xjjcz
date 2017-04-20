@@ -28,6 +28,6 @@ Route::get('/test', function (){
     return view('layouts.test');
 });
 Route::get('/home', function (){
-    return view('layouts.companyinfo');
+    return view('layouts.companyinfo1');
 });
 

@@ -24,191 +24,11 @@
                         + i + "号设备 </a></li>";
                 }
             }
-            //获取状态值，如果是2说明审核通过不在显示增加按钮，否则显示增加按钮
-            /*	if(json.sys_status==2){
-             $("#sloventadd").hide();
-             }else{
-             $("#sloventadd").show();
-             }*/
 
-            $
-                .post(
-                    "ajax/Factory/getexhaustnumber.do",
-                    {},
-                    function (data) {
-                        var json = eval("(" + data + ")");
-                        if (json.sys_exhaust != null) {
-                            var i = 1;
-                            for (; i <= json.sys_exhaust; i++) {
-                                document
-                                    .getElementById("exhaustul").innerHTML += "<li id='exhaustli"
-                                    + i
-                                    + "'><a onclick='addsaveinfo("
-                                    + i
-                                    + ",\"exhaust\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号烟囱/排气筒 </a></li>";
-                            }
-                        }
-                        //获取状态值，如果是2说明审核通过不在显示增加按钮，否则显示增加按钮
-                        /*	if(json.sys_status==2){
-                         $("#sloventadd").hide();
-                         }else{
-                         $("#sloventadd").show();
-                         }*/
-                    });
 
-            //
-            //加载工艺过程源-窑炉
-            $
-                .post("ajax/TotalKilnTemp/getnumber.do",
-                    {},
-                    function (data) {
-                        var json = eval("(" + data + ")");
-                        //a加载锅炉信息
-                        if (json.sys_numberkiln != null) {
 
-                            var i = 1;
-                            for (; i <= json.sys_numberkiln; i++) {
-                                document.getElementById("yaoluulkiln").innerHTML += "<li id='yaolulikiln"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + i
-                                    + ",\"procedure\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号窑炉</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-                        //alert(json.sys_newpagepaiqi );
-                        //加载烟囱/排气筒信息
 
-                    });
 
-            //加载锅炉信息
-            $
-                .post(
-                    "ajax/TotalBoilerTemp/getnumber.do",
-                    {},
-                    function (data) {
-
-                        var json = eval("(" + data + ")");
-                        //a加载锅炉信息
-                        if (json.sys_numberboiler != null) {
-
-                            var i = 1;
-
-                            for (; i <= json.sys_numberboiler; i++) {
-
-                                document.getElementById("sguoluul").innerHTML += "<li id='sguoluli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + i
-                                    + ",\"stationary\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号锅炉</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-
-                    });
-            //加载固定点源信息
-            $
-                .post(
-                    "ajax/TotalProductrawTemp/getnumber.do",
-                    {},
-                    function (data) {
-
-                        var json = eval("(" + data + ")");
-                        //a加载锅炉信息
-
-                        if (json.sys_numberdevice != null) {
-
-                            var i = 1;
-
-                            for (; i <= json.sys_numberdevice; i++) {
-
-                                document.getElementById("deviceul").innerHTML += "<li id='deviceli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + i
-                                    + ",\"product\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号设备</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-                        if (json.sys_numberproduct != null) {
-
-                            var i = 1;
-
-                            for (; i <= json.sys_numberproduct; i++) {
-                                var ii = i + 200;
-
-                                document
-                                    .getElementById("productul").innerHTML += "<li id='productli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + ii
-                                    + ",\"product\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号产品</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-                        if (json.sys_numberraw != null) {
-
-                            var i = 1;
-
-                            for (; i <= json.sys_numberraw; i++) {
-                                var ii = i + 100;
-
-                                document.getElementById("rawul").innerHTML += "<li id='rawli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + ii
-                                    + ",\"product\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号原料</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-
-                    });
-
-            //加载溶剂使用源产品
-            $
-                .post(
-                    "ajax/TotalRongjiTemp/getnumber.do",
-                    {},
-                    function (data) {
-                        var json = eval("(" + data + ")");
-                        //a加载锅炉信息
-                        if (json.sys_numberproduct != null) {
-                            var i = 1;
-                            for (; i <= json.sys_numberproduct; i++) {
-                                var ii = i + 100;
-                                document
-                                    .getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + ii
-                                    + ",\"rongji\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号产品</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-                        if (json.sys_numberraw != null) {
-
-                            var i = 1;
-                            for (; i <= json.sys_numberraw; i++) {
-                                var ii = i;
-                                document
-                                    .getElementById("rongjirawul").innerHTML += "<li id='rongjirawli"
-                                    + i
-                                    + "'><a href='javascript:void(0)' onclick='addsaveinfo("
-                                    + ii
-                                    + ",\"rongji\")'><i class='icon-double-angle-right'></i>"
-                                    + i + "号原料</a></li>";
-                            }
-                            //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
-                        }
-
-                    });
 
         });
 
@@ -241,12 +61,7 @@
             + ",\"procedure\")'><i class='icon-double-angle-right'></i>"
             + number + "号窑炉</a></li>";
 
-        $.post("ajax/TotalKilnTemp/savetotalpage.do", {
-            totalnumkiln: number,
-            newpagekiln: 1
-        }, function (data) {
-            addsaveinfo(number, 'procedure');
-        });
+
 
     }
     //var m_number=number+1;
@@ -279,12 +94,7 @@
 
         var m_newpageboiler = 1;
         document.getElementById("sguoluul").innerHTML += "<li id='sguoluli" + number + "'>" + "<a href='javascript:void(0)' onclick='addsaveinfo(" + number + ",\"stationary\")'><i class='icon-double-angle-right'></i>" + number + "号锅炉</a></li>";
-        $.post("ajax/TotalBoilerTemp/savetotalpage.do", {
-            totalnumboiler: number,
-            newpageboiler: m_newpageboiler
-        }, function (data) {
-            addsaveinfo(number, 'stationary');
-        });
+
 
     }
     function addchimney() {
@@ -306,10 +116,7 @@
             document.getElementById("exhaustul").innerHTML += "<li id='exhaustli" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + i + ",\"exhaust\")'><i class='icon-double-angle-right'></i>" + i + "号烟囱/排气筒</a></li>";
             //document.getElementById("exhaustul").innerHTML+="<li id='exhaustli"+i+"'><a onclick='addsaveinfo("+i+",\"exhaust\")'><i class='icon-double-angle-right'></i>"+i+"号烟囱/排气筒 </a></li>";
             //修改中的个数
-            $.post("ajax/ExhaustTemp/decone.do",
-                {totalexhaust: i, newexhaust: 1}, function (data) {
-                    addsaveinfo(i, 'exhaust');
-                });
+
             //alert(ii);
             //跳转到新增页面
 
@@ -343,10 +150,7 @@
             document.getElementById("feiqiul").innerHTML += "<li id='feiqili" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + i + ",\"feiqi\")'><i class='icon-double-angle-right'></i>" + i + "号设备</a></li>";
             //document.getElementById("exhaustul").innerHTML+="<li id='exhaustli"+i+"'><a onclick='addsaveinfo("+i+",\"exhaust\")'><i class='icon-double-angle-right'></i>"+i+"号烟囱/排气筒 </a></li>";
             //修改中的个数
-            $.post("ajax/FeiqiTemp/decone.do",
-                {totalfeiqi: i, newfeiqi: 1}, function (data) {
-                    addsaveinfo(i, 'feiqi');
-                });
+
             //alert(ii);
             //跳转到新增页面
 
@@ -384,12 +188,7 @@
             }
             var m_newdevice = 1;
             document.getElementById("deviceul").innerHTML += "<li id='deviceli" + number + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + number + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号设备</a></li>";
-            $.post("ajax/TotalProductrawTemp/savetotalpage.do", {
-                totalpage: number,
-                newdevice: m_newdevice
-            }, function (data) {
-                addsaveinfo(number, 'product');
-            });
+
         }
     }
 
@@ -431,12 +230,7 @@
             }
             var page = number + 200;
             document.getElementById("deviceul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-            $.post("ajax/TotalProductrawTemp/savetotalproduct.do", {
-                totalproduct: number,
-                newdevice: 1
-            }, function (data) {
-                saveinfo(page, 'product');
-            });
+
 
 
         }
@@ -482,9 +276,7 @@
             }
             var page = number + 100;
             document.getElementById("rawul").innerHTML += "<li id='rawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
-            $.post("ajax/TotalProductrawTemp/savetotalraw.do", {totalraw: number, newdevice: 1}, function (data) {
-                saveinfo(page, 'product');
-            });
+
 
 
         }
@@ -507,12 +299,7 @@
             }
             var page = number + 100;
             document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-            $.post("ajax/TotalRongjiTemp/savetotalproduct.do", {
-                totalproduct: number,
-                newrongjiproduct: 1
-            }, function (data) {
-                saveinfo(page, 'rongji');
-            });
+
 
 
         }
@@ -538,9 +325,7 @@
             }
             var page = number;
             document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
-            $.post("ajax/TotalRongjiTemp/savetotalraw.do", {totalraw: number, newrongjiraw: 1}, function (data) {
-                saveinfo(page, 'rongji');
-            });
+
 
 
         }
@@ -562,12 +347,7 @@
             // document.getElementById("solventul").innerHTML-="<li id='m_addpage'><a onclick='addpage("+i+")'><i class='icon-double-angle-right'></i>+</a></li>";
             document.getElementById("paiqiul").innerHTML += "<li id='paiqili" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + ii + ",\"procedureproduce\")'><i class='icon-double-angle-right'></i>" + i + "号烟囱/排气筒</a></li>";
 
-            $.post("ajax/FabricationtotalTemp/savepaiqitotalpage.do", {
-                totalnumfabrpaiqi: i,
-                newpagefabrpaiqi: 1
-            }, function (data) {
-                addsaveinfo(ii, 'procedureproduce');
-            });
+
 
 
         }

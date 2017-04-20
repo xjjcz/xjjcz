@@ -4,12 +4,10 @@
 <head>
     <title>登陆</title>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
-    <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset("/css/bootstrap.min.css") }}"/>
     <link rel="stylesheet" href="{{ asset("/css/font-awesome.min.css") }}"/>
 
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="{{ asset("/css/font-awesome-ie7.min.css") }}" />
-    <![endif]-->
+
 
     <!-- page specific plugin styles -->
 
