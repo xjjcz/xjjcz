@@ -604,7 +604,7 @@
             <ul class="submenu" id="set2">
                 <li id="roaddust">
                     <a
-                            href="">
+                            href="{{ url("tolistRoad") }}">
                         <i class=""><img src="img\qiye.png"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂道路信息</span> </a>
@@ -612,26 +612,26 @@
 
                 <li id="condust">
                     <a
-                            href=>
+                            href="{{ url("toconstruction") }}">
                         <i class=""><img src="img\qiye.png"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂施工信息</span> </a>
                 </li>
                 <li id="yarddust">
-                    <a href=> <i
+                    <a href={{ url("toyarddust") }}> <i
                                 class=""><img src="img\qiye.png"
                                               style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂堆场信息</span> </a>
                 </li>
                 <li id="baredust">
-                    <a href=>
+                    <a href={{ url("tobaresoil") }}>
                         <i class=""><img src="img\qiye.png"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂裸土面积</span> </a>
                 </li>
                 <li id="workshop">
                     <a
-                            href=>
+                            href={{ url("tonoOrganizationWorkshop") }}>
                         <i class=""><img src="img\qiye.png"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 工厂车间情况</span> </a>

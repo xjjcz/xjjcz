@@ -39,6 +39,7 @@
     <script type="text/javascript" src="{{ asset("/js/autoNumeric.js") }}"></script>
 
     <script type="text/javascript">
+
         jQuery(function ($) {
             $('.check1').focus(function () {
                 $('.check1').autoNumeric();
@@ -1186,7 +1187,7 @@
 
 
     <div style="display: none">
-        <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
+        <script src='{{ asset("http://v7.cnzz.com/stat.php?id=155540&web_id=155540") }}'
                 language='JavaScript' charset='gb2312'>
         </script>
     </div>

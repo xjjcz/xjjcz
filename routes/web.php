@@ -12,7 +12,7 @@
 */
 
 //Route::get('/', function () {
-//    return view('welcome');
+//    return view('welcome')11;
 //});
 Route::get('/', "IndexController@index");
 Route::get('/register', function(){
@@ -32,5 +32,19 @@ Route::get('/changepsd', function (){
     return view('layouts.changepsd');
 });
 Route::post('/changepsddo', "UserController@dochange");
-
-
+Route::get('/tolistRoad',function (){
+    return view('layouts.listRoad');
+});
+Route::post('/listRoadlist',"XjjczController@roadlist");
+Route::get('/toconstruction',function (){
+    return view('layouts.constructionDust');
+});
+Route::get('/toyarddust',function (){
+    return view('layouts.FyardDust');
+});
+Route::get('/tobaresoil',function(){
+    return view('layouts.FbareSoilDust');
+});
+Route::get('/tonoOrganizationWorkshop',function (){
+    return view('layouts.noOrganizationWorkshop');
+});
