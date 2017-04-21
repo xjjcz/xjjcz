@@ -229,7 +229,6 @@ $_SESSION['fac_no']='1';
 
 <script type="text/javascript">
     $("#alertBox").alert('close');
-    alert($_SESSION['fac_no']);
 </script>
 
 </body>
