@@ -31,7 +31,6 @@ Route::get('/home', "XjjczController@clientlist");
 Route::get('/changepsd', function (){
     return view('layouts.changepsd');
 });
-
 Route::post('/changepsddo', "UserController@dochange");
 Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
     $totalexhaust = $request->session()->get("totalexhaust");
@@ -49,3 +48,20 @@ Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$inde
 });
 
 
+
+Route::get('/tolistRoad',function (){
+    return view('layouts.listRoad');
+});
+Route::post('/listRoadlist',"XjjczController@roadlist");
+Route::get('/toconstruction',function (){
+    return view('layouts.constructionDust');
+});
+Route::get('/toyarddust',function (){
+    return view('layouts.FyardDust');
+});
+Route::get('/tobaresoil',function(){
+    return view('layouts.FbareSoilDust');
+});
+Route::get('/tonoOrganizationWorkshop',function (){
+    return view('layouts.noOrganizationWorkshop');
+});
