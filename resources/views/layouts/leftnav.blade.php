@@ -9,28 +9,35 @@
     var alertadd = "对不起！您有新增页面没有保存或当前页面必填项未填写完,请保存或填写完再添加！";
     $(document)
         .ready(function () {
-            /*CAIJUN 加载烟囱/排气筒信息*/
+            var totalexhuast = '{{ session("totalexhaust") }}';
+            var exhaust_temps = new Array('{{  json_encode(session("exhaust_temps")) }}');
 
-            //加载溶剂使用源信息
-            var feiqnub = "${totalfeiqi}";
-            if (feiqnub != null) {
-                var i = 1;
-                for (; i <= feiqnub; i++) {
-                    document.getElementById("feiqiul").innerHTML += "<li id='feiqili"
-                        + i
-                        + "'><a onclick='addsaveinfo("
-                        + i
-                        + ",\"feiqi\")'><i class='icon-double-angle-right'></i>"
-                        + i + "号设备 </a></li>";
-                }
+            var realtotalexhuast = exhaust_temps.length;
+
+            var i = 1;
+            for (; i <= realtotalexhuast; i++) {
+                document
+                    .getElementById("exhaustul").innerHTML += "<li id='exhaustli"
+                    + i
+                    + "'><a onclick='getexhaust("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + i + "号烟囱/排气筒 </a></li>";
+            }
+            if(totalexhuast>realtotalexhuast){
+                document
+                    .getElementById("exhaustul").innerHTML += "<li id='exhaustli"
+                    + i
+                    + "'><a onclick='getnewexhaust()'><i class='icon-double-angle-right'></i>"
+                    + i + "号烟囱/排气筒 </a></li>";
             }
 
 
-
-
-
-
         });
+    function getexhaust(i){
+        window.location.href = '{{ url("/exhaust") }}'+'/'+i;
+    }
+    function getnewexhaust(i){
+        window.location.href = '{{ url("/exhaust") }}'+'/new';
+    }
 
     function addyaolukiln() {
         if (!checkvalue(1)) {
@@ -60,7 +67,6 @@
             + number
             + ",\"procedure\")'><i class='icon-double-angle-right'></i>"
             + number + "号窑炉</a></li>";
-
 
 
     }
@@ -104,11 +110,11 @@
         }
         if (checkvalue()) {
             var i = 0;
-            if ('${totalexhaust}' != null) {
-                if ('${totalexhaust}' == "") {
+            if ('{{ session("totalexhaust") }}' != null) {
+                if ('{{ session("totalexhaust") }}' == "") {
                     i = 1;
                 } else {
-                    i = parseInt('${totalexhaust}') + 1;
+                    i = parseInt('{{ session("totalexhaust") }}') + 1;
                 }
             } else {
                 i++;
@@ -119,6 +125,7 @@
 
             //alert(ii);
             //跳转到新增页面
+            window.location.href = '{{ url("/addexhaust") }}';
 
 
         }
@@ -232,7 +239,6 @@
             document.getElementById("deviceul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
 
 
-
         }
     }
     function addraw() {
@@ -278,7 +284,6 @@
             document.getElementById("rawul").innerHTML += "<li id='rawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
 
 
-
         }
     }
     function addrongjiproduct() {
@@ -299,7 +304,6 @@
             }
             var page = number + 100;
             document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-
 
 
         }
@@ -327,7 +331,6 @@
             document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
 
 
-
         }
     }
     function addpaiqi() {
@@ -348,8 +351,6 @@
             document.getElementById("paiqiul").innerHTML += "<li id='paiqili" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + ii + ",\"procedureproduce\")'><i class='icon-double-angle-right'></i>" + i + "号烟囱/排气筒</a></li>";
 
 
-
-
         }
 
         //var m_number=number+1;
@@ -364,12 +365,12 @@
 
     <ul class="nav nav-list">
         <li style="height: 40px">
-            <img src="img\daohang.gif" style="width: 100%; height: 100%"/>
+            <img src="{{ asset("/img/daohang.gif") }}" style="width: 100%; height: 100%"/>
         </li>
 
         <li id='info'>
             <a href="{{ url("/home") }}"> <i
-                        class=""><img src="img\qiye.png"
+                        class=""><img src="{{ asset("/img/qiye.png") }}"
                                       style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px; background-image: url({{ asset("/img/zuo_bg.png") }})">
                 </i> <span class="menu-text">企业信息</span> </a>
         </li>

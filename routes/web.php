@@ -31,6 +31,21 @@ Route::get('/home', "XjjczController@clientlist");
 Route::get('/changepsd', function (){
     return view('layouts.changepsd');
 });
+
 Route::post('/changepsddo', "UserController@dochange");
+Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
+    $totalexhaust = $request->session()->get("totalexhaust");
+    $request->session()->put(["totalexhaust"=>intval($totalexhaust)+1]);
+    return redirect("/exhaust/new");
+});
+
+Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.exhuast',["NUM"=>$request->session()->get("totalexhaust")]);
+    }else {
+        $exhaust_temps = $request->session()->get("exhaust_temps");
+        return view('layouts.exhuast',["exhaust_temps"=>$exhaust_temps[$index],"NUM"=>($index+1)]);
+    }
+});
 
 

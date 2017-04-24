@@ -19,11 +19,11 @@ class XjjczController extends Controller
 
     public function clientlist(Request $request){
         $clientfactoryid = $request->session()->get("clientfactoryid");
-        $exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",20087);
-        //$exhaust_temps = Exhaust_temp::where("FACTORY_ID",20087);
-
-        $d = count($exhaust_temps);
+        //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+        $exhaust_temps = Exhaust_temp::where("FACTORY_ID",$clientfactoryid)->get()->toArray();
         $totalexhaust = count($exhaust_temps);
-        $i=1;
+        $request->session()->put("totalexhaust",$totalexhaust);
+        $request->session()->put("exhaust_temps",$exhaust_temps);
+        return view("layouts.companyinfo");
     }
 }
