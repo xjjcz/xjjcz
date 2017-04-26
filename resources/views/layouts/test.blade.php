@@ -13,7 +13,7 @@
     <script type="text/javascript" language="JavaScript" src="{{ asset("/js/bootstrap.min.js") }}"></script>
     <script type="text/javascript" language="JavaScript">
         $(document).ready(function () {
-            var id = 1;
+            var id = 122;
             $.post("{{ url("information") }}",{'_token':'{{ csrf_token() }}','id':id},function (data) {
                 console.log(data);
                 $("#information").val(data.information);

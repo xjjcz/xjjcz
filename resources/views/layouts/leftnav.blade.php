@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
     try {
         ace.settings.check('sidebar', 'fixed')
@@ -639,6 +640,7 @@
 
             </ul>
         </li>
+
         <li id='user'>
             <a href="#" class="dropdown-toggle"> <i class=""><img
                             src="img\yantong.png"

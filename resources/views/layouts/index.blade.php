@@ -229,6 +229,13 @@ $_SESSION['fac_no']='1';
 
 <script type="text/javascript">
     $("#alertBox").alert('close');
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
 </script>
 
 </body>
