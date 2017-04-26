@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <?php
@@ -6,18 +5,18 @@ $itemroaddusti = 0;
 ?>
 <html lang="en">
 <head>
-    <title>道路扬尘源</title>
+    <title>道路施工源</title>
 
     <!-- basic styles -->
-    <meta name="keywords"	content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文" />
-    <meta name="description"	content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta name="keywords" content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文"/>
+    <meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
 
     <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
-    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
     <link href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/chosen.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/datepicker.css") }}" rel="stylesheet"/>
@@ -25,12 +24,12 @@ $itemroaddusti = 0;
     <link href="{{ asset("/css/daterangepicker.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/colorpicker.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/ui.jqgrid.css") }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}"/>
     <script src="{{ asset("/js/client.js") }}"></script>
     <script src="{{ asset("/js/savehelp.js") }}"></script>
-    <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}"/>
     <script src="{{ asset("/js/ace-extra.min.js") }}"></script>
     <script src="{{ asset("/js/html5shiv.js") }}"></script>
     <script src="{{ asset("/js/respond.min.js") }}"></script>
@@ -45,7 +44,6 @@ $itemroaddusti = 0;
             src="{{ asset("http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.pack.js") }}"
             type="text/javascript">
     </script>
-    @include("layouts.header")
     <script type="text/javascript" src="{{ asset("/js/autoNumeric.js") }}">
     </script>
     <script src="{{ asset("/js/shihua.js") }}">
@@ -112,13 +110,13 @@ $itemroaddusti = 0;
     </script>
     <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
     </script>
-    <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}" />
+    <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}"/>
     {{--<script type="text/javascript" src="<c:url value="/widgets/simpletable/simpletable.js"/>"></script>--}}
 
 
     <script type="text/javascript">
-        jQuery(function($) {
-            $('.check1').focus(function() {
+        jQuery(function ($) {
+            $('.check1').focus(function () {
                 $('.check1').autoNumeric();
             });
         });
@@ -128,218 +126,198 @@ $itemroaddusti = 0;
         $(document).ready(function () {
 
 
-            /* $.post("{{ url("information") }}",{'_token':'{{ csrf_token() }}','id':id},function (data) {
-             console.log(data);
-             $("#information").val(data.information);
-             });*/
-            $.post("{{ url("listRoadlist") }}",{'_token':'{{ csrf_token() }}'},function(data){
+            
+            $.post("{{ url("listRoadlist") }}", {'_token': '{{ csrf_token() }}'}, function (data) {
                 $froaddustsourcetemp = 1;
             });
         });
     </script>
     <script type="text/javascript">
+        function addCon() {
+            var numm=document.getElementById("itemcondusti").value;
+            //alert(numm);
+            //alert("890");
+            //var companyName= document.getElementById("companyName").value;
+            var confactoryid = document.getElementById("confactoryid").value;
+            var longitude1 = document.getElementById("nlongitude1").value;
+            var longitude2 = document.getElementById("nlongitude2").value;
+            var longitude3 = document.getElementById("nlongitude3").value;
+            var longitude4 = document.getElementById("nlongitude4").value;
 
+            var latitude1 = document.getElementById("nlatitude1").value;
+            var latitude2 = document.getElementById("nlatitude2").value;
+            var latitude3 = document.getElementById("nlatitude3").value;
+            var latitude4 = document.getElementById("nlatitude4").value;
 
-        function addinfo() {
+            var constructionType = document.getElementById("nconstructionType").value;
+            var constructState = document.getElementById("nconstructState").value;
+            var constructArea = document.getElementById("nconstructArea").value;
+            var finisharea = document.getElementById("nfinisharea").value;
+            var nowkgarea = document.getElementById("nnowkgarea").value;
+            var startdate = document.getElementById("nstartdate").value;
+            var finishdate = document.getElementById("nfinishdate").value;
 
-
-            var companyName = document.getElementById("companyName").innerHTML;
-
-            var pathLength = document.getElementById("pathLength").value;
-            var ispave = document.getElementById("ispave").value;
-            var averWidth = document.getElementById("averWidth").value;
-
-            var averWeight = document.getElementById("averWeight").value;
-            var carFlow = document.getElementById("carFlow").value;
-            var averSpeed = document.getElementById("averSpeed").value;
-            var clearTimeInstall = document.getElementById("clearTimeInstall").value;
-            var clearTimeUninstall = document.getElementById("clearTimeUninstall").value;
-            var sweepSpring = document.getElementById("sweepSpring").value;
-
-            var sweepSummer = document.getElementById("sweepSummer").value;
-            var sweepFall = document.getElementById("sweepFall").value;
-            var waterTimesSpring = document.getElementById("waterTimesSpring").value;
-
-            var waterTimesSummer = document.getElementById("waterTimesSummer").value;
-            var waterTimesFall = document.getElementById("waterTimesFall").value;
-            var dustSuppression = document.getElementById("dustSuppression").value;
-
-
-            if(ispave==1){
-                scc="1602001003";
+            var strMonth=document.getElementsByName("Month");
+            var objarray=strMonth.length;
+            var chestrMonth="";
+            for (var i=0;i<objarray;i++)
+            {
+                if(strMonth[i].checked == true)
+                {
+                    chestrMonth+=strMonth[i].value+",";
+                }
             }
-            else{
-                scc="1602002000";
+            if(chestrMonth==""){
+                chestrMonth="无";
             }
 
-
-            //alert(1);
-
-
-            if(pathLength==""||ispave==""||averWeight==""||
-                averSpeed==""||averWidth==""||carFlow==""||clearTimeInstall==""||
-                clearTimeUninstall==""||sweepSpring==""||sweepSummer==""||sweepFall==""||
-                waterTimesSpring==""||waterTimesSummer==""||waterTimesFall==""||dustSuppression==""){
-                alert("红色标识为必填字段！");
+            var str=document.getElementsByName("control");
+            var objarray=str.length;
+            var controlMeasures="";
+            for (var i=0;i<objarray;i++)
+            {
+                if(str[i].checked == true)
+                {
+                    controlMeasures+=str[i].value+",";
+                }
             }
-            else{
-                $.post("ajax/FroadDustSourceTemp/save.do", {
-                        scccode:scc,
-                        companyName: companyName,
-
-                        pathLength : pathLength,
-                        ispave : ispave,
-                        averWidth : averWidth,
-                        averWeight : averWeight ,
-                        carFlow : carFlow,
-                        averSpeed  : averSpeed,
-                        clearTimeInstall : clearTimeInstall,
-                        clearTimeUninstall : clearTimeUninstall,
-                        sweepSpring : sweepSpring,
-                        sweepSummer : sweepSummer,
-                        sweepFall : sweepFall ,
-                        waterTimesSpring : waterTimesSpring,
-                        waterTimesSummer : waterTimesSummer,
-                        waterTimesFall : waterTimesFall ,
-                        dustSuppression : dustSuppression
-
-
-
-                    },
-                    function(data) {
-                        var json = eval("(" + data + ")");
-                        if (json.flag== 1) {
-                            alert("道路扬尘源保存成功！");
-
-                            window.location.reload();
-
-                        } else {
-                            alert("道路扬尘源保存失败！");
-                        }
-
-                    });
-
-
+            if(controlMeasures==""){
+                controlMeasures="";
             }
+                    $.post("{{ url('addCon')}}", {
+                            '_token': '{{csrf_token()}}',
+                            confactoryid:confactoryid,
+                            constructionType : constructionType ,
+                            constructState : constructState,
+                            constructArea  : constructArea,
+                            nowkgarea : nowkgarea,
+                            startdate : startdate,
+                            finishdate : finishdate,
+                            constructMonths : chestrMonth ,
+                            controlMeasures : controlMeasures
+                        },
+                        function(data) {
+                            //alert(1345);
+
+                            var json = eval("(" + data + ")");
+                            if (json.status == 1) {
+                                numm++;
+                                alert("当前共填写数据"+numm+"条,该施工扬尘源保存成功！");
+                                window.location.reload();
+                            } else {
+                                alert("施工扬尘源保存失败！");
+                            }
+
+                        });
+
+
+
+
         }
 
 
-        function deleteRoad(rId){
-            //alert(12345);
-            $.post("ajax/FroadDustSourceTemp/deleteRoad.do",{roadDustid:rId},function(data){
-                var jsonObj = eval("(" + data + ")");
-                if(jsonObj.status=="1"){
-                    alert("恭喜您，数据删除成功！")
-                    window.location.reload();
-                }
-                else{
-                    //没权限
-                    alert("对不起，您没有权限进行该操作！");
-                }
-            });
-        }
+
+
+
 
     </script>
+
+
     <script type="text/javascript">
-        function updateInfo(cur){
-
-
-            var factoryid = document.getElementById("roadfactoryid"+cur).value;
-            var roadDustid = document.getElementById("roadDustid"+cur).value;
-            var companyName = document.getElementById("companyName"+cur).innerHTML;
-            //alert(companyName);
-            var pathLength = document.getElementById("pathLength"+cur).value;
-            var ispave = document.getElementById("ispave"+cur).value;
-
-            var averWidth = document.getElementById("averWidth"+cur).value;
-            var averWeight = document.getElementById("averWeight"+cur).value;
-            var carFlow = document.getElementById("carFlow"+cur).value;
-            var averSpeed = document.getElementById("averSpeed"+cur).value;
-            var clearTimeInstall = document.getElementById("clearTimeInstall"+cur).value;
-
-            var clearTimeUninstall = document.getElementById("clearTimeUninstall"+cur).value;
-            var sweepSpring = document.getElementById("sweepSpring"+cur).value;
-            var sweepSummer = document.getElementById("sweepSummer"+cur).value;
-            var sweepFall = document.getElementById("sweepFall"+cur).value;
-            var waterTimesSpring = document.getElementById("waterTimesSpring"+cur).value;
-
-            var waterTimesSummer = document.getElementById("waterTimesSummer"+cur).value;
-            var waterTimesFall = document.getElementById("waterTimesFall"+cur).value;
-            var dustSuppression = document.getElementById("dustSuppression"+cur).value;
-
-
-
-            if(ispave=="1"){
-                //alert(4);
-
-                scc="1602001003";
-            }
-            else{
-                scc="1602002000";
-            }
-
-            if(pathLength==""||ispave==""||averWeight==""||
-                averSpeed==""||averWidth==""||carFlow==""||clearTimeInstall==""||
-                clearTimeUninstall==""||sweepSpring==""||sweepSummer==""||sweepFall==""||
-                waterTimesSpring==""||waterTimesSummer==""||waterTimesFall==""||dustSuppression==""){
-                alert("红色标识为必填字段！");
-                return;
-            }
-            else{
-
-                $.post("ajax/FroadDustSourceTemp/saveClientRoad.do", {
-                    scccode:scc,
-                    factoryid:factoryid,
-                    roadDustid:roadDustid,
-                    companyName: companyName,
-                    pathLength : pathLength,
-                    ispave : ispave,
-
-                    averWidth : averWidth,
-                    averWeight:averWeight,
-                    carFlow:carFlow,
-                    averSpeed:averSpeed,
-                    clearTimeInstall : clearTimeInstall ,
-                    clearTimeUninstall : clearTimeUninstall,
-                    sweepSpring : sweepSpring,
-                    sweepSummer : sweepSummer,
-                    sweepFall : sweepFall,
-                    waterTimesSpring : waterTimesSpring,
-
-                    waterTimesSummer:waterTimesSummer,
-                    waterTimesFall:waterTimesFall,
-                    dustSuppression:dustSuppression
-
-                },function(data){
-                    //alert("nihao 123");
-                    var json = eval("(" + data + ")");
-                    if(json.status==1){
-                        alert("保存成功！");
-
-                    }else{
-                        alert("保存失败！");
+        function deleteCon(conId) {
+            if (confirm("你确认删除这条数据吗？")) {
+                $.post("{{url("Conlistdelete")}}", {
+                    '_token': '{{csrf_token()}}',
+                    'conid': conId
+                }, function (state) {
+                    if (state == 1) {
+                        alert("删除成功");
+                    }else {
+                        alert("删除失败");
                     }
-
                 });
+                location.reload();
+            }
+        }
+        function updateCon(dustitem) {
+            var constructDustid = document.getElementById("conDustid"+dustitem).value;
+
+
+            var constructionType = document.getElementById("constructionType"+dustitem).value;
+            var constructState = document.getElementById("constructState"+dustitem).value;
+            var constructArea = document.getElementById("constructArea"+dustitem).value;
+            var nowkgarea = document.getElementById("nowkgarea"+dustitem).value;
+            var startdate = document.getElementById("startdate"+dustitem).value;
+            var finishdate = document.getElementById("finishdate"+dustitem).value;
+
+            //月份复选框
+            var strMonth=document.getElementsByName("Month"+dustitem);
+            var objarray=strMonth.length;
+            var chestrMonth="";
+            for (var i=0;i<objarray;i++)
+            {
+                if(strMonth[i].checked == true)
+                {
+                    chestrMonth+=strMonth[i].value+",";
+                }
+            }
+            if(chestrMonth==""){
+                chestrMonth="无";
+            }
+            //控制措施
+            var str=document.getElementsByName("control"+dustitem);
+            var objarray=str.length;
+            var controlMeasures="";
+            for (var i=0;i<objarray;i++)
+            {
+                if(str[i].checked == true)
+                {
+                    controlMeasures+=str[i].value+",";
+                }
+            }
+            if(controlMeasures==""){
+                controlMeasures="";
             }
 
+
+
+                    //companyName: companyName,
+                    $.post("{{url('updateCon')}}", {
+                            '_token': '{{csrf_token()}}',
+                            constructDustid:constructDustid,
+                            constructionType : constructionType ,
+                            constructState : constructState,
+                            constructArea  : constructArea,
+                            nowkgarea : nowkgarea,
+                            startdate : startdate,
+                            finishdate : finishdate,
+                            constructMonths : chestrMonth ,
+                            controlMeasures : controlMeasures
+                        },
+                        function(state) {
+                            if (state == 0) {
+                                alert("施工扬尘源更新成功！");
+                            } else {
+                                alert("施工扬尘源更新失败！");
+                            }
+                        });
+
+
+
         }
 
-        function addTable(){
-            document.getElementById("grid1").style.display='block';
-            document.getElementById("add").style.display='none';
-            document.getElementById("headroad").style.display='none';
+        function addTable() {
+            document.getElementById("grid1").style.display = 'block';
+            document.getElementById("add").style.display = 'none';
+            document.getElementById("headroad").style.display = 'none';
+            return ;
         }
-
-
-
 
     </script>
 
 
 </head>
 @include("layouts.header")
-
 
 
 <body onLoad="javascript:document.queryForm.reset()">
@@ -379,180 +357,19 @@ $itemroaddusti = 0;
                       action=""
                       method="get" style="display: inline;">
                     <div class="gridTable">
-                        <c:forEach items="${page.result}" var="condustSourcePage"
-                                   varStatus="status">
-
+                        @foreach($fconstructionsourcetemp as $item)
+                            <?php  $itemroaddusti++;?>
                             <div class="col-md-12" style="margin-top: 20px; height: 40px">
                                 <p style="font-size: 20px; text-align: left; color: #32B16C">
-                                    <%%>号施工扬尘源信息
+                                    {{ $itemroaddusti }}号施工扬尘源信息
                                 </p>
                             </div>
-                            <div class="col-md-12" style="height: 40px;display:none;">
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点经度1：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="longitude1<%%>"
-                                                   class="check1"
-                                                   onblur="checklonfour(this.id,0,4)"
-                                                   onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
-                                                   placeholder="73.6667~96.3000"
-                                                   style="height: 30px; width: 170px;"
-                                                   alt="p3x3p4s"
-                                                   value='${condustSourcePage.longitude1}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点纬度1：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="latitude1<%%>"
-                                                   class="check1"
-                                                   onblur="checklatfour(this.id,0,4)"
-                                                   onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
-                                                   placeholder="34.4167~48.1667"
-                                                   alt="p3x3p4s"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.latitude1}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点经度2：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="longitude2<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,1,4)" onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.longitude2}' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="height: 40px;display:none">
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点纬度2：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="latitude2<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklatfour(this.id,1,4)" onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="34.4167~48.1667"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.latitude2}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点经度3：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="longitude3<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,2,4)" onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.longitude3}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点纬度3：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="latitude3<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklatfour(this.id,2,4)" onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="34.4167~48.1667"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.latitude3}' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12" style="height: 40px">
-                                <div class="col-md-6" style="height: 35px;display:none" >
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点经度4：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="longitude4<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,3,4)"
-                                                   onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
-                                                   placeholder="73.6667~96.3000"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.longitude4}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" style="height: 35px;display:none" >
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            拐点纬度4：
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="latitude4<%%>"
-                                                   class="check1"
-                                                   alt="p3x3p4s"
-                                                   onblur="checklatfour(this.id,3,4)"
-                                                   onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="34.4167~48.1667"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.latitude4}' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <input id="conDustid{{ $itemroaddusti }}" class="form-control"
+                                       style="height: 30px; width: 170px;"
+                                       value='{{ $item['construct_dustid'] }}' type="hidden"/>
+                                <input id="confactoryid{{ $itemroaddusti }}" class="form-control"
+                                       style="height: 30px; width: 170px;" value='{{ $item['factoryid'] }}'
+                                       type="hidden"/>
                             <div class="col-md-12" style="height: 40px">
                                 <div class="col-md-6" style="height: 35px">
                                     <div class="form-group">
@@ -562,9 +379,9 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <input type="text" id="constructionType<%%>"
+                                            <input type="text" id="constructionType{{ $itemroaddusti }}"
                                                    class="form-control" style="height: 30px; width: 250px;"
-                                                   value='${condustSourcePage.constructionType}' readonly="readonly"/>
+                                                   value='{{$item['construction_type']}}' readonly="readonly"/>
                                         </div>
                                     </div>
                                 </div>
@@ -577,9 +394,9 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <input type="text" id="constructState<%%>"
+                                            <input type="text" id="constructState{{ $itemroaddusti }}"
                                                    class="form-control" style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.constructState}' readonly="readonly" />
+                                                   value='{{$item['construct_state']}}' readonly="readonly"/>
                                         </div>
                                     </div>
                                 </div>
@@ -596,10 +413,10 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <input type="text" id="constructArea<%%>"
+                                            <input type="text" id="constructArea{{ $itemroaddusti }}"
                                                    onkeyup="checkNum(this);" class="form-control"
                                                    style="height: 30px; width: 250px;"
-                                                   value='${condustSourcePage.constructArea}' />
+                                                   value='{{$item['construct_area']}}'/>
                                         </div>
                                     </div>
                                 </div>
@@ -613,53 +430,14 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <input type="text" id="nowkgarea<%%>"
+                                            <input type="text" id="nowkgarea{{ $itemroaddusti }}"
                                                    onkeyup="checkNum(this);" class="form-control"
                                                    style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.nowkgarea}' />
+                                                   value='{{$item['nowkgarea']}}'/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" style="height: 40px;display:none;">
-                                <div class="col-md-6" style="height: 35px">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            施工竣工面积(m<sup>2</sup>):
-
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="finisharea<%%>"
-                                                   onkeyup="checkNum(this);" class="form-control"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.finisharea}' />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" style="height: 35px;display:none;">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label no-padding-right"
-                                               for="form-field-3">
-                                            SCC编码：
-                                            <a style="color: red">*</a>
-                                        </label>
-
-                                        <div class="col-md-8">
-                                            <input type="text" id="scccode<%%>"
-                                                   class="form-control"
-                                                   style="height: 30px; width: 170px;"
-                                                   value='${condustSourcePage.scccode}' readonly="readonly" />
-                                            <input type="text" id="constructDustid<%%>"
-                                                   class="form-control"
-                                                   style="height: 30px; width: 170px; display: none"
-                                                   value='${condustSourcePage.constructDustid}' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="col-md-12" style="height: 40px">
                                 <div class="col-md-12" style="height: 35px">
                                     <div class="form-group">
@@ -676,22 +454,22 @@ $itemroaddusti = 0;
                                 <div class="col-md-12" style="height: 35px">
                                     <div class="form-group">
                                         <div class="col-md-12" style="width:600px;padding-left:20px;">
-                                            <input type="text" id="constructMonths<%%>"
+                                            <input type="text" id="constructMonths{{ $itemroaddusti }}"
                                                    onkeyup="checkNum(this);" class="form-control"
                                                    style="height: 30px; width: 170px; display: none"
-                                                   value='${condustSourcePage.constructMonths}' />
-                                            <label><input name="Month<%%>" type="checkbox" value="1" />1月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="2" />2月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="3" />3月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="4" />4月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="5" />5月</label>
-                                            <label><input name="Month<%%>" type="checkbox" value="6" />6月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="7" />7月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="8" />8月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="9" />9月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="10" />10月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="11" />11月</label>
-                                            <label><input name="Month<%%>" type="checkbox"value="12" />12月</label>
+                                                   value='{{$item['construct_months']}}'/>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="1"/>1月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="2"/>2月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="3"/>3月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="4"/>4月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="5"/>5月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="6"/>6月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="7"/>7月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="8"/>8月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="9"/>9月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="10"/>10月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="11"/>11月</label>
+                                            <label><input name="Month{{ $itemroaddusti }}" type="checkbox" value="12"/>12月</label>
 
                                         </div>
                                     </div>
@@ -700,8 +478,9 @@ $itemroaddusti = 0;
 
                             <div class="col-md-12" style="height: 35px">
                                 <div class="col-md-12" style="height: 35px">
-                                    <div class="form-group" >
-                                        <label class="col-md-2 control-label no-padding-right"for="form-field-3" style="width:130px">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label no-padding-right" for="form-field-3"
+                                               style="width:130px">
                                             控制措施:<a style="color: red">*</a>
                                         </label>
                                     </div>
@@ -710,19 +489,21 @@ $itemroaddusti = 0;
 
                             <div class="col-md-12" style="height: 35px">
                                 <div class="col-md-12" style="height: 35px">
-                                    <div class="form-group" >
+                                    <div class="form-group">
                                         <div class="col-md-12" style="width:700px;padding-left:20px;">
-                                            <input type="text" id="controlMeasures<%%>"
+                                            <input type="text" id="controlMeasures{{ $itemroaddusti }}"
                                                    onkeyup="checkNum(this);" class="form-control"
                                                    style="height: 30px; width: 170px; display: none"
-                                                   value='${condustSourcePage.controlMeasures}' />
-                                            <label><input name="control<%%>" type="checkbox" value="A1" />1.8m硬质围挡</label>
-                                            <label><input name="control<%%>" type="checkbox" value="A2" />2.4m硬质围挡</label>
-                                            <label><input name="control<%%>" type="checkbox" value="B" />化学抑尘剂</label>
-                                            <label><input name="control<%%>" type="checkbox" value="C" />覆盖防尘布</label>
-                                            <label><input name="control<%%>" type="checkbox" value="E" />路面铺装和洒水</label>
-                                            <label><input name="control<%%>" type="checkbox" value="F" />封闭</label>
-                                            <label><input name="control<%%>" type="checkbox" value="无" />无控制措施</label>
+                                                   value='{{$item['construct_months']}}'/>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox"
+                                                          value="A1"/>1.8m硬质围挡</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox"
+                                                          value="A2"/>2.4m硬质围挡</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox" value="B"/>化学抑尘剂</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox" value="C"/>覆盖防尘布</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox" value="E"/>路面铺装和洒水</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox" value="F"/>封闭</label>
+                                            <label><input name="control{{ $itemroaddusti }}" type="checkbox" value="无"/>无控制措施</label>
                                         </div>
                                     </div>
                                 </div>
@@ -739,9 +520,9 @@ $itemroaddusti = 0;
                                         <div class="input-group date form_date "
                                              style="width: 200px" data-date="" data-date-format=""
                                              data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                            <input id="startdate<%%>" class="form-control"
+                                            <input id="startdate{{ $itemroaddusti }}" class="form-control"
                                                    style="height: 30px; width: 170px;" size="16" type="text"
-                                                   value='${condustSourcePage.startdate}' readonly>
+                                                   value='{{$item['startdate']}}' readonly>
                                             <span class="input-group-addon"><span
                                                         class="glyphicon glyphicon-remove"></span> </span>
                                             <span class="input-group-addon"><span
@@ -761,10 +542,10 @@ $itemroaddusti = 0;
                                         <div class="input-group date form_date "
                                              style="width: 200px" data-date="" data-date-format=""
                                              data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                            <input id="finishdate<%%>"
+                                            <input id="finishdate{{ $itemroaddusti }}"
                                                    class="form-control" style="height: 30px; width: 170px;"
                                                    size="16" type="text"
-                                                   value='${condustSourcePage.finishdate}' readonly>
+                                                   value='{{$item['finishdate']}}' readonly>
                                             <span class="input-group-addon"><span
                                                         class="glyphicon glyphicon-remove"></span> </span>
                                             <span class="input-group-addon"><span
@@ -779,22 +560,22 @@ $itemroaddusti = 0;
                                 <input type="button" class="btn btn-primary"
                                        style="width: 80px; line-height: 8px; margin-left: 15px;"
                                        value="更新数据" id="saveCon"
-                                       onclick="" />
+                                       onclick="updateCon('{{ $itemroaddusti }}')"/>
                                 <input type="button" class="btn btn-primary"
                                        style="width: 80px; line-height: 8px; margin-left: 15px;"
-                                       value="删除" id="saveCon"
-                                       onclick="deleteCon('${condustSourcePage.constructDustid}')" />
+                                       value="删除" id="ass"
+                                       onclick="deleteCon('{{ $item['construct_dustid'] }}')"/>
                             </div>
-                        </c:forEach>
+                        @endforeach
                         <div class="col-md-8" style="display: none">
                             <input type="text" id="itemcondusti" class="form-control"
-                                   style="height: 30px; width: 170px;" value='<%%>' />
+                                   style="height: 30px; width: 170px;" value='{{ $itemroaddusti }}'/>
                         </div>
 
 
                         <div id="grid1" style="margin-top: 10px; display: none">
                             <div class="page-header"
-                                 style="margin-top: 20px; height: 40px；">
+                                 style="margin-top: 20px; height: 40px;">
                                 <h1>
                                     <b>施工扬尘源新增</b>
                                 </h1>
@@ -804,7 +585,10 @@ $itemroaddusti = 0;
                                     1号施工扬尘源信息
                                 </p>
                             </div>
-                            <div class="col-md-12" style="height: 40px;display:none" >
+                            <input id="confactoryid" class="form-control"
+                                   style="height: 30px; width: 170px;" value='{{ session("factory")["factory_id"] }}'
+                                   type="hidden"/>
+                            <div class="col-md-12" style="height: 40px;display:none">
                                 <div class="col-md-4" style="height: 35px">
                                     <div class="form-group">
                                         <label class="col-md-4 control-label no-padding-right"
@@ -815,9 +599,11 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nlongitude1"
                                                    class="check1" alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,0,4)" style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onblur="checklonfour(this.id,0,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -853,9 +639,11 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nlongitude2"
                                                    class="check1" alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,1,4)" style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onblur="checklonfour(this.id,1,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"/>
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -871,10 +659,11 @@ $itemroaddusti = 0;
 
                                         <div class="col-md-8">
                                             <input type="text" id="nlatitude2"
-                                                   onblur="checklatfour(this.id,1,4)"   class="check1" alt="p3x3p4s"
+                                                   onblur="checklatfour(this.id,1,4)" class="check1" alt="p3x3p4s"
                                                    style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"/>
                                         </div>
                                     </div>
                                 </div>
@@ -889,9 +678,11 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nlongitude3"
                                                    class="check1" alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,2,4)" style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onblur="checklonfour(this.id,2,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
                                         </div>
                                     </div>
                                 </div>
@@ -905,10 +696,11 @@ $itemroaddusti = 0;
 
                                         <div class="col-md-8">
                                             <input type="text" id="nlatitude3"
-                                                   onblur="checklatfour(this.id,2,4)"   class="check1" alt="p3x3p4s"
+                                                   onblur="checklatfour(this.id,2,4)" class="check1" alt="p3x3p4s"
                                                    style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"/>
                                         </div>
                                     </div>
                                 </div>
@@ -925,13 +717,15 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nlongitude4"
                                                    class="check1" alt="p3x3p4s"
-                                                   onblur="checklonfour(this.id,3,4)" style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onblur="checklonfour(this.id,3,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="height: 35px;display:none" >
+                                <div class="col-md-4" style="height: 35px;display:none">
                                     <div class="form-group">
                                         <label class="col-md-4 control-label no-padding-right"
                                                for="form-field-3">
@@ -941,10 +735,11 @@ $itemroaddusti = 0;
 
                                         <div class="col-md-8">
                                             <input type="text" id="nlatitude4"
-                                                   onblur="checklatfour(this.id,3,4)"   class="check1" alt="p3x3p4s"
+                                                   onblur="checklatfour(this.id,3,4)" class="check1" alt="p3x3p4s"
                                                    style="height: 25px; margin-top: 3px; width: 170px;"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
-                                                   onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667" />
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"/>
                                         </div>
                                     </div>
                                 </div>
@@ -958,7 +753,9 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <!--<input type="text" id="nconstructionType"
                                                 class="form-control" style="height: 30px; width: 170px;" />
-                                            --><select name="constructType" id="nconstructionType" class="form-control"  style="width:170px;height:30px;">
+                                            --><select name="constructType" id="nconstructionType"
+                                                       class="form-control"
+                                                       style="width:170px;height:30px;">
                                                 <option value=""></option>
                                                 <option value="城市市政基础设施建设">城市市政基础设施建设</option>
                                                 <option value="建筑物建造与拆迁建筑物建造与拆迁">建筑物建造与拆迁</option>
@@ -979,7 +776,9 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <!--<input type="text" id="nconstructState"
                                                 class="form-control" style="height: 30px; width: 170px;" />
-                                            --><select name="constructStage" id="nconstructState" class="form-control"   style="width:170px;height:30px;">
+                                            --><select name="constructStage" id="nconstructState"
+                                                       class="form-control"
+                                                       style="width:170px;height:30px;">
                                                 <option value=""></option>
                                                 <option value="未分类">未分类</option>
                                                 <option value="土方开挖">土方开挖</option>
@@ -1005,7 +804,7 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nconstructArea"
                                                    onkeyup="checkNum(this);" class="form-control"
-                                                   style="height: 30px; width: 170px;" />
+                                                   style="height: 30px; width: 170px;"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1021,11 +820,10 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nnowkgarea"
                                                    onkeyup="checkNum(this);" class="form-control"
-                                                   style="height: 30px; width: 170px;" />
+                                                   style="height: 30px; width: 170px;"/>
                                         </div>
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -1041,13 +839,13 @@ $itemroaddusti = 0;
                                         <div class="col-md-8">
                                             <input type="text" id="nfinisharea"
                                                    onkeyup="checkNum(this);" class="form-control"
-                                                   style="height: 30px; width: 170px;" />
+                                                   style="height: 30px; width: 170px;"/>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div class="col-md-4" style="height: 35px;display:none;" >
+                                <div class="col-md-4" style="height: 35px;display:none;">
                                     <div class="form-group">
                                         <label class="col-md-4 control-label no-padding-right"
                                                for="form-field-3">
@@ -1056,7 +854,8 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <select name="nscccode" id="nscccode" class="form-control"   style="width:170px;height:30px;">
+                                            <select name="nscccode" id="nscccode" class="form-control"
+                                                    style="width:170px;height:30px;">
                                                 <option value="1603001000">1603001000</option>
                                                 <option value="1603001002">1603001002</option>
                                                 <option value="1603001003">1603001003</option>
@@ -1103,18 +902,18 @@ $itemroaddusti = 0;
                                 <div class="col-md-12" style="height: 35px">
                                     <div class="form-group">
                                         <div class="col-md-12" style="width:600px;padding-left:20px;">
-                                            <label><input name="Month" type="checkbox" value="1" />1月</label>
-                                            <label><input name="Month" type="checkbox"value="2" />2月</label>
-                                            <label><input name="Month" type="checkbox"value="3" />3月</label>
-                                            <label><input name="Month" type="checkbox"value="4" />4月</label>
-                                            <label><input name="Month" type="checkbox"value="5" />5月</label>
-                                            <label><input name="Month" type="checkbox" value="6" />6月</label>
-                                            <label><input name="Month" type="checkbox"value="7" />7月</label>
-                                            <label><input name="Month" type="checkbox"value="8" />8月</label>
-                                            <label><input name="Month" type="checkbox"value="9" />9月</label>
-                                            <label><input name="Month" type="checkbox"value="10" />10月</label>
-                                            <label><input name="Month" type="checkbox"value="11" />11月</label>
-                                            <label><input name="Month" type="checkbox"value="12" />12月</label>
+                                            <label><input name="Month" type="checkbox" value="1"/>1月</label>
+                                            <label><input name="Month" type="checkbox" value="2"/>2月</label>
+                                            <label><input name="Month" type="checkbox" value="3"/>3月</label>
+                                            <label><input name="Month" type="checkbox" value="4"/>4月</label>
+                                            <label><input name="Month" type="checkbox" value="5"/>5月</label>
+                                            <label><input name="Month" type="checkbox" value="6"/>6月</label>
+                                            <label><input name="Month" type="checkbox" value="7"/>7月</label>
+                                            <label><input name="Month" type="checkbox" value="8"/>8月</label>
+                                            <label><input name="Month" type="checkbox" value="9"/>9月</label>
+                                            <label><input name="Month" type="checkbox" value="10"/>10月</label>
+                                            <label><input name="Month" type="checkbox" value="11"/>11月</label>
+                                            <label><input name="Month" type="checkbox" value="12"/>12月</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1123,8 +922,9 @@ $itemroaddusti = 0;
 
                             <div class="col-md-12" style="height: 35px">
                                 <div class="col-md-12" style="height: 35px;">
-                                    <div class="form-group" >
-                                        <label class="col-md-2 control-label no-padding-right"for="form-field-3" style="width:130px">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label no-padding-right" for="form-field-3"
+                                               style="width:130px">
                                             控制措施:<a style="color: red">*</a>
                                         </label>
 
@@ -1134,16 +934,18 @@ $itemroaddusti = 0;
 
                             <div class="col-md-12" style="height: 35px">
                                 <div class="col-md-12" style="height: 35px;">
-                                    <div class="form-group" >
+                                    <div class="form-group">
 
                                         <div class="col-md-12" style="width:700px;padding-left:20px;">
-                                            <label><input name="control" type="checkbox" value="A1" />1.8m硬质围挡</label>
-                                            <label><input name="control" type="checkbox" value="A2" />2.4m硬质围挡</label>
-                                            <label><input name="control" type="checkbox" value="B" />化学抑尘剂</label>
-                                            <label><input name="control" type="checkbox" value="C" />覆盖防尘布</label>
-                                            <label><input name="control" type="checkbox" value="E" />路面铺装和洒水</label>
-                                            <label><input name="control" type="checkbox" value="F" />封闭</label>
-                                            <label><input name="control" type="checkbox" value="无" />无控制措施</label>
+                                            <label><input name="control" type="checkbox"
+                                                          value="A1"/>1.8m硬质围挡</label>
+                                            <label><input name="control" type="checkbox"
+                                                          value="A2"/>2.4m硬质围挡</label>
+                                            <label><input name="control" type="checkbox" value="B"/>化学抑尘剂</label>
+                                            <label><input name="control" type="checkbox" value="C"/>覆盖防尘布</label>
+                                            <label><input name="control" type="checkbox" value="E"/>路面铺装和洒水</label>
+                                            <label><input name="control" type="checkbox" value="F"/>封闭</label>
+                                            <label><input name="control" type="checkbox" value="无"/>无控制措施</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1203,22 +1005,21 @@ $itemroaddusti = 0;
                             <div align="left">
                                 <input type="button" class="btn btn-primary"
                                        style="width: 80px; line-height: 8px; margin-left: 15px;"
-                                       value="保存" onclick="addCon()" />
+                                       value="保存" onclick="addCon()"/>
                             </div>
                         </div>
 
-                        <div style="text-align: center; width: 100%;display: none">
-                            <simpletable:pageToolbar page="${page}"></simpletable:pageToolbar>
-                        </div>
+
                         <div align="left">
                             <input type="button" class="btn btn-primary"
                                    style="width: 80px; line-height: 8px; margin-left: 15px;"
                                    value="新增" id="add" onclick="addTable()"/>
                         </div>
                     </div>
+
                     <!--/.gridTable -->
-                    <div class="row" style="height:60px;text-align:center;" >
-                    <!--<%@ include file="/client/public_end.jsp"%>-->
+                    <div class="row" style="height:60px;text-align:center;">
+                        <!--<% include file="/client/public_end.jsp"%>-->
                     </div>
 
                 </form>
@@ -1233,29 +1034,24 @@ $itemroaddusti = 0;
 <!-- /.main-container -->
 
 
-
-
 <script type="text/javascript">
     $("#set2").toggle();
-    document.getElementById("condust").setAttribute("class","active");
+    document.getElementById("condust").setAttribute("class", "active");
 </script>
 <script type="text/javascript">
     window.jQuery
     || document
         .write("<script src='assets/js/jquery-2.0.3.min.js'>"
-            + "<"+"/script>");
+            + "<" + "/script>");
 </script>
-
 
 
 <script type="text/javascript">
     if ("ontouchend" in document)
         document
             .write("<script src='assets/js/jquery.mobile.custom.min.js'>"
-                + "<"+"/script>");
+                + "<" + "/script>");
 </script>
-
-
 
 
 <!-- inline scripts related to this page -->
@@ -1263,5 +1059,123 @@ $itemroaddusti = 0;
     <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
             language='JavaScript' charset='gb2312'></script>
 </div>
+<script type="text/javascript">
+    //glh 加载option中的内容
+    $(document).ready(function() {
+        //判断如果page的result为空。直接调用add方法
+        //alert(1);
+        /*var str =  $fconstructionsourcetemp;
+        if(str=="[]")
+        {
+            document.getElementById("yihao").style.display = 'block';
+            addTable();
+        }else{
+
+        };*/
+        var num = "<?php echo "{$itemroaddusti}" ?>";
+        for ( var cur = 1; cur <= num; cur++) {
+            var conn = document.getElementById("controlMeasures" + cur).value;
+            if (conn.charAt(conn.length - 1) == "、"
+                || conn.charAt(conn.length - 1) == ",") {
+                conn = conn.substring(0, conn.length - 1);
+            }
+            //alert(conn);
+            var strs = new Array(); //定义一数组
+            strs = conn.split(",");
+            //alert(strs.length);
+            var i = 0;
+            for (i = 0; i < strs.length; i++) {
+                if(strs!=""){
+                    if (strs[i] == "A1") {
+                        $("input[name='control" + cur + "'][value='A1']").attr(
+                            'checked', true);
+                        //$("[control=A1]").attr('checked',true);
+                    }  if (strs[i] == "A2") {
+                        $("input[name='control" + cur + "'][value='A2']").attr(
+                            'checked', true);
+                    } if (strs[i] == "B") {
+                        $("input[name='control" + cur + "'][value='B']").attr(
+                            'checked', true);
+                    } if (strs[i] == "C") {
+                        $("input[name='control" + cur + "'][value='C']").attr(
+                            'checked', true);
+                    } if (strs[i] == "D") {
+                        $("input[name='control" + cur + "'][value='D']").attr(
+                            'checked', true);
+                    }  if (strs[i] == "E") {
+                        $("input[name='control" + cur + "'][value='E']").attr(
+                            'checked', true);
+                    }  if (strs[i] == "F") {
+                        $("input[name='control" + cur + "'][value='F']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "无") {
+                        $("input[name='control" + cur + "'][value='无']").attr(
+                            'checked', true);
+                    }
+
+                }
+                else {
+
+                }
+            }
+
+        }
+
+        //加载月份复选框情况信息
+        for ( var cur = 1; cur <= num; cur++) {
+            var conn = document.getElementById("constructMonths" + cur).value;
+            var strs = new Array(); //定义一数组
+            strs = conn.split(",");
+            var i = 0;
+            for (i = 0; i < strs.length; i++) {
+                if(strs!=""){
+                    if (strs[i] == "1") {
+                        $("input[name='Month" + cur + "'][value='1']").attr(
+                            'checked', true);
+                    }  if (strs[i] == "2") {
+                        $("input[name='Month" + cur + "'][value='2']").attr(
+                            'checked', true);
+                    } if (strs[i] == "3") {
+                        $("input[name='Month" + cur + "'][value='3']").attr(
+                            'checked', true);
+                    } if (strs[i] == "4") {
+                        $("input[name='Month" + cur + "'][value='4']").attr(
+                            'checked', true);
+                    } if (strs[i] == "5") {
+                        $("input[name='Month" + cur + "'][value='5']").attr(
+                            'checked', true);
+                    }  if (strs[i] == "6") {
+                        $("input[name='Month" + cur + "'][value='6']").attr(
+                            'checked', true);
+                    }  if (strs[i] == "7") {
+                        $("input[name='Month" + cur + "'][value='7']").attr(
+                            'checked', true);
+                    }if (strs[i] == "8") {
+                        $("input[name='Month" + cur + "'][value='8']").attr(
+                            'checked', true);
+                    }if (strs[i] == "9") {
+                        $("input[name='Month" + cur + "'][value='9']").attr(
+                            'checked', true);
+                    }if (strs[i] == "10") {
+                        $("input[name='Month" + cur + "'][value='10']").attr(
+                            'checked', true);
+                    }if (strs[i] == "11") {
+                        $("input[name='Month" + cur + "'][value='11']").attr(
+                            'checked', true);
+                    }if (strs[i] == "12") {
+                        $("input[name='Month" + cur + "'][value='12']").attr(
+                            'checked', true);
+                    }
+
+                }
+                else {
+                }
+            }
+
+        }
+
+    });
+</script>
 </body>
 </html>

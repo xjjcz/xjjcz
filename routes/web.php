@@ -12,7 +12,7 @@
 */
 
 //Route::get('/', function () {
-//    return view('welcome');
+//    return view('welcome')11;
 //});
 Route::get('/', "IndexController@index");
 Route::get('/register', function(){
@@ -23,7 +23,7 @@ Route::post('/auth/register', 'Auth\RegisterController@postRegister');
 Route::get('/welcome', function (){
     return view("welcome");
 });
-Route::post('/information', "XjjczController@show");
+Route::any('/information', "XjjczController@show");
 Route::get('/test', function (){
     return view('layouts.changepsd');
 });
@@ -47,21 +47,24 @@ Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$inde
     }
 });
 
+Route::get('/tolistRoad',"XjjczController@roadlist");
+Route::get('/toconstruction',"XjjczController@toconstruction");
+Route::get('/toyarddust',"XjjczController@toyarddustlist");
+Route::any('/tonoOrganizationWorkshop',"XjjczController@tonoOrganizationWorkshop");
+Route::get('/zhanmentest',function (){
+    return view('layouts.a');
+});
 
-
-Route::get('/tolistRoad',function (){
-    return view('layouts.listRoad');
-});
-Route::post('/listRoadlist',"XjjczController@roadlist");
-Route::get('/toconstruction',function (){
-    return view('layouts.constructionDust');
-});
-Route::get('/toyarddust',function (){
-    return view('layouts.FyardDust');
-});
-Route::get('/tobaresoil',function(){
-    return view('layouts.FbareSoilDust');
-});
-Route::get('/tonoOrganizationWorkshop',function (){
-    return view('layouts.noOrganizationWorkshop');
-});
+Route::any('/Roadlistsave_update',"XjjczController@Roadlistsave_update");
+Route::any('/Roadlistdelete',"XjjczController@Roadlistdelete");
+Route::any('/Conlistdelete',"XjjczController@Conlistdelete");
+Route::post('/Roadlistinsert',"XjjczController@Roadlistinsert");
+Route::post('/updateCon',"XjjczController@updateCon");
+Route::any('/addCon',"XjjczController@addCon");
+Route::any('/deleteYard',"XjjczController@deleteYard");
+Route::any('/updateYard',"XjjczController@updateYard");
+Route::any('/tobaresoil',"XjjczController@tobaresoil");
+Route::any('/deleteSoil',"XjjczController@deleteSoil");
+Route::any('/updatebareinfo',"XjjczController@updatebareinfo");
+Route::any('/noOrganizationdelete',"XjjczController@noOrganizationdelete");
+Route::any('/FnoOrganizationWorkshopDischargeTempupdate','XjjczController@FnoOrganizationWorkshopDischargeTempupdate');

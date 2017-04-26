@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <?php
@@ -9,15 +8,15 @@ $itemroaddusti = 0;
     <title>道路扬尘源</title>
 
     <!-- basic styles -->
-    <meta name="keywords"	content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文" />
-    <meta name="description"	content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta name="keywords" content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文"/>
+    <meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
 
     <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
-    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
     <link href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/chosen.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/datepicker.css") }}" rel="stylesheet"/>
@@ -25,12 +24,12 @@ $itemroaddusti = 0;
     <link href="{{ asset("/css/daterangepicker.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/colorpicker.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/ui.jqgrid.css") }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}"/>
     <script src="{{ asset("/js/client.js") }}"></script>
     <script src="{{ asset("/js/savehelp.js") }}"></script>
-    <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}"/>
     <script src="{{ asset("/js/ace-extra.min.js") }}"></script>
     <script src="{{ asset("/js/html5shiv.js") }}"></script>
     <script src="{{ asset("/js/respond.min.js") }}"></script>
@@ -112,13 +111,13 @@ $itemroaddusti = 0;
     </script>
     <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
     </script>
-    <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}" />
+    <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}"/>
     {{--<script type="text/javascript" src="<c:url value="/widgets/simpletable/simpletable.js"/>"></script>--}}
 
 
     <script type="text/javascript">
-        jQuery(function($) {
-            $('.check1').focus(function() {
+        jQuery(function ($) {
+            $('.check1').focus(function () {
                 $('.check1').autoNumeric();
             });
         });
@@ -128,218 +127,344 @@ $itemroaddusti = 0;
         $(document).ready(function () {
 
 
-            /* $.post("{{ url("information") }}",{'_token':'{{ csrf_token() }}','id':id},function (data) {
+            /* $.post(" url("information") }}",{'_token':' csrf_token() }}','id':id},function (data) {
              console.log(data);
              $("#information").val(data.information);
              });*/
-            $.post("{{ url("listRoadlist") }}",{'_token':'{{ csrf_token() }}'},function(data){
-                $froaddustsourcetemp = 1;
-            });
+
         });
     </script>
+
     <script type="text/javascript">
-
-
-        function addinfo() {
-
-
-            var companyName = document.getElementById("companyName").innerHTML;
-
-            var pathLength = document.getElementById("pathLength").value;
-            var ispave = document.getElementById("ispave").value;
-            var averWidth = document.getElementById("averWidth").value;
-
-            var averWeight = document.getElementById("averWeight").value;
-            var carFlow = document.getElementById("carFlow").value;
-            var averSpeed = document.getElementById("averSpeed").value;
-            var clearTimeInstall = document.getElementById("clearTimeInstall").value;
-            var clearTimeUninstall = document.getElementById("clearTimeUninstall").value;
-            var sweepSpring = document.getElementById("sweepSpring").value;
-
-            var sweepSummer = document.getElementById("sweepSummer").value;
-            var sweepFall = document.getElementById("sweepFall").value;
-            var waterTimesSpring = document.getElementById("waterTimesSpring").value;
-
-            var waterTimesSummer = document.getElementById("waterTimesSummer").value;
-            var waterTimesFall = document.getElementById("waterTimesFall").value;
-            var dustSuppression = document.getElementById("dustSuppression").value;
-
-
-            if(ispave==1){
-                scc="1602001003";
-            }
-            else{
-                scc="1602002000";
+        //检查物料装卸量是否符合填写要求
+        function checkwl(z) {
+            var px = document.getElementById("ndloadingCapacity").value;//每日装卸量
+            var py = document.getElementById("ndloadingCount").value//每日装卸次数
+            var pz = document.getElementById(z).value
+            if (px * py > pz || pz < 0) {
+                alert("您输入的物料装卸量不符合实际规则，请重新输入！");
+                document.getElementById(z).focus();
             }
 
-
-            //alert(1);
-
-
-            if(pathLength==""||ispave==""||averWeight==""||
-                averSpeed==""||averWidth==""||carFlow==""||clearTimeInstall==""||
-                clearTimeUninstall==""||sweepSpring==""||sweepSummer==""||sweepFall==""||
-                waterTimesSpring==""||waterTimesSummer==""||waterTimesFall==""||dustSuppression==""){
-                alert("红色标识为必填字段！");
+        }
+        //检查含水率是否符合要求
+        function checkhs(x) {
+            var px = document.getElementById(x).value;
+            if (px > 100 || px < 0) {
+                alert("您输入的数值超出填写范围1~100，请重新输入！");
+                document.getElementById(z).focus();
             }
-            else{
-                $.post("ajax/FroadDustSourceTemp/save.do", {
-                        scccode:scc,
-                        companyName: companyName,
 
-                        pathLength : pathLength,
-                        ispave : ispave,
-                        averWidth : averWidth,
-                        averWeight : averWeight ,
-                        carFlow : carFlow,
-                        averSpeed  : averSpeed,
-                        clearTimeInstall : clearTimeInstall,
-                        clearTimeUninstall : clearTimeUninstall,
-                        sweepSpring : sweepSpring,
-                        sweepSummer : sweepSummer,
-                        sweepFall : sweepFall ,
-                        waterTimesSpring : waterTimesSpring,
-                        waterTimesSummer : waterTimesSummer,
-                        waterTimesFall : waterTimesFall ,
-                        dustSuppression : dustSuppression
-
-
-
-                    },
-                    function(data) {
-                        var json = eval("(" + data + ")");
-                        if (json.flag== 1) {
-                            alert("道路扬尘源保存成功！");
-
-                            window.location.reload();
-
-                        } else {
-                            alert("道路扬尘源保存失败！");
-                        }
-
-                    });
-
-
+        }
+        //检查地面风速是否符合要求
+        function checksp(x) {
+            var px = document.getElementById(x).value;
+            if (px > 61.3 || px < 0) {
+                alert("您输入的数值超出填写范围0~61.3，请重新输入！");
+                document.getElementById(z).focus();
             }
         }
-
-
-        function deleteRoad(rId){
-            //alert(12345);
-            $.post("ajax/FroadDustSourceTemp/deleteRoad.do",{roadDustid:rId},function(data){
-                var jsonObj = eval("(" + data + ")");
-                if(jsonObj.status=="1"){
-                    alert("恭喜您，数据删除成功！")
-                    window.location.reload();
-                }
-                else{
-                    //没权限
-                    alert("对不起，您没有权限进行该操作！");
-                }
-            });
-        }
-
     </script>
+
+
     <script type="text/javascript">
-        function updateInfo(cur){
+        function addTable() {
+            document.getElementById("grid1").style.display = 'block';
+            document.getElementById("add").style.display = 'none';
+        }
 
+        function addYard() {
 
-            var factoryid = document.getElementById("roadfactoryid"+cur).value;
-            var roadDustid = document.getElementById("roadDustid"+cur).value;
-            var companyName = document.getElementById("companyName"+cur).innerHTML;
-            //alert(companyName);
-            var pathLength = document.getElementById("pathLength"+cur).value;
-            var ispave = document.getElementById("ispave"+cur).value;
+            //alert("addYard");
+            var numm = document.getElementById("itemyarddusti").value;
+            var longitude1 = document.getElementById("ndlongitude1").value;
+            var longitude2 = document.getElementById("ndlongitude2").value;
+            var longitude3 = document.getElementById("ndlongitude3").value;
+            var longitude4 = document.getElementById("ndlongitude4").value;
 
-            var averWidth = document.getElementById("averWidth"+cur).value;
-            var averWeight = document.getElementById("averWeight"+cur).value;
-            var carFlow = document.getElementById("carFlow"+cur).value;
-            var averSpeed = document.getElementById("averSpeed"+cur).value;
-            var clearTimeInstall = document.getElementById("clearTimeInstall"+cur).value;
+            var latitude1 = document.getElementById("ndlatitude1").value;
+            var latitude2 = document.getElementById("ndlatitude2").value;
+            var latitude3 = document.getElementById("ndlatitude3").value;
+            var latitude4 = document.getElementById("ndlatitude4").value;
+            //var scccode = document.getElementById("nscccode").value;
 
-            var clearTimeUninstall = document.getElementById("clearTimeUninstall"+cur).value;
-            var sweepSpring = document.getElementById("sweepSpring"+cur).value;
-            var sweepSummer = document.getElementById("sweepSummer"+cur).value;
-            var sweepFall = document.getElementById("sweepFall"+cur).value;
-            var waterTimesSpring = document.getElementById("waterTimesSpring"+cur).value;
+            var materialType = document.getElementById("ndmaterialType").value;
+            var windSpeed = document.getElementById("ndwindSpeed").value;
 
-            var waterTimesSummer = document.getElementById("waterTimesSummer"+cur).value;
-            var waterTimesFall = document.getElementById("waterTimesFall"+cur).value;
-            var dustSuppression = document.getElementById("dustSuppression"+cur).value;
+            var materialCapacity = document.getElementById("ndmaterialCapacity").value;
+            var loadingCount = document.getElementById("ndloadingCount").value;
+            var loadingStart = document.getElementById("ndloadingStart").value;
+            var loadingTime = document.getElementById("ndloadingTime").value;
 
+            var loadingCapacity = document.getElementById("ndloadingCapacity").value;
 
-
-            if(ispave=="1"){
-                //alert(4);
-
-                scc="1602001003";
+            //var controlMeasures = document.getElementById("ndcontrolMeasures").value;
+            var str = document.getElementsByName("winddust");
+            var objarray = str.length;
+            var controlMeasures = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures += str[i].value + ",";
+                }
             }
-            else{
-                scc="1602002000";
+            if (controlMeasures == "") {
+                controlMeasures = "";
+            }
+            //alert("风蚀控制措施"+controlMeasures);
+            var moistureMateria = document.getElementById("ndmoistureMateria").value;
+            var materialType1 = document.getElementById("ndmaterialType1").value;
+
+            var heapArea = document.getElementById("ndheapArea").value;
+            var heapHeigh = document.getElementById("ndheapHeigh").value;
+            var heapCovered = document.getElementById("ndheapCovered").value;
+
+            //var controlMeasures1 = document.getElementById("ndcontrolMeasures1").value;
+            var str = document.getElementsByName("yarddust");
+            var objarray = str.length;
+            var controlMeasures1 = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures1 += str[i].value + ",";
+                }
+            }
+            if (controlMeasures1 == "") {
+                controlMeasures1 = "";
+            }
+            //alert("装卸控制措施"+controlMeasures1);
+            //	else if(windSpeed==""){alert("地面风速未填写");}
+            //检查必填字段是否正确
+            if (materialType == "") {
+                alert("物料种类未填写");
             }
 
-            if(pathLength==""||ispave==""||averWeight==""||
-                averSpeed==""||averWidth==""||carFlow==""||clearTimeInstall==""||
-                clearTimeUninstall==""||sweepSpring==""||sweepSummer==""||sweepFall==""||
-                waterTimesSpring==""||waterTimesSummer==""||waterTimesFall==""||dustSuppression==""){
-                alert("红色标识为必填字段！");
-                return;
+            else if (materialCapacity == "") {
+                alert("物料装卸量未填写");
             }
-            else{
+            else if (loadingCapacity == "") {
+                alert("每次装卸量未填写");
+            }
+            else if (loadingCount == "") {
+                alert("每日装卸次数未填写");
+            }
+            //else if(materialType1==""){alert("装卸物料种类未填写");}
+            else if (moistureMateria == "") {
+                alert("物料含水率未填写");
+            }
+            else if (heapCovered == "") {
+                alert("堆料占地面积未填写");
+            }
+            else if (heapArea == "") {
+                alert("堆料表面积未填写");
+            }
+            else if (heapHeigh == "") {
+                alert("堆料高度未填写");
+            }
 
-                $.post("ajax/FroadDustSourceTemp/saveClientRoad.do", {
-                    scccode:scc,
-                    factoryid:factoryid,
-                    roadDustid:roadDustid,
-                    companyName: companyName,
-                    pathLength : pathLength,
-                    ispave : ispave,
+            else if (controlMeasures1 == "") {
+                alert("装卸控制措施未进行选择");
+            }
+            else if (controlMeasures == "") {
+                alert("风蚀控制措施未进行选择");
+            }
+            else {
+                if (loadingStart == "") {
+                    loadingStart = "00:00";
+                }
+                if (loadingTime == "") {
+                    loadingTime = "00:00";
+                }
+                //alert(loadingStart+"..."+loadingTime);
+                //alert(1);companyName : companyName,scccode:scccode,
+                $.post("ajax/FyardDustSourceTemp/addYardDust.do", {
+                    longitude1: longitude1,
+                    longitude2: longitude2,
+                    longitude3: longitude3,
+                    longitude4: longitude4,
+                    latitude1: latitude1,
+                    latitude2: latitude2,
+                    latitude3: latitude3,
+                    latitude4: latitude4,
 
-                    averWidth : averWidth,
-                    averWeight:averWeight,
-                    carFlow:carFlow,
-                    averSpeed:averSpeed,
-                    clearTimeInstall : clearTimeInstall ,
-                    clearTimeUninstall : clearTimeUninstall,
-                    sweepSpring : sweepSpring,
-                    sweepSummer : sweepSummer,
-                    sweepFall : sweepFall,
-                    waterTimesSpring : waterTimesSpring,
+                    materialType: materialType,
+                    windSpeed: windSpeed,
+                    materialCapacity: materialCapacity,
+                    loadingCount: loadingCount,
+                    loadingStart: loadingStart,
+                    loadingTime: loadingTime,
+                    loadingCapacity: loadingCapacity,
+                    controlMeasures: controlMeasures,
+                    moistureMateria: moistureMateria,
 
-                    waterTimesSummer:waterTimesSummer,
-                    waterTimesFall:waterTimesFall,
-                    dustSuppression:dustSuppression
-
-                },function(data){
+                    materialType1: materialType1,
+                    heapArea: heapArea,
+                    heapHeigh: heapHeigh,
+                    heapCovered: heapCovered,
+                    controlMeasures1: controlMeasures1,
+                }, function (data) {
                     //alert("nihao 123");
                     var json = eval("(" + data + ")");
-                    if(json.status==1){
-                        alert("保存成功！");
-
-                    }else{
-                        alert("保存失败！");
+                    //alert(json.status);
+                    if (json.status == 1) {
+                        numm++;
+                        alert("当前共填写数据" + numm + "条，该堆场扬尘源保存成功！");
+                        window.location.reload();
+                    } else {
+                        alert("堆场扬尘源保存失败！");
                     }
 
                 });
+
+            }
+        }
+        //删除数据
+        function deleteYard(wId) {
+            $.post("{{url("deleteYard")}}", {
+                '_token': '{{csrf_token()}}',
+                windDustid: wId
+            }, function (state) {
+                if (state == 1) {
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
+            });
+            location.reload();
+        }
+
+
+
+        //更新一条数据
+        function updateYard(itemyard) {
+            //alert("updateYard");
+            var itemyarddusti = itemyard;
+
+            /*var scccode = document.getElementById("dscccode" + itemyarddusti).value;
+            var scccode1 = document.getElementById("dscccode1" + itemyarddusti).value;*/
+            var windDustid = document.getElementById("yardDustid"+itemyarddusti).value;
+            var materialType = document.getElementById("dmaterialType" + itemyarddusti).value;
+            var moistureMateria = document.getElementById("dmoistureMateria" + itemyarddusti).value;
+            var materialCapacity = document.getElementById("dmaterialCapacity" + itemyarddusti).value;
+            var loadingCount = document.getElementById("dloadingCount" + itemyarddusti).value;
+            var loadingCapacity = document.getElementById("dloadingCapacity" + itemyarddusti).value;
+            var heapCovered = document.getElementById("dheapCovered" + itemyarddusti).value;
+            var heapArea = document.getElementById("dheapArea" + itemyarddusti).value;
+            var heapHeigh = document.getElementById("dheapHeigh" + itemyarddusti).value;
+            var controlMeasures = document.getElementById("dcontrolMeasures"+itemyarddusti).value;
+            var controlMeasures1 = document.getElementById("dcontrolMeasures1"+itemyarddusti).value;
+            var loadingStart = document.getElementById("dloadingStart" + itemyarddusti).value;
+            var loadingTime = document.getElementById("dloadingTime" + itemyarddusti).value;
+
+
+            var str=document.getElementsByName("winddust"+itemyarddusti);
+            var objarray = str.length;
+            var controlMeasures = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures += str[i].value + ",";
+                }
+            }
+            if (controlMeasures == "") {
+                controlMeasures = "";
             }
 
+            var str = document.getElementsByName("yarddust" + itemyarddusti);
+            var objarray = str.length;
+            var controlMeasures1 = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures1 += str[i].value + ",";
+                }
+            }
+            if (controlMeasures1 == "") {
+                controlMeasures1 = "";
+            }
+            //风蚀控制措施可以为空
+            //装卸控制措施可以为空
+
+            //else if(windSpeed==""){alert("地面风速未填写");}
+            if (materialType == "") {
+                alert("物料种类未填写");
+            }
+            else if (materialCapacity == "") {
+                alert("物料装卸量未填写");
+            }
+            else if (loadingCapacity == "") {
+                alert("每次装卸量未填写");
+            }
+            else if (loadingCount == "") {
+                alert("每日装卸次数未填写");
+            }
+            //else if(materialType1==""){alert("装卸物料种类未填写");}
+            else if (moistureMateria == "") {
+                alert("物料含水率未填写");
+            }
+            else if (heapCovered == "") {
+                alert("堆料占地面积未填写");
+            }
+            else if (heapArea == "") {
+                alert("堆料表面积未填写");
+            }
+            else if (heapHeigh == "") {
+                alert("堆料高度未填写");
+            }
+
+            /*else if(loadingStart==""){alert("日装卸开始时间未填写");}
+             else if(loadingTime==""){alert("日装卸结束时间未填写");}*/
+            else if (loadingCapacity * loadingCount > materialCapacity) {
+                //判断物料装卸量是否符合条件
+                alert("物料装卸量填写不符合实际条件，请重新填写！");
+
+
+            }
+            else if (controlMeasures1 == "") {
+                alert("装卸控制措施未进行选择");
+            }
+            else if (controlMeasures == "") {
+                alert("风蚀控制措施未进行选择");
+            }
+
+            else {
+                if (loadingStart == "") {
+                    loadingStart = "00:00";
+                }
+                if (loadingTime == "") {
+                    loadingTime = "00:00";
+                }
+                $.post("{{url('updateYard')}}", {
+                    windDustid: windDustid,
+                    materialType: materialType,
+                    moistureMateria:moistureMateria,
+                    materialCapacity: materialCapacity,
+                    loadingCount: loadingCount,
+                    loadingCapacity: loadingCapacity,
+                    heapCovered: heapCovered,
+                    heapArea: heapArea,
+                    heapHeigh: heapHeigh,
+                    loadingStart: loadingStart,
+                    loadingTime: loadingTime,
+                    controlMeasures1: controlMeasures1,
+                    controlMeasures: controlMeasures
+                }, function (state) {
+                    if (state == 0) {
+
+                        alert("堆场扬尘源更新成功！");
+                    } else {
+                        alert("号堆场扬尘源更新失败！");
+                    }
+
+                });
+
+
+            }
+
+
         }
-
-        function addTable(){
-            document.getElementById("grid1").style.display='block';
-            document.getElementById("add").style.display='none';
-            document.getElementById("headroad").style.display='none';
-        }
-
-
-
-
     </script>
 
 
 </head>
 @include("layouts.header")
-
 
 
 <body onLoad="javascript:document.queryForm.reset()">
@@ -371,932 +496,1100 @@ $itemroaddusti = 0;
 
             <div class="page-content">
                 <form aid="queryForm" name="queryForm"
-                      action="<c:url value="/pages/FwindErosionDustSource/listAll.do"/>"
-                method="get" style="display: inline;">
-                <div class="gridTable">
-                    <c:forEach items="${page.result}" var="yardSourcePage"
-                               varStatus="status">
-                        <%
-                        itemyarddusti++;
-                        %>
-                        <div class="col-md-12" style="margin-top: 30px; height: 40px">
-
-                            <p style="font-size: 20px; text-align: left;color: #32B16C">
-<%%>号堆场扬尘源信息
-</p>
-</div>
-<div class="col-md-12" style="height: 40px;display:none;" >
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度1:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlongitude1<%%>"
-            class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,0,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-            value='${yardSourcePage.longitude1}' />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度1:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlatitude1<%%>"
-            onblur="checklatfour(this.id,0,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-            value='${yardSourcePage.latitude1}' />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度2:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlongitude2<%%>"
-            class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,1,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-            value='${yardSourcePage.longitude2}' />
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px;display:none;">
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度2:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlatitude2<%%>"
-        onblur="checklatfour(this.id,1,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-
-            value='${yardSourcePage.latitude2}' />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度3:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlongitude3<%%>" class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,2,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-            value='${yardSourcePage.longitude3}' />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度3:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlatitude3<%%>"
-        onblur="checklatfour(this.id,2,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-
-            value='${yardSourcePage.latitude3}' />
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-4" style="height: 35px;display:none;" >
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度4:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlongitude4<%%>"  class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,3,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-            value='${yardSourcePage.longitude4}' />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px;display:none;" >
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度4:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dlatitude4<%%>"
-        onblur="checklatfour(this.id,3,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-            value='${yardSourcePage.latitude4}' />
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 物料种类:<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dmaterialType<%%>"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.materialType}'  readonly="readonly"/>
-    </div>
-</div>
-</div>
-
-<div class="col-md-6" style="height: 35px;display:none;">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 地面风速(m/s):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dwindSpeed<%%>" onkeyup="checkNum(this);"
-            onblur="checksp(this.id)"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.windSpeed}' />
-    </div>
-</div>
-</div>
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 物料含水率(%):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dmoistureMateria<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px; " onblur="checkhs(this.id)"
-            value='${yardSourcePage.moistureMateria}' />
-    </div>
-</div>
-</div>
-
-
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-6" style="height: 35px;display:none;">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 装卸物料种类:<a style="color: red">*</a></label>
-    <div class="col-md-8">
-        <input type="text" id="dmaterialType1<%%>" class="form-control"
-            style="height: 30px; width: 170px;"
-            value='${yardSourcePage.materialType1}' readonly="readonly"/>
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 年物料装卸量(t):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dmaterialCapacity<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.materialCapacity}' />
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 每日装卸次数:<a style="color: red">*</a></label>
-
-    <div class="col-md-8">
-        <input type="text" id="dloadingCount<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.loadingCount}' />
-    </div>
-</div>
-</div>
-
-
-</div>
-<div class="col-md-12" style="height: 40px">
-
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 每次装卸量(t):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dloadingCapacity<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.loadingCapacity}' />
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆占地面积(m<sup>2</sup>):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dheapCovered<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.heapCovered}' />
-    </div>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-12" style="height: 40px">
-
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆表面积(m<sup>2</sup>):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dheapArea<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.heapArea}' />
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆高度(m):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dheapHeigh<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.heapHeigh}' />
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px;display:none;">
-<div class="col-md-6" style="height: 35px;display:none">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> SCC编码: </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dscccode<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.scccode}' readonly="readonly"/>
-        <input type="text" id="dscccode1<%%>" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.scccode1}' readonly="readonly"/>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px;">
-<div class="form-group" style="margin-top:10px">
-    <label class="col-md-2 control-label no-padding-right"
-        for="form-field-3" style="width:125px;">
-        装卸控制措施:<a style="color: red">*</a>
-    </label>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px;">
-<div class="form-group" style="margin-top:10px">
-    <div class="col-md-12" style="width:600px;padding-left:20px">
-        <label><input name="yarddust<%%>" type="checkbox" value="A" />封闭</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="B" />密封</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="C" />抑尘墙</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="D" />抑尘网</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="E" />防风网</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="F" />洒水</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="G" />喷淋</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="H" />喷水</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="I" />半封闭</label>
-        <label><input name="yarddust<%%>" type="checkbox"value="J" />无</label>
-    </div>
-    <input id="dcontrolMeasures1<%%>"
-            value='${yardSourcePage.controlMeasures1}'
-            style="display: none" />
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-2 control-label no-padding-right"
-        for="form-field-3" style="width:125px">
-        风蚀控制措施:
-        <a style="color: red">*</a>
-    </label>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-<div class="form-group">
-    <div class="col-md-12" style="width:600px;padding-left:20px">
-        <input id="dcontrolMeasures<%%>"
-            value='${yardSourcePage.controlMeasures}'
-            style="display: none" />
-        <label><input name="winddust<%%>" type="checkbox" value="A" />封闭</label>
-        <label><input name="winddust<%%>" type="checkbox" value="B" />密闭</label>
-        <label><input name="winddust<%%>" type="checkbox" value="C" />洒水</label>
-        <label><input name="winddust<%%>" type="checkbox" value="D" />喷淋</label>
-        <label><input name="winddust<%%>" type="checkbox" value="E" />喷水</label>
-        <label><input name="winddust<%%>" type="checkbox" value="F" />化学覆盖剂</label>
-        <label><input name="winddust<%%>" type="checkbox" value="G" />编织布覆盖</label>
-        <label><input name="winddust<%%>" type="checkbox" value="H" />半封闭</label>
-        <label><input name="winddust<%%>" type="checkbox"value="I" />无</label>
-
-    </div>
-    </div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-10" style="height: 35px">
-<div class="form-group" style="width:400px">
-    <label class="col-md-3 control-label no-padding-right"
-            for="form-field-3" style="width:130px"> 日装卸开始时间:</label>
-
-    <div  class="input-group date form_time "  style="width: 200px" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-        <input type="text" id="dloadingStart<%%>"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.loadingStart}' readonly="readonly"/>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-10" style="height: 35px">
-<div class="form-group" style="width:400px">
-    <label class="col-md-3 control-label no-padding-right"
-        for="form-field-3" style="width:130px"> 日装卸结束时间:</label>
-    <div  class="input-group date form_time " style="width: 200px" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-        <input type="text" id="dloadingTime<%%>"
-            class="form-control" style="height: 30px; width: 170px;"
-            value='${yardSourcePage.loadingTime}' readonly="readonly"/>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px; display: none">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> </label>
-
-    <div class="col-md-8">
-        <input type="text" id="dwindDustid<%%>" class="form-control"
-            style="height: 30px; width: 170px;"
-            value='${yardSourcePage.windDustid}' />
-    </div>
-</div>
-</div>
-</div>
-<div align="right" style="margin-right: 110px;">
-<input type="button" class="btn btn-primary"
-style="width: 80px; line-height: 8px; margin-left: 15px;"
-value="更新数据" id="saveCon" onclick="updateYard(<%%>)" /> <input
-type="button" class="btn btn-primary"
-style="width: 80px; line-height: 8px; margin-left: 15px;"
-value="删除" id="saveCon"
-onclick="deleteYard('${yardSourcePage.windDustid}')" />
-</div>
-</c:forEach>
-<div class="col-md-8" style="display: none">
-<input type="text" id="itemyarddusti" class="form-control"
-style="height: 30px; width: 170px;" value='<%%>' />
-</div>
-
-<div id="grid1" style="margin-top: 10px; display: none">
-<div class="page-header" style="margin-top: 20px; height: 40px；">
-<h1>
-<b>堆场扬尘源新增</b>
-</h1>
-</div>
-<div class="col-md-12" id="yihao" style="margin-top: 20px; height: 40px;display:none;">
-<p style="font-size: 20px; text-align: left; color: #32B16C">
-    1号堆场扬尘源信息
-</p>
-</div>
-<div class="col-md-12" style="height: 40px;display:none;" >
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度1:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlongitude1"
-            class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,0,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"/>
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度1:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlatitude1"
-        onblur="checklatfour(this.id,0,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-                                                        />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度2:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlongitude2"
-        class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,1,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000" />
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px;display:none;">
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度2:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlatitude2"
-        onblur="checklatfour(this.id,1,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-             />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度3:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlongitude3"
-        class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,2,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"/>
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度3:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlatitude3"
-        onblur="checklatfour(this.id,2,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"
-
-             />
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px">
-
-
-<div class="col-md-4" style="height: 35px;display:none;" >
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点经度4:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlongitude4"
-        class="check1" alt="p3x3p4s"
-            onblur="checklonfour(this.id,3,4)" style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')"  placeholder="73.6667~96.3000"
-            />
-    </div>
-</div>
-</div>
-<div class="col-md-4" style="height: 35px;display:none;" >
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 拐点纬度4:
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndlatitude4"
-            onblur="checklatfour(this.id,3,4)"   class="check1" alt="p3x3p4s"
-            style="height: 25px; margin-top: 3px; width: 170px;"
-            onkeyup="if(isNaN(value))execCommand('undo')"
-            onafterpaste="if(isNaN(value))execCommand('undo')" placeholder="34.4167~48.1667"/>
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 物料种类:<a style="color: red">*</a>
-    </label>
-    <div class="col-md-8">
-        <select name="ndmaterialType" id="ndmaterialType" class="form-control"  style="width:170px;height:30px;">
-            <option value=""></option>
-            <option value="焦炭">焦炭</option>
-            <option value="块矿">块矿</option>
-            <option value="矿渣">矿渣</option>
-            <option value="炉渣">炉渣</option>
-            <option value="煤灰">煤灰</option>
-            <option value="灰渣">灰渣</option>
-            <option value="煤炭">煤炭</option>
-            <option value="球团矿">球团矿</option>
-            <option value="沙石">沙石</option>
-            <option value="砂石">砂石</option>
-            <option value="石灰石">石灰石</option>
-            <option value="水泥熟料">水泥熟料</option>
-            <option value="粘土">粘土</option>
-        </select>
-    </div>
-</div>
-</div>
-
-<div class="col-md-6" style="height: 35px;display:none;">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 地面风速(m/s):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndwindSpeed"
-            onkeyup="checkNum(this);" onblur="checksp(this.id)"
-            class="form-control" style="height: 30px; width: 170px;"/>
-    </div>
-</div>
-</div>
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 物料含水率(%):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndmoistureMateria" onblur="checkhs(this.id)"
-        onkeyup="checkNum(this);" class="form-control"
-        style="height: 30px; width: 170px;" />
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-6" style="height: 35px;display:none;">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 装卸物料种类:<a style="color: red">*</a></label>
-    <div class="col-md-8">
-        <select name="ndmaterialType1" id="ndmaterialType1" class="form-control"  style="width:170px;height:30px;">
-            <option value=""></option>
-            <option value="焦炭">焦炭</option>
-            <option value="块矿">块矿</option>
-            <option value="矿渣">矿渣</option>
-            <option value="炉渣">炉渣</option>
-            <option value="煤灰">煤灰</option>
-            <option value="灰渣">灰渣</option>
-            <option value="煤炭">煤炭</option>
-            <option value="球团矿">球团矿</option>
-            <option value="沙石">沙石</option>
-            <option value="砂石">砂石</option>
-            <option value="石灰石">石灰石</option>
-            <option value="水泥熟料">水泥熟料</option>
-            <option value="粘土">粘土</option>
-        </select>
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 年物料装卸量(t):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndmaterialCapacity" onblur="checkwl(this.id)";
-        onkeyup="checkNum(this);" class="form-control"
-        style="height: 30px; width: 170px;"/>
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 每日装卸次数:<a style="color: red">*</a></label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndloadingCount"
-        onkeyup="checkNum(this);" class="form-control"
-        style="height: 30px; width: 170px;"/>
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px">
-
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 每次装卸量(t):<a style="color: red">*</a>
-    </label>
-    <div class="col-md-8">
-    <input type="text" id="ndloadingCapacity" class="check1"style="height: 30px; width: 170px;"/>
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆占地面积(m<sup>2</sup>):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndheapCovered" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"
-             />
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆表面积(m<sup>2</sup>):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndheapArea"
-        onkeyup="checkNum(this);" class="form-control"
-        style="height: 30px; width: 170px;" />
-    </div>
-</div>
-</div>
-<div class="col-md-6" style="height: 35px">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> 料堆高度(m):<a style="color: red">*</a>
-    </label>
-
-    <div class="col-md-8">
-        <input type="text" id="ndheapHeigh" onkeyup="checkNum(this);"
-            class="form-control" style="height: 30px; width: 170px;"/>
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-12" style="height: 40px;display:none;">
-
-<div class="col-md-6" style="height: 35px;display:none;">
-<div class="form-group">
-    <label class="col-md-4 control-label no-padding-right"
-        for="form-field-3"> SCC编码:<a style="color: red">*</a>
-    </label>
-    <div class="col-md-8">
-        <select name="nscccode" id="nscccode" class="form-control"  style="width:170px;height:30px;">
-            <option value="1604001001">1604001001</option>
-            <option value="1604001001">1604001002</option>
-            <option value="1604002001">1604002001</option>
-            <option value="1604002002">1604002002</option>
-            <option value="1604003001">1604003001</option>
-            <option value="1604003002">1604003002</option>
-            <option value="1604004001">1604004001</option>
-            <option value="1604004002">1604004002</option>
-            <option value="1604005001">1604005001</option>
-            <option value="1604005002">1604005002</option>
-        </select>
-    </div>
-</div>
-</div>
-
-</div>
-
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-<div class="form-group" style="margin-top:10px">
-    <label class="col-md-2 control-label no-padding-right"
-        for="form-field-3" style="width:130px">
-        装卸控制措施:<a style="color: red">*</a>
-    </label>
-    </div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-<div class="form-group" style="margin-top:10px">
-
-    <div class="col-md-12" style="width:600px;padding-left:20px">
-        <label><input name="yarddust" type="checkbox" value="A" />封闭</label>
-        <label><input name="yarddust" type="checkbox"value="B" />密封</label>
-        <label><input name="yarddust" type="checkbox"value="C" />抑尘墙</label>
-        <label><input name="yarddust" type="checkbox"value="D" />抑尘网</label>
-        <label><input name="yarddust" type="checkbox"value="E" />防风网</label>
-        <label><input name="yarddust" type="checkbox"value="F" />洒水</label>
-        <label><input name="yarddust" type="checkbox"value="G" />喷淋</label>
-        <label><input name="yarddust" type="checkbox"value="H" />喷水</label>
-        <label><input name="yarddust" type="checkbox"value="I" />半封闭</label>
-        <label><input name="yarddust" type="checkbox"value="J" />无</label>
-    </div>
-    </div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-    <div class="form-group">
-        <label class="col-md-2 control-label no-padding-right"
-            for="form-field-3" style="width:130px">
-            风蚀控制措施:
-            <a style="color: red">*</a>
-        </label>
-    </div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 50px">
-<div class="col-md-12" style="height: 35px">
-    <div class="form-group">
-
-        <div class="col-md-12" style="width:600px;padding-left:20px">
-            <label><input name="winddust" type="checkbox" value="A" />封闭</label>
-            <label><input name="winddust" type="checkbox" value="B" />密闭</label>
-            <label><input name="winddust" type="checkbox" value="C" />洒水</label>
-            <label><input name="winddust" type="checkbox" value="D" />喷淋</label>
-            <label><input name="winddust" type="checkbox" value="E" />喷水</label>
-            <label><input name="winddust" type="checkbox" value="F" />化学覆盖剂</label>
-            <label><input name="winddust" type="checkbox" value="G" />编织布覆盖</label>
-            <label><input name="winddust" type="checkbox" value="H" />半封闭</label>
-            <label><input name="winddust" type="checkbox" value="I" />无</label>
+                      action=""
+                      method="get" style="display: inline;">
+                    <div class="gridTable">
+                        @foreach($fyarddust as $item)
+                            <?php $itemroaddusti++; ?>
+                            <div class="col-md-12" style="margin-top: 30px; height: 40px">
+
+                                <p style="font-size: 20px; text-align: left;color: #32B16C">
+                                    {{$itemroaddusti}}号堆场扬尘源信息
+                                </p>
+                            </div>
+                                <input id="yardDustid{{ $itemroaddusti }}" class="form-control"
+                                       style="height: 30px; width: 170px;"
+                                       value='{{ $item['wind_dustid'] }}' type="hidden"/>
+                            <div class="col-md-12" style="height: 40px;display:none;">
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度1:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlongitude1{{ $itemroaddusti}}"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,0,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"
+                                                   value='${yardSourcePage.longitude1}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度1:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlatitude1{{ $itemroaddusti}}"
+                                                   onblur="checklatfour(this.id,0,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+                                                   value='${yardSourcePage.latitude1}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度2:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlongitude2{{ $itemroaddusti}}"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,1,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"
+                                                   value='${yardSourcePage.longitude2}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px;display:none;">
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度2:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlatitude2{{ $itemroaddusti}}"
+                                                   onblur="checklatfour(this.id,1,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+
+                                                   value='${yardSourcePage.latitude2}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度3:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlongitude3{{ $itemroaddusti}}" class="check1"
+                                                   alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,2,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"
+                                                   value='${yardSourcePage.longitude3}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度3:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlatitude3{{ $itemroaddusti}}"
+                                                   onblur="checklatfour(this.id,2,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+
+                                                   value='${yardSourcePage.latitude3}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-4" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度4:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlongitude4{{ $itemroaddusti}}" class="check1"
+                                                   alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,3,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"
+                                                   value='${yardSourcePage.longitude4}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度4:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dlatitude4{{ $itemroaddusti}}"
+                                                   onblur="checklatfour(this.id,3,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+                                                   value='${yardSourcePage.latitude4}'/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 物料种类:<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dmaterialType{{$itemroaddusti}}"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['material_type']}}' readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 地面风速(m/s):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dwindSpeed{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   onblur="checksp(this.id)"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['material_type1']}}' wind_speed/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 物料含水率(%):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dmoistureMateria{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px; "
+                                                   onblur="checkhs(this.id)"
+                                                   value='{{$item['moisture_materia']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-6" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 装卸物料种类:<a style="color: red">*</a></label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="dmaterialType1{{$itemroaddusti}}"
+                                                   class="form-control"
+                                                   style="height: 30px; width: 170px;"
+                                                   value='{{$item['material_type1']}}' readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 年物料装卸量(t):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dmaterialCapacity{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['material_capacity']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 每日装卸次数:<a style="color: red">*</a></label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dloadingCount{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['loading_count']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-12" style="height: 40px">
+
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 每次装卸量(t):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dloadingCapacity{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['loading_capacity']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆占地面积(m<sup>2</sup>):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dheapCovered{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['heap_covered']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12" style="height: 40px">
+
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆表面积(m<sup>2</sup>):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dheapArea{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['heap_area']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆高度(m):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dheapHeigh{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['heap_heigh']}}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px;display:none;">
+                                <div class="col-md-6" style="height: 35px;display:none">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> SCC编码: </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="dscccode{{$itemroaddusti}}" onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['material_type1']}}' readonly="readonly"/>
+                                            <input type="text" id="dscccode1{{$itemroaddusti}}"
+                                                   onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='${yardSourcePage.scccode1}' readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px;">
+                                    <div class="form-group" style="margin-top:10px">
+                                        <label class="col-md-2 control-label no-padding-right"
+                                               for="form-field-3" style="width:125px;">
+                                            装卸控制措施:<a style="color: red">*</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px;">
+                                    <div class="form-group" style="margin-top:10px">
+                                        <div class="col-md-12" style="width:600px;padding-left:20px">
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="A"/>封闭</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="B"/>密封</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="C"/>抑尘墙</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="D"/>抑尘网</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="E"/>防风网</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="F"/>洒水</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="G"/>喷淋</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="H"/>喷水</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="I"/>半封闭</label>
+                                            <label><input name="yarddust{{$itemroaddusti}}" type="checkbox" value="J"/>无</label>
+                                        </div>
+                                        <input id="dcontrolMeasures1{{$itemroaddusti}}"
+                                               value='{{$item['control_measures1']}}'
+                                               style="display: none"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label no-padding-right"
+                                               for="form-field-3" style="width:125px">
+                                            风蚀控制措施:
+                                            <a style="color: red">*</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group">
+                                        <div class="col-md-12" style="width:600px;padding-left:20px">
+                                            <input id="dcontrolMeasures{{$itemroaddusti}}"
+                                                   value='{{$item['control_measures']}}'
+                                                   style="display: none"/>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="A"/>封闭</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="B"/>密闭</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="C"/>洒水</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="D"/>喷淋</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="E"/>喷水</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="F"/>化学覆盖剂</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="G"/>编织布覆盖</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="H"/>半封闭</label>
+                                            <label><input name="winddust{{$itemroaddusti}}" type="checkbox" value="I"/>无</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-10" style="height: 35px">
+                                    <div class="form-group" style="width:400px">
+                                        <label class="col-md-3 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px"> 日装卸开始时间:</label>
+
+                                        <div class="input-group date form_time " style="width: 200px" data-date=""
+                                             data-date-format="hh:ii" data-link-field="dtp_input3"
+                                             data-link-format="hh:ii">
+                                            <input type="text" id="dloadingStart{{$itemroaddusti}}"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['loading_start']}}' readonly="readonly"/>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-10" style="height: 35px">
+                                    <div class="form-group" style="width:400px">
+                                        <label class="col-md-3 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px"> 日装卸结束时间:</label>
+                                        <div class="input-group date form_time " style="width: 200px" data-date=""
+                                             data-date-format="hh:ii" data-link-field="dtp_input3"
+                                             data-link-format="hh:ii">
+                                            <input type="text" id="dloadingTime{{$itemroaddusti}}"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value='{{$item['loading_time']}}' readonly="readonly"/>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div align="right" style="margin-right: 110px;">
+                                <input type="button" class="btn btn-primary"
+                                       style="width: 80px; line-height: 8px; margin-left: 15px;"
+                                       value="更新数据" id="saveCon" onclick="updateYard('{{$itemroaddusti}}')"/>
+                                <input type="button" class="btn btn-primary"
+                                       style="width: 80px; line-height: 8px; margin-left: 15px;"
+                                       value="删除" id="saveCon"
+                                       onclick="deleteYard('{{ $item['wind_dustid'] }}')"/>
+                            </div>
+                        @endforeach
+                        <div class="col-md-8" style="display: none">
+                            <input type="text" id="itemyarddusti" class="form-control"
+                                   style="height: 30px; width: 170px;" value=''/>
+                        </div>
+
+                        <div id="grid1" style="margin-top: 10px; display: none">
+                            <div class="page-header" style="margin-top: 20px; height: 40px;">
+                                <h1>
+                                    <b>堆场扬尘源新增</b>
+                                </h1>
+                            </div>
+                            <div class="col-md-12" id="yihao" style="margin-top: 20px; height: 40px;display:none;">
+                                <p style="font-size: 20px; text-align: left; color: #32B16C">
+                                    1号堆场扬尘源信息
+                                </p>
+                            </div>
+                            <div class="col-md-12" style="height: 40px;display:none;">
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度1:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlongitude1"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,0,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度1:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlatitude1"
+                                                   onblur="checklatfour(this.id,0,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度2:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlongitude2"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,1,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px;display:none;">
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度2:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlatitude2"
+                                                   onblur="checklatfour(this.id,1,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度3:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlongitude3"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,2,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度3:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlatitude3"
+                                                   onblur="checklatfour(this.id,2,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"
+
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px">
+
+
+                                <div class="col-md-4" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点经度4:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlongitude4"
+                                                   class="check1" alt="p3x3p4s"
+                                                   onblur="checklonfour(this.id,3,4)"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="73.6667~96.3000"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 拐点纬度4:
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndlatitude4"
+                                                   onblur="checklatfour(this.id,3,4)" class="check1" alt="p3x3p4s"
+                                                   style="height: 25px; margin-top: 3px; width: 170px;"
+                                                   onkeyup="if(isNaN(value))execCommand('undo')"
+                                                   onafterpaste="if(isNaN(value))execCommand('undo')"
+                                                   placeholder="34.4167~48.1667"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 物料种类:<a style="color: red">*</a>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select name="ndmaterialType" id="ndmaterialType" class="form-control"
+                                                    style="width:170px;height:30px;">
+                                                <option value=""></option>
+                                                <option value="焦炭">焦炭</option>
+                                                <option value="块矿">块矿</option>
+                                                <option value="矿渣">矿渣</option>
+                                                <option value="炉渣">炉渣</option>
+                                                <option value="煤灰">煤灰</option>
+                                                <option value="灰渣">灰渣</option>
+                                                <option value="煤炭">煤炭</option>
+                                                <option value="球团矿">球团矿</option>
+                                                <option value="沙石">沙石</option>
+                                                <option value="砂石">砂石</option>
+                                                <option value="石灰石">石灰石</option>
+                                                <option value="水泥熟料">水泥熟料</option>
+                                                <option value="粘土">粘土</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 地面风速(m/s):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndwindSpeed"
+                                                   onkeyup="checkNum(this);" onblur="checksp(this.id)"
+                                                   class="form-control" style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 物料含水率(%):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndmoistureMateria" onblur="checkhs(this.id)"
+                                                   onkeyup="checkNum(this);" class="form-control"
+                                                   style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-6" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 装卸物料种类:<a style="color: red">*</a></label>
+                                        <div class="col-md-8">
+                                            <select name="ndmaterialType1" id="ndmaterialType1" class="form-control"
+                                                    style="width:170px;height:30px;">
+                                                <option value=""></option>
+                                                <option value="焦炭">焦炭</option>
+                                                <option value="块矿">块矿</option>
+                                                <option value="矿渣">矿渣</option>
+                                                <option value="炉渣">炉渣</option>
+                                                <option value="煤灰">煤灰</option>
+                                                <option value="灰渣">灰渣</option>
+                                                <option value="煤炭">煤炭</option>
+                                                <option value="球团矿">球团矿</option>
+                                                <option value="沙石">沙石</option>
+                                                <option value="砂石">砂石</option>
+                                                <option value="石灰石">石灰石</option>
+                                                <option value="水泥熟料">水泥熟料</option>
+                                                <option value="粘土">粘土</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 年物料装卸量(t):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndmaterialCapacity" onblur="checkwl(this.id)" ;
+                                                   onkeyup="checkNum(this);" class="form-control"
+                                                   style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 每日装卸次数:<a style="color: red">*</a></label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndloadingCount"
+                                                   onkeyup="checkNum(this);" class="form-control"
+                                                   style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px">
+
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 每次装卸量(t):<a style="color: red">*</a>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndloadingCapacity" class="check1"
+                                                   style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆占地面积(m<sup>2</sup>):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndheapCovered" onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆表面积(m<sup>2</sup>):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndheapArea"
+                                                   onkeyup="checkNum(this);" class="form-control"
+                                                   style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> 料堆高度(m):<a style="color: red">*</a>
+                                        </label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" id="ndheapHeigh" onkeyup="checkNum(this);"
+                                                   class="form-control" style="height: 30px; width: 170px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="height: 40px;display:none;">
+
+                                <div class="col-md-6" style="height: 35px;display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label no-padding-right"
+                                               for="form-field-3"> SCC编码:<a style="color: red">*</a>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select name="nscccode" id="nscccode" class="form-control"
+                                                    style="width:170px;height:30px;">
+                                                <option value="1604001001">1604001001</option>
+                                                <option value="1604001001">1604001002</option>
+                                                <option value="1604002001">1604002001</option>
+                                                <option value="1604002002">1604002002</option>
+                                                <option value="1604003001">1604003001</option>
+                                                <option value="1604003002">1604003002</option>
+                                                <option value="1604004001">1604004001</option>
+                                                <option value="1604004002">1604004002</option>
+                                                <option value="1604005001">1604005001</option>
+                                                <option value="1604005002">1604005002</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group" style="margin-top:10px">
+                                        <label class="col-md-2 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px">
+                                            装卸控制措施:<a style="color: red">*</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group" style="margin-top:10px">
+
+                                        <div class="col-md-12" style="width:600px;padding-left:20px">
+                                            <label><input name="yarddust" type="checkbox" value="A"/>封闭</label>
+                                            <label><input name="yarddust" type="checkbox" value="B"/>密封</label>
+                                            <label><input name="yarddust" type="checkbox" value="C"/>抑尘墙</label>
+                                            <label><input name="yarddust" type="checkbox" value="D"/>抑尘网</label>
+                                            <label><input name="yarddust" type="checkbox" value="E"/>防风网</label>
+                                            <label><input name="yarddust" type="checkbox" value="F"/>洒水</label>
+                                            <label><input name="yarddust" type="checkbox" value="G"/>喷淋</label>
+                                            <label><input name="yarddust" type="checkbox" value="H"/>喷水</label>
+                                            <label><input name="yarddust" type="checkbox" value="I"/>半封闭</label>
+                                            <label><input name="yarddust" type="checkbox" value="J"/>无</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px">
+                                            风蚀控制措施:
+                                            <a style="color: red">*</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 50px">
+                                <div class="col-md-12" style="height: 35px">
+                                    <div class="form-group">
+
+                                        <div class="col-md-12" style="width:600px;padding-left:20px">
+                                            <label><input name="winddust" type="checkbox" value="A"/>封闭</label>
+                                            <label><input name="winddust" type="checkbox" value="B"/>密闭</label>
+                                            <label><input name="winddust" type="checkbox" value="C"/>洒水</label>
+                                            <label><input name="winddust" type="checkbox" value="D"/>喷淋</label>
+                                            <label><input name="winddust" type="checkbox" value="E"/>喷水</label>
+                                            <label><input name="winddust" type="checkbox" value="F"/>化学覆盖剂</label>
+                                            <label><input name="winddust" type="checkbox" value="G"/>编织布覆盖</label>
+                                            <label><input name="winddust" type="checkbox" value="H"/>半封闭</label>
+                                            <label><input name="winddust" type="checkbox" value="I"/>无</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group" style="width:400px">
+                                        <label class="col-md-3 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px"> 日装卸开始时间:</label>
+                                        <div class="input-group date form_time " style="width: 200px" data-date=""
+                                             data-date-format="hh:ii" data-link-field="dtp_input3"
+                                             data-link-format="hh:ii">
+                                            <input type="text" id="ndloadingStart"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value="" readonly="readonly"/>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12" style="height: 40px">
+                                <div class="col-md-6" style="height: 35px">
+                                    <div class="form-group" style="width:400px">
+                                        <label class="col-md-3 control-label no-padding-right"
+                                               for="form-field-3" style="width:130px"> 日装卸结束时间:</label>
+                                        <div style="width: 200px" class="input-group date form_time " data-date=""
+                                             data-date-format="hh:ii" data-link-field="dtp_input3"
+                                             data-link-format="hh:ii">
+                                            <input type="text" id="ndloadingTime"
+                                                   class="form-control" style="height: 30px; width: 170px;"
+                                                   value="" readonly="readonly"/>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                            <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div align="left">
+                                <input type="button" class="btn btn-primary"
+                                       style="width: 80px; line-height: 8px; margin-left: 15px;"
+                                       value="保存" onclick="addYard()"/>
+                            </div>
+                        </div>
+                        <div align="left">
+                            <input type="button" class="btn btn-primary"
+                                   style="width:80px;line-height:8px;margin-left:15px;" value="新增"
+                                   id="add" onclick="addTable()"/>
+                        </div>
+                        <div class="row" style="height:60px;text-align:center;">
+                            @include('layouts.public_end')
+                        </div>
+
+
+                    </div>
+                    <!--/.gridTable -->
+                </form>
+            </div>
+            <!-- /.page-content -->
         </div>
+        <!-- /.main-content -->
     </div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-6" style="height: 35px">
-<div class="form-group" style="width:400px">
-    <label class="col-md-3 control-label no-padding-right"
-            for="form-field-3" style="width:130px"> 日装卸开始时间:</label>
-    <div  class="input-group date form_time "  style="width: 200px" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-        <input type="text" id="ndloadingStart"
-            class="form-control" style="height: 30px; width: 170px;"
-            value="" readonly="readonly"/>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="col-md-12" style="height: 40px">
-<div class="col-md-6" style="height: 35px">
-<div class="form-group" style="width:400px">
-    <label class="col-md-3 control-label no-padding-right"
-        for="form-field-3" style="width:130px"> 日装卸结束时间:</label>
-    <div   style="width: 200px" class="input-group date form_time " data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-        <input type="text" id="ndloadingTime"
-            class="form-control" style="height: 30px; width: 170px;"
-            value="" readonly="readonly"/>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-    </div>
-</div>
-</div>
-</div>
-
-<div align="left">
-<input type="button" class="btn btn-primary"
-    style="width: 80px; line-height: 8px; margin-left: 15px;"
-    value="保存"   onclick="addYard()" />
-</div>
-</div>
-<div style="text-align:center;width: 100%;display:none ">
-<simpletable:pageToolbar page="${page}"></simpletable:pageToolbar>
-</div>
-<div align="left">
-<input type="button" class="btn btn-primary"
-style="width:80px;line-height:8px;margin-left:15px;" value="新增"
-id="add" onclick="addTable()" />
-</div>
-<div class="row" style="height:60px;text-align:center;" >
-<%@ include file="/client/public_end.jsp"%>
-</div>
-
+    <!-- /.main-container-inner -->
 
 </div>
-<!--/.gridTable -->
-</form>
-</div>
-<!-- /.page-content -->
-</div>
-<!-- /.main-content -->
-</div>
-<!-- /.main-container-inner -->
-
-</div>
-
 
 
 <script type="text/javascript">
-$("#set2").toggle();
-document.getElementById("yarddust").setAttribute("class","active");
+    $("#set2").toggle();
+    document.getElementById("yarddust").setAttribute("class", "active");
 </script>
 <script type="text/javascript">
-window.jQuery
-|| document
-.write("<script src='assets/js/jquery-2.0.3.min.js'>"
-+ "<"+"/script>");
+    window.jQuery
+    || document
+        .write("<script src='assets/js/jquery-2.0.3.min.js'>"
+            + "<" + "/script>");
 </script>
-
 
 
 <script type="text/javascript">
-if ("ontouchend" in document)
-document
-.write("<script src='assets/js/jquery.mobile.custom.min.js'>"
-+ "<"+"/script>");
+    if ("ontouchend" in document)
+        document
+            .write("<script src='assets/js/jquery.mobile.custom.min.js'>"
+                + "<" + "/script>");
 </script>
-
-
 
 
 <!-- inline scripts related to this page -->
 <div style="display:none">
-<script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
-language='JavaScript' charset='gb2312'></script>
+    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
+            language='JavaScript' charset='gb2312'></script>
 </div>
+<script type="text/javascript">
+    //glh 加载option中的内容
+    $(document).ready(function () {
+
+        //装卸控制措施
+        var num = "<?php echo "{$itemroaddusti}" ?>";
+        //alert(num);
+        for (var cur = 1; cur <= num; cur++) {
+            //alert("controlMeasures" + cur);
+            var conn1 = document.getElementById("dcontrolMeasures1" + cur).value;
+
+            //alert(conn1);
+            if (conn1.charAt(conn1.length - 1) == "、"
+                || conn1.charAt(conn1.length - 1) == ",") {
+                conn1 = conn1.substring(0, conn1.length - 1);
+            }
+            //alert(conn1);
+            var finalname = "";
+            var strs = new Array(); //定义一数组
+            strs = conn1.split(",");
+            //alert(strs.length);
+            var i = 0;
+            for (i = 0; i < strs.length; i++) {
+                if (strs != "") {
+                    if (strs[i] == "A") {
+                        $("input[name='yarddust" + cur + "'][value='A']").attr('checked', true);
+                        //$("[control=A1]").attr('checked',true);
+                    }
+                    if (strs[i] == "B") {
+                        $("input[name='yarddust" + cur + "'][value='B']").attr('checked', true);
+                    }
+                    if (strs[i] == "C") {
+                        $("input[name='yarddust" + cur + "'][value='C']").attr('checked', true);
+                    }
+                    if (strs[i] == "D") {
+                        $("input[name='yarddust" + cur + "'][value='D']").attr('checked', true);
+                    }
+                    if (strs[i] == "E") {
+                        $("input[name='yarddust" + cur + "'][value='E']").attr('checked', true);
+                    }
+                    if (strs[i] == "F") {
+                        $("input[name='yarddust" + cur + "'][value='F']").attr('checked', true);
+                    }
+                    if (strs[i] == "G") {
+                        $("input[name='yarddust" + cur + "'][value='G']").attr('checked', true);
+                    }
+                    if (strs[i] == "H") {
+                        $("input[name='yarddust" + cur + "'][value='H']").attr('checked', true);
+                    }
+                    if (strs[i] == "I") {
+                        $("input[name='yarddust" + cur + "'][value='I']").attr('checked', true);
+                    }
+                    if (strs[i] == "J") {
+                        $("input[name='yarddust" + cur + "'][value='J']").attr('checked', true);
+                    }
+
+                }
+                else {
+                }
+            }
+
+        }
+
+
+
+        for (var cur = 1; cur <= num; cur++) {
+            //alert("controlMeasures" + cur);
+            var conn = document.getElementById("dcontrolMeasures" + cur).value;
+
+            //alert(conn);
+            if (conn.charAt(conn.length - 1) == "、"
+                || conn.charAt(conn.length - 1) == ",") {
+                conn = conn.substring(0, conn.length - 1);
+            }
+            //alert(conn);
+            var finalname = "";
+            var strs = new Array(); //定义一数组
+            strs = conn.split(",");
+            //alert(strs.length);
+            var i = 0;
+            for (i = 0; i < strs.length; i++) {
+                if (strs != "") {
+                    if (strs[i] == "A") {
+                        $("input[name='winddust" + cur + "'][value='A']").attr(
+                            'checked', true);
+                        //$("[control=A1]").attr('checked',true);
+                    }
+                    if (strs[i] == "B") {
+                        $("input[name='winddust" + cur + "'][value='B']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "C") {
+                        $("input[name='winddust" + cur + "'][value='C']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "D") {
+                        $("input[name='winddust" + cur + "'][value='D']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "E") {
+                        $("input[name='winddust" + cur + "'][value='E']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "F") {
+                        $("input[name='winddust" + cur + "'][value='F']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "G") {
+                        $("input[name='winddust" + cur + "'][value='G']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "H") {
+                        $("input[name='winddust" + cur + "'][value='H']").attr(
+                            'checked', true);
+                    }
+                    if (strs[i] == "I") {
+                        $("input[name='winddust" + cur + "'][value='I']").attr(
+                            'checked', true);
+                    }
+
+                }
+                else {
+                }
+            }
+
+        }
+    });
+</script>
 </body>
 </html>
