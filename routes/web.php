@@ -32,6 +32,21 @@ Route::get('/changepsd', function (){
     return view('layouts.changepsd');
 });
 Route::post('/changepsddo', "UserController@dochange");
+Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
+    $totalexhaust = $request->session()->get("totalexhaust");
+    $request->session()->put(["totalexhaust"=>intval($totalexhaust)+1]);
+    return redirect("/exhaust/new");
+});
+
+Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.exhuast',["NUM"=>$request->session()->get("totalexhaust")]);
+    }else {
+        $exhaust_temps = $request->session()->get("exhaust_temps");
+        return view('layouts.exhuast',["exhaust_temps"=>$exhaust_temps[$index],"NUM"=>($index+1)]);
+    }
+});
+
 Route::get('/tolistRoad',"XjjczController@roadlist");
 Route::get('/toconstruction',"XjjczController@toconstruction");
 Route::get('/toyarddust',"XjjczController@toyarddustlist");
@@ -39,6 +54,7 @@ Route::any('/tonoOrganizationWorkshop',"XjjczController@tonoOrganizationWorkshop
 Route::get('/zhanmentest',function (){
     return view('layouts.a');
 });
+
 Route::any('/Roadlistsave_update',"XjjczController@Roadlistsave_update");
 Route::any('/Roadlistdelete',"XjjczController@Roadlistdelete");
 Route::any('/Conlistdelete',"XjjczController@Conlistdelete");

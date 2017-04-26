@@ -52,8 +52,8 @@ class LoginController extends Controller
         $status = User::where(["fac_no"=>$fac_no,"password"=>$password])->first();
 
         if($status){
-            //$factory = Factory::where("factory_no1",$fac_no)->first()->toArray();
-            $factory = Factory::where("factory_no1",'0102G001-1')->first()->toArray();
+            $factory = Factory::where("factory_no1",$fac_no)->first()->toArray();
+            //$factory = Factory::where("factory_no1",'0102G001-1')->first()->toArray();
             $request->session()->put("factory",$factory);
             $request->session()->put("clientfactoryid",$factory["factory_id"]);
             //return redirect('/home');
