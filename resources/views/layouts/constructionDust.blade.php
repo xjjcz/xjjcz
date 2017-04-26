@@ -310,7 +310,6 @@ $itemroaddusti = 0;
             document.getElementById("grid1").style.display = 'block';
             document.getElementById("add").style.display = 'none';
             document.getElementById("headroad").style.display = 'none';
-            return ;
         }
 
     </script>
@@ -321,6 +320,7 @@ $itemroaddusti = 0;
 
 
 <body onLoad="javascript:document.queryForm.reset()">
+{{$fconstructionsourcetemp}}
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -1064,14 +1064,14 @@ $itemroaddusti = 0;
     $(document).ready(function() {
         //判断如果page的result为空。直接调用add方法
         //alert(1);
-        /*var str =  $fconstructionsourcetemp;
-        if(str=="[]")
+        var str =<?php echo $fconstructionsourcetemp ?>;
+        console.log(str.length);
+        if(str.length==0)
         {
             document.getElementById("yihao").style.display = 'block';
             addTable();
         }else{
-
-        };*/
+        }
         var num = "<?php echo "{$itemroaddusti}" ?>";
         for ( var cur = 1; cur <= num; cur++) {
             var conn = document.getElementById("controlMeasures" + cur).value;

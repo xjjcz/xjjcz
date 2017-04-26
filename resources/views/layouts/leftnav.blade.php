@@ -11,7 +11,7 @@
     $(document)
         .ready(function () {
             var totalexhuast = '{{ session("totalexhaust") }}';
-            var exhaust_temps = new Array('{{  json_encode(session("exhaust_temps")) }}');
+            var exhaust_temps = {!! json_encode(session("exhaust_temps"))  !!};
 
             var realtotalexhuast = exhaust_temps.length;
 

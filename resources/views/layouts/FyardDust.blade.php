@@ -44,7 +44,6 @@ $itemroaddusti = 0;
             src="{{ asset("http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.pack.js") }}"
             type="text/javascript">
     </script>
-    @include("layouts.header")
     <script type="text/javascript" src="{{ asset("/js/autoNumeric.js") }}">
     </script>
     <script src="{{ asset("/js/shihua.js") }}">
@@ -381,7 +380,6 @@ $itemroaddusti = 0;
             }
             //风蚀控制措施可以为空
             //装卸控制措施可以为空
-
             //else if(windSpeed==""){alert("地面风速未填写");}
             if (materialType == "") {
                 alert("物料种类未填写");
@@ -422,9 +420,7 @@ $itemroaddusti = 0;
             }
             else if (controlMeasures == "") {
                 alert("风蚀控制措施未进行选择");
-            }
-
-            else {
+            } else {
                 if (loadingStart == "") {
                     loadingStart = "00:00";
                 }
@@ -432,6 +428,7 @@ $itemroaddusti = 0;
                     loadingTime = "00:00";
                 }
                 $.post("{{url('updateYard')}}", {
+                    '_token': '{{csrf_token()}}',
                     windDustid: windDustid,
                     materialType: materialType,
                     moistureMateria:moistureMateria,

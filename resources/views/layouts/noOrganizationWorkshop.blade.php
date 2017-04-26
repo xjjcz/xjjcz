@@ -381,10 +381,10 @@ $itemroaddusti = 0;
                     workshopArea: array[4]
 
                 }, function (state) {
-                    if (state == 0) {
-                        alert("更新成功");
-                    } else {
+                    if (state <0) {
                         alert("更新失败");
+                    } else {
+                        alert("更新成功");
                     }
                 });
                 location.reload();
