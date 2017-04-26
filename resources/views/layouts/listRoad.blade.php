@@ -124,6 +124,7 @@ $itemroaddusti = 0;
     <script type="text/javascript" language="JavaScript">
         $(document).ready(function () {
             var str = "<?php echo $froaddustsourcetemp?>";
+            console.log(str);
             if(str=="[]")
             {
                 document.getElementById("headroad").style.display = 'block';

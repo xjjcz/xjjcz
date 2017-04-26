@@ -9,6 +9,7 @@ use App\Model\FnoOrganizationTemp;
 use App\Model\FroadDustSourceTemp;
 use App\Model\FyardDustTemp;
 use App\Model\Information;
+use App\Model\Xie;
 use Illuminate\Http\Request;
 use DB;
 
@@ -112,11 +113,14 @@ class XjjczController extends Controller
 
     public function Roadlistinsert(Request $request)
     {
+         $xie = new Xie();
+         $xie->name = "1234";
+         $xie->save();
         $f = new FroadDustSourceTemp();
-
+        //$f->factoryid = $request->session()->get('clientfactoryid');
         $f->scccode = $_POST['scccode'];
         $f->company_name = $_POST['companyName'];
-        $f->factoryid = $_POST['roadfactoryid'];
+        $f->factoryid = intval($_POST['roadfactoryid']);
         $f->path_length = $_POST['pathLength'];
         $f->ispave = $_POST['ispave'];
         $f->aver_width = $_POST['averWidth'];
@@ -167,7 +171,8 @@ class XjjczController extends Controller
     public function updateYard(){
         $a = 1;
         $a = 12;
-        $state = FconstructionDustTemp::where('wind_dustid', $_POST['windDustid'])->update(array(
+        $c=$_POST['windDustid'];
+        $state = FyardDustTemp::where('wind_dustid', $_POST['windDustid'])->update(array(
             'material_type' => $_POST['materialType'],
             'moisture_materia' => $_POST['moistureMateria'],
             'material_capacity' => $_POST['materialCapacity'],
@@ -217,6 +222,7 @@ class XjjczController extends Controller
             'latitude' => $_POST['latitude'],
             'production_use' => $_POST['productionUse'],
             'workshop_area' => $_POST['workshopArea']));
+        $a = $state;
         return $state;
     }
 }
