@@ -56,8 +56,8 @@ class LoginController extends Controller
             //$factory = Factory::where("factory_no1",'0102G001-1')->first()->toArray();
             $request->session()->put("factory",$factory);
             $request->session()->put("clientfactoryid",$factory["factory_id"]);
-            //return redirect('/home');
-            return view("layouts.companyinfo");
+            return redirect('/home');
+            //return view("layouts.companyinfo");
         }else{
             return redirect('/');
         }
