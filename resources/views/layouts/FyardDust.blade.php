@@ -13,9 +13,12 @@ $itemroaddusti = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
 
-    <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
+    <link href="{{ asset("/wuzuzhi/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
+
+    <link href="{{ asset("/wuzuzhi/css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet" media="screen"/>
+
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
     <link href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/chosen.css") }}" rel="stylesheet"/>
@@ -451,7 +454,14 @@ $itemroaddusti = 0;
         }
     </script>
 
-
+    <style type="text/css">
+        .table-condensed thead tr th{
+            visibility: hidden;
+        }
+        .table-condensed thead tr th span{
+            visibility: hidden;
+        }
+    </style>
 </head>
 @include("layouts.header")
 
@@ -1431,6 +1441,26 @@ $itemroaddusti = 0;
     $("#set2").toggle();
     document.getElementById("yarddust").setAttribute("class", "active");
 </script>
+
+
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.js") }}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.zh-CN.js") }}" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+
+
+
 <script type="text/javascript">
     window.jQuery
     || document
