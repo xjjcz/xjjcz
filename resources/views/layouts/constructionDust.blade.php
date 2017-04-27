@@ -138,7 +138,7 @@ $itemroaddusti = 0;
             //alert(numm);
             //alert("890");
             //var companyName= document.getElementById("companyName").value;
-            var confactoryid = document.getElementById("confactoryid").value;
+           /* var confactoryid = document.getElementById("confactoryid").value;
             var longitude1 = document.getElementById("nlongitude1").value;
             var longitude2 = document.getElementById("nlongitude2").value;
             var longitude3 = document.getElementById("nlongitude3").value;
@@ -147,8 +147,7 @@ $itemroaddusti = 0;
             var latitude1 = document.getElementById("nlatitude1").value;
             var latitude2 = document.getElementById("nlatitude2").value;
             var latitude3 = document.getElementById("nlatitude3").value;
-            var latitude4 = document.getElementById("nlatitude4").value;
-
+            var latitude4 = document.getElementById("nlatitude4").value;*/
             var constructionType = document.getElementById("nconstructionType").value;
             var constructState = document.getElementById("nconstructState").value;
             var constructArea = document.getElementById("nconstructArea").value;
@@ -156,7 +155,6 @@ $itemroaddusti = 0;
             var nowkgarea = document.getElementById("nnowkgarea").value;
             var startdate = document.getElementById("nstartdate").value;
             var finishdate = document.getElementById("nfinishdate").value;
-
             var strMonth=document.getElementsByName("Month");
             var objarray=strMonth.length;
             var chestrMonth="";
@@ -186,7 +184,6 @@ $itemroaddusti = 0;
             }
                     $.post("{{ url('addCon')}}", {
                             '_token': '{{csrf_token()}}',
-                            confactoryid:confactoryid,
                             constructionType : constructionType ,
                             constructState : constructState,
                             constructArea  : constructArea,
@@ -196,19 +193,14 @@ $itemroaddusti = 0;
                             constructMonths : chestrMonth ,
                             controlMeasures : controlMeasures
                         },
-                        function(data) {
-                            //alert(1345);
-
-                            var json = eval("(" + data + ")");
-                            if (json.status == 1) {
-                                numm++;
-                                alert("当前共填写数据"+numm+"条,该施工扬尘源保存成功！");
-                                window.location.reload();
-                            } else {
-                                alert("施工扬尘源保存失败！");
-                            }
-
-                        });
+            function (state) {
+                if (state == 1) {
+                    alert("施工扬尘源保存成功！");
+                    window.location.reload();
+                } else {
+                    alert("施工扬尘源保存失败！");
+                }
+            });
 
 
 
@@ -241,15 +233,12 @@ $itemroaddusti = 0;
         }
         function updateCon(dustitem) {
             var constructDustid = document.getElementById("conDustid"+dustitem).value;
-
-
             var constructionType = document.getElementById("constructionType"+dustitem).value;
             var constructState = document.getElementById("constructState"+dustitem).value;
             var constructArea = document.getElementById("constructArea"+dustitem).value;
             var nowkgarea = document.getElementById("nowkgarea"+dustitem).value;
             var startdate = document.getElementById("startdate"+dustitem).value;
             var finishdate = document.getElementById("finishdate"+dustitem).value;
-
             //月份复选框
             var strMonth=document.getElementsByName("Month"+dustitem);
             var objarray=strMonth.length;
@@ -281,7 +270,6 @@ $itemroaddusti = 0;
 
 
 
-                    //companyName: companyName,
                     $.post("{{url('updateCon')}}", {
                             '_token': '{{csrf_token()}}',
                             constructDustid:constructDustid,
@@ -320,7 +308,6 @@ $itemroaddusti = 0;
 
 
 <body onLoad="javascript:document.queryForm.reset()">
-{{$fconstructionsourcetemp}}
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -774,9 +761,7 @@ $itemroaddusti = 0;
                                         </label>
 
                                         <div class="col-md-8">
-                                            <!--<input type="text" id="nconstructState"
-                                                class="form-control" style="height: 30px; width: 170px;" />
-                                            --><select name="constructStage" id="nconstructState"
+                                            <select name="constructStage" id="nconstructState"
                                                        class="form-control"
                                                        style="width:170px;height:30px;">
                                                 <option value=""></option>
@@ -1064,7 +1049,11 @@ $itemroaddusti = 0;
     $(document).ready(function() {
         //判断如果page的result为空。直接调用add方法
         //alert(1);
-        var str =<?php echo $fconstructionsourcetemp ?>;
+        var str ={!! $fconstructionsourcetemp !!};
+        /*for(i=0;i<str.length;i++){
+            alert(str[i]['scccode']);
+        }   */
+
         console.log(str.length);
         if(str.length==0)
         {

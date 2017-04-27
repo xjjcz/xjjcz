@@ -10,7 +10,7 @@
     var alertadd = "对不起！您有新增页面没有保存或当前页面必填项未填写完,请保存或填写完再添加！";
     $(document)
         .ready(function () {
-            var totalexhuast = '{{ session("totalexhaust") }}';
+            var totalexhuast = {!! session("totalexhaust") !!};
             var exhaust_temps = {!! json_encode(session("exhaust_temps"))  !!};
 
             var realtotalexhuast = exhaust_temps.length;
@@ -377,7 +377,7 @@
         </li>
         <li id='exhaust'>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yantong.png"
+                            src="{{ asset("/img/yantong.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">烟囱/排气筒</span> <b class="arrow icon-angle-down"></b>
             </a>
@@ -390,14 +390,14 @@
         </li>
         <li>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yaolu.png"
+                            src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">锅炉</span> <b class="arrow icon-angle-down"></b>
             </a>
             <ul class="submenu" id="station">
                 <li id="stationinfo">
                     <a onclick="addsaveinfo(0,'stationary')"> <i class=""><img
-                                    src="img\qiye.png"
+                                    src="{{ asset("/img/qiye.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 总信息 </span> </a>
                 </li>
@@ -405,7 +405,7 @@
 
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">锅炉列表</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -422,21 +422,21 @@
         </li>
         <li>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yaolu.png"
+                            src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">窑炉</span> <b class="arrow icon-angle-down"></b>
             </a>
             <ul class="submenu" id="kiln">
                 <li id="kilninfo">
                     <a onclick="addsaveinfo(0,'procedure')"> <i class=""><img
-                                    src="img\qiye.png"
+                                    src="{{ asset("/img/qiye.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 总信息 </span> </a>
                 </li>
 
                 <!--li>
                                     <a href="#" class="dropdown-toggle">
-                                        <i class=""><img src="img\yantong.png" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
+                                        <i class=""><img src="{{ asset("/img/yantong.png") }}" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
                                         <span class="menu-text">烟囱/排气筒管理</span>
                                         <b class="arrow icon-angle-down"></b>
                                     </a>
@@ -451,7 +451,7 @@
                                 </li>-->
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">窑炉列表</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -469,21 +469,21 @@
 
         <li>
             <a href="/" class="dropdown-toggle"> <i class=""><img
-                            src="img\yaolu.png"
+                            src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">设备生产原料及产品</span> <b
                         class="arrow icon-angle-down"></b> </a>
             <ul class="submenu" id="device">
                 <li id="deviceinfo">
                     <a onclick="addsaveinfo(0,'product')"> <i class=""><img
-                                    src="img\qiye.png"
+                                    src="{{ asset("/img/qiye.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">总信息 </span> </a>
                 </li>
 
                 <!-- <li>
                                     <a href="#" class="dropdown-toggle">
-                                        <i class=""><img src="img\yantong.png" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
+                                        <i class=""><img src="{{ asset("/img/yantong.png") }}" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
                                         <span class="menu-text">烟囱/排气筒管理</span>
                                         <b class="arrow icon-angle-down"></b>
                                     </a>
@@ -498,7 +498,7 @@
                                 </li>-->
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">生产工艺装置</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -513,7 +513,7 @@
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">原料信息</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -526,7 +526,7 @@
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">产品信息</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -541,14 +541,14 @@
         </li>
         <li>
             <a href="/" class="dropdown-toggle"> <i class=""><img
-                            src="img\yaolu.png"
+                            src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">溶剂使用原料及产品</span> <b
                         class="arrow icon-angle-down"></b> </a>
             <ul class="submenu" id="rongji">
                 <li id="rongjiinfo">
                     <a onclick="addsaveinfo(0,'rongji')"> <i class=""><img
-                                    src="img\qiye.png"
+                                    src="{{ asset("/img/qiye.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">总信息 </span> </a>
                 </li>
@@ -556,7 +556,7 @@
 
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">原料信息</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -569,7 +569,7 @@
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle"> <i class=""><img
-                                    src="img\yaolu.png"
+                                    src="{{ asset("/img/yaolu.png") }}"
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">产品信息</span> <b
                                 class="arrow icon-angle-down"></b> </a>
@@ -584,7 +584,7 @@
         </li>
         <li id='feiqi'>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yantong.png"
+                            src="{{ asset("/img/yantong.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">废弃物处理设备</span> <b
                         class="arrow icon-angle-down"></b> </a>
@@ -599,7 +599,7 @@
         <!--gaolihong -->
         <li>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yaolu.png"
+                            src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">生产辅助设施</span> <b class="arrow icon-angle-down"></b>
             </a>
@@ -607,7 +607,7 @@
                 <li id="roaddust">
                     <a
                             href="{{ url("tolistRoad") }}">
-                        <i class=""><img src="img\qiye.png"
+                        <i class=""><img src="{{ asset("/img/qiye.png") }}"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂道路信息</span> </a>
                 </li>
@@ -615,26 +615,26 @@
                 <li id="condust">
                     <a
                             href="{{ url("toconstruction") }}">
-                        <i class=""><img src="img\qiye.png"
+                        <i class=""><img src="{{ asset("/img/qiye.png") }}"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂施工信息</span> </a>
                 </li>
                 <li id="yarddust">
                     <a href={{ url("toyarddust") }}> <i
-                                class=""><img src="img\qiye.png"
+                                class=""><img src="{{ asset("/img/qiye.png") }}"
                                               style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂堆场信息</span> </a>
                 </li>
                 <li id="baredust">
                     <a href={{ url("tobaresoil") }}>
-                        <i class=""><img src="img\qiye.png"
+                        <i class=""><img src="{{ asset("/img/qiye.png") }}"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">工厂裸土面积</span> </a>
                 </li>
                 <li id="workshop">
                     <a
                             href={{ url("tonoOrganizationWorkshop") }}>
-                        <i class=""><img src="img\qiye.png"
+                        <i class=""><img src="{{ asset("/img/qiye.png") }}"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 工厂车间情况</span> </a>
                 </li>
@@ -644,7 +644,7 @@
 
         <li id='user'>
             <a href="#" class="dropdown-toggle"> <i class=""><img
-                            src="img\yantong.png"
+                            src="{{ asset("/img/yantong.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">用户信息管理</span> <b
                         class="arrow icon-angle-down"></b> </a>
@@ -652,7 +652,7 @@
                 <li id="lipsd">
                     <a
                             href="{{ url("/changepsd") }}">
-                        <i class=""><img src="img\qiye.png"
+                        <i class=""><img src="{{ asset("/img/qiye.png") }}"
                                          style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text"> 密码修改</span> </a>
 
