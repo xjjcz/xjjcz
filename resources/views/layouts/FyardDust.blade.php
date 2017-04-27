@@ -178,7 +178,7 @@ $itemroaddusti = 0;
         function addYard() {
 
             //alert("addYard");
-            var numm = document.getElementById("itemyarddusti").value;
+/*            var numm = document.getElementById("itemyarddusti").value;
             var longitude1 = document.getElementById("ndlongitude1").value;
             var longitude2 = document.getElementById("ndlongitude2").value;
             var longitude3 = document.getElementById("ndlongitude3").value;
@@ -187,20 +187,31 @@ $itemroaddusti = 0;
             var latitude1 = document.getElementById("ndlatitude1").value;
             var latitude2 = document.getElementById("ndlatitude2").value;
             var latitude3 = document.getElementById("ndlatitude3").value;
-            var latitude4 = document.getElementById("ndlatitude4").value;
+            var latitude4 = document.getElementById("ndlatitude4").value;*/
             //var scccode = document.getElementById("nscccode").value;
 
             var materialType = document.getElementById("ndmaterialType").value;
-            var windSpeed = document.getElementById("ndwindSpeed").value;
-
+            var moistureMateria = document.getElementById("ndmoistureMateria").value;
             var materialCapacity = document.getElementById("ndmaterialCapacity").value;
             var loadingCount = document.getElementById("ndloadingCount").value;
+            var loadingCapacity = document.getElementById("ndloadingCapacity").value;
+            var heapCovered = document.getElementById("ndheapCovered").value;
+            var heapArea = document.getElementById("ndheapArea").value;
+            var heapHeigh = document.getElementById("ndheapHeigh").value;
+
+
+
+
+
+            /*var windSpeed = document.getElementById("ndwindSpeed").value;*/
+
             var loadingStart = document.getElementById("ndloadingStart").value;
             var loadingTime = document.getElementById("ndloadingTime").value;
 
-            var loadingCapacity = document.getElementById("ndloadingCapacity").value;
 
             //var controlMeasures = document.getElementById("ndcontrolMeasures").value;
+
+
             var str = document.getElementsByName("winddust");
             var objarray = str.length;
             var controlMeasures = "";
@@ -213,12 +224,9 @@ $itemroaddusti = 0;
                 controlMeasures = "";
             }
             //alert("风蚀控制措施"+controlMeasures);
-            var moistureMateria = document.getElementById("ndmoistureMateria").value;
             var materialType1 = document.getElementById("ndmaterialType1").value;
 
-            var heapArea = document.getElementById("ndheapArea").value;
-            var heapHeigh = document.getElementById("ndheapHeigh").value;
-            var heapCovered = document.getElementById("ndheapCovered").value;
+
 
             //var controlMeasures1 = document.getElementById("ndcontrolMeasures1").value;
             var str = document.getElementsByName("yarddust");
@@ -277,43 +285,27 @@ $itemroaddusti = 0;
                 }
                 //alert(loadingStart+"..."+loadingTime);
                 //alert(1);companyName : companyName,scccode:scccode,
-                $.post("ajax/FyardDustSourceTemp/addYardDust.do", {
-                    longitude1: longitude1,
-                    longitude2: longitude2,
-                    longitude3: longitude3,
-                    longitude4: longitude4,
-                    latitude1: latitude1,
-                    latitude2: latitude2,
-                    latitude3: latitude3,
-                    latitude4: latitude4,
-
+                $.post("{{url('addYardDust')}}", {
+                    '_token': '{{csrf_token()}}',
                     materialType: materialType,
-                    windSpeed: windSpeed,
+                    moistureMateria:moistureMateria,
                     materialCapacity: materialCapacity,
                     loadingCount: loadingCount,
-                    loadingStart: loadingStart,
-                    loadingTime: loadingTime,
                     loadingCapacity: loadingCapacity,
-                    controlMeasures: controlMeasures,
-                    moistureMateria: moistureMateria,
-
-                    materialType1: materialType1,
+                    heapCovered: heapCovered,
                     heapArea: heapArea,
                     heapHeigh: heapHeigh,
-                    heapCovered: heapCovered,
+                    loadingStart: loadingStart,
+                    loadingTime: loadingTime,
                     controlMeasures1: controlMeasures1,
-                }, function (data) {
-                    //alert("nihao 123");
-                    var json = eval("(" + data + ")");
-                    //alert(json.status);
-                    if (json.status == 1) {
-                        numm++;
-                        alert("当前共填写数据" + numm + "条，该堆场扬尘源保存成功！");
+                    controlMeasures: controlMeasures
+                }, function (state) {
+                    if (state == 1) {
+                        alert("堆场扬尘源保存成功！");
                         window.location.reload();
                     } else {
                         alert("堆场扬尘源保存失败！");
                     }
-
                 });
 
             }

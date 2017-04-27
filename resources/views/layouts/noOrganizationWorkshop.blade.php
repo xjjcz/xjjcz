@@ -135,8 +135,6 @@ $itemroaddusti = 0;
         });
     </script>
     <script type="text/javascript">
-
-
         function addRow() {
 
             var tabObj = document.getElementById("grid1");//获取添加数据的表格
@@ -152,7 +150,7 @@ $itemroaddusti = 0;
 //			td[i].innerHTML = "<input type='checkbox' name='ischeck' id='chkArr'  />";
 //		else
                 if (i == 5) {
-                    td[i].innerHTML = "<input  name='123' id='1'  style='width:60px' type='button' value='保存' onclick='savepage(-1)'/>";
+                    td[i].innerHTML = "<input  name='123' id='1'  style='width:60px' type='button' value='保存' onclick='savepageadd(-1)'/>";
                     //td[i].innerHTML = "<span style='width:100px' id='tt'  class='ui-pg-div' onclick='savepage(-1)' ><span class='ui-icon icon-refresh green'></span></span>";
                 } else {
 
@@ -162,7 +160,6 @@ $itemroaddusti = 0;
 
             }
 
-            document.getElementById("add").disabled = true;
         }
         //删除所选中的行，且直接删除数据库中的数据
         function deletejspresult(wsid) {
@@ -323,30 +320,13 @@ $itemroaddusti = 0;
 
 
         //保存完成后，新增按钮点亮，一次只允许添加一行
-        function savepage(wsid) {
-            //用js提取页面中值
-            if (wsid == -1) {
-                var elms = document.getElementsByName("chkArr");
-                var array = new Array(elms.length);
-                for (var i = 0; i < 5; i++) {
-                    array[i] = elms[i].value;
-
-                }
-
+        function savepageadd(aa) {
+            var elms = document.getElementsByName("chkArr");
+            var array = new Array(elms.length);
+            for (var i = 0; i < 5; i++) {
+                array[i] = elms[i].value;
 
             }
-
-            else {
-                var elms = document.getElementsByName("modify" + wsid);
-
-                var array = new Array(elms.length);
-                for (var i = 0; i < elms.length; i++) {
-                    array[i] = elms[i].value;
-                }
-
-
-            }
-
             if (isNaN(array[0])) {
                 alert("车间编号必须输入数字！");
                 return;
@@ -371,9 +351,8 @@ $itemroaddusti = 0;
                     if (checklat(array[2]));
                     else return;
                 }
-                $.post("{{url('FnoOrganizationWorkshopDischargeTempupdate')}}", {
+                $.post("{{url('savenoOrganpageadd')}}", {
                     '_token': '{{csrf_token()}}',
-                    wsid: wsid,
                     workshopid: array[0],
                     longitude: array[1],
                     latitude: array[2],
@@ -381,28 +360,97 @@ $itemroaddusti = 0;
                     workshopArea: array[4]
 
                 }, function (state) {
-                    if (state <0) {
-                        alert("更新失败");
+                    if (state < 0) {
+                        alert("保存失败");
                     } else {
-                        alert("更新成功");
+                        alert("保存成功");
                     }
                 });
                 location.reload();
 
 
             }
+            function savepage(wsid) {
+                //用js提取页面中值
+                if (wsid == -1) {
+                    var elms = document.getElementsByName("chkArr");
+                    var array = new Array(elms.length);
+                    for (var i = 0; i < 5; i++) {
+                        array[i] = elms[i].value;
+
+                    }
 
 
-            document.getElementById("add").disabled = false;
-            $('#edit' + wsid).show();
-            $('#save' + wsid).hide();
-        }//end
+                }
 
-        function setAllCheckboxState(name, state) {
-            var elms = document.getElementsByName("ischeck");
+                else {
+                    var elms = document.getElementsByName("modify" + wsid);
 
-            for (var i = 0; i < elms.length; i++) {
-                elms[i].checked = state;
+                    var array = new Array(elms.length);
+                    for (var i = 0; i < elms.length; i++) {
+                        array[i] = elms[i].value;
+                    }
+
+
+                }
+
+                if (isNaN(array[0])) {
+                    alert("车间编号必须输入数字！");
+                    return;
+                } else if (isNaN(array[4])) {
+                    alert("车间面积必须输入数字！");
+                    return;
+                } else if (array[4].length == 0) {
+                    alert("车间面积不能为空！");
+                    return;
+                } else if (array[0].length == 0) {
+                    alert("车间编号不能为空！");
+                    return;
+                }
+                else {
+                    if (array[1].length != 0) {
+                        if (checklon(array[1]));//检查
+                        else return;
+                    }
+                    if (array[2].length != 0) {
+                        // alert("纬度检查");
+                        //如果检查不通过，直接return;
+                        if (checklat(array[2]));
+                        else return;
+                    }
+                    $.post("{{url('FnoOrganizationWorkshopDischargeTempupdate')}}", {
+                        '_token': '{{csrf_token()}}',
+                        wsid: wsid,
+                        workshopid: array[0],
+                        longitude: array[1],
+                        latitude: array[2],
+                        productionUse: array[3],
+                        workshopArea: array[4]
+
+                    }, function (state) {
+                        if (state < 0) {
+                            alert("更新失败");
+                        } else {
+                            alert("更新成功");
+                        }
+                    });
+                    location.reload();
+
+
+                }
+
+
+                document.getElementById("add").disabled = false;
+                $('#edit' + wsid).show();
+                $('#save' + wsid).hide();
+            }//end
+
+            function setAllCheckboxState(name, state) {
+                var elms = document.getElementsByName("ischeck");
+
+                for (var i = 0; i < elms.length; i++) {
+                    elms[i].checked = state;
+                }
             }
         }
 
