@@ -137,6 +137,29 @@ $itemroaddusti = 0;
     </script>
 
     <script type="text/javascript">
+        function addnewRow(){
+
+            var tabObj=document.getElementById("grid1");//获取添加数据的表格
+            var rowsNum = tabObj.rows.length;  //获取当前行数
+            var colsNum=tabObj.rows[rowsNum-1].cells.length;//获取行的列数
+
+            var td=new Array(colsNum);
+            var myNewRow = tabObj.insertRow(rowsNum);//插入新行
+
+
+            for(var i = 0 ; i <2 ; i ++){
+                td[i]=myNewRow.insertCell(i);
+                if(i==1){
+                    td[i].innerHTML="<input type='button' value='保存' style='width:60px'   class='ui-pg-div' onclick='savepagesoiladd(-1)' />";
+                }
+                else if(i==0){
+
+                    td[i].innerHTML="<input  name='chkArr' id='newadd'  style='width:120px'  onkeyup='checkNum(this);' maxlength='20'  />";
+
+                }
+            }
+            document.getElementById("addbare").disabled=true;
+        }
         function modify(loadingid) {
             $('#edit' + loadingid).hide();
             $('#save' + loadingid).show();
@@ -171,6 +194,25 @@ $itemroaddusti = 0;
 
         //2015年6月19日  刘晓晨
         //保存完成后，新增按钮点亮，一次只允许添加一行
+        function savepagesoiladd(loadingid){
+            var elms = document.getElementsByName("chkArr");
+            var array = new Array(elms.length)
+            for (var i = 1; i < 2; i++) {
+                array[i] = elms[i - 1].value;
+            }
+            var barearea = array[1];
+            $.post('{{url('savepagesoiladd')}}',{'_token': '{{csrf_token()}}', barearea: barearea},function (state) {
+
+                    if (state == 1) {
+                        alert("裸土扬尘源保存成功！");
+                    } else {
+                        alert("裸土扬尘源保存失败！");
+                    }
+
+            });
+            window.location.reload();
+
+        }
         function savepagesoil(loadingid) {
             //用js提取页面中值
 

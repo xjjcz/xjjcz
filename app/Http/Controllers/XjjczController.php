@@ -113,9 +113,6 @@ class XjjczController extends Controller
 
     public function Roadlistinsert(Request $request)
     {
-         $xie = new Xie();
-         $xie->name = "1234";
-         $xie->save();
         $f = new FroadDustSourceTemp();
         //$f->factoryid = $request->session()->get('clientfactoryid');
         $f->scccode = $_POST['scccode'];
@@ -164,14 +161,37 @@ class XjjczController extends Controller
         }
     }
 
-    public function addCon()
+    public function addCon(Request $request)
     {
+        $fconstructionDustTemp = new FconstructionDustTemp();
+        $fconstructionDustTemp->factoryid = $request->session()->get('clientfactoryid');
+        $fconstructionDustTemp->construction_type = $_POST['constructionType'];
+        $fconstructionDustTemp->construct_state = $_POST['constructState'];
+        $fconstructionDustTemp->construct_area = $_POST['constructArea'];
+        $a = $_POST['nowkgarea'];
+        if($a == ""){$fconstructionDustTemp->nowkgarea = 0;}else{
+        $fconstructionDustTemp->nowkgarea = $_POST['nowkgarea'];}
+        //$fconstructionDustTemp->startdate = $_POST['startdate'];
+        //$fconstructionDustTemp->finishdate = $_POST['finishdate'];
+        $fconstructionDustTemp->construct_months = $_POST['constructMonths'];
+        $fconstructionDustTemp->control_measures = $_POST['controlMeasures'];
+        $fconstructionDustTemp->scccode = '1603004002';
+        $fconstructionDustTemp->save();
+        return 1;
+       /* $state = FconstructionDustTemp::create(array(
 
+            'factoryid' => $request->session()->get('clientfactoryid'),
+            'construction_type' => $_POST['constructionType'],
+            'construct_state' => $_POST['constructState'],
+            'construct_area' => $_POST['constructArea'],
+            'nowkgarea' => $_POST['nowkgarea'],
+            'startdate' => $_POST['startdate'],
+            'finishdate' => $_POST['finishdate'],
+            'construct_months' => $_POST['constructMonths'],
+            'control_measures' => $_POST['controlMeasures']
+        ));*/
     }
     public function updateYard(){
-        $a = 1;
-        $a = 12;
-        $c=$_POST['windDustid'];
         $state = FyardDustTemp::where('wind_dustid', $_POST['windDustid'])->update(array(
             'material_type' => $_POST['materialType'],
             'moisture_materia' => $_POST['moistureMateria'],
@@ -191,6 +211,26 @@ class XjjczController extends Controller
         } else {
             return 0;
         }
+    }
+    public function addYardDust(Request $request){
+        $fyardDustTemp = new FyardDustTemp();
+        $fyardDustTemp->factoryid = $request->session()->get('clientfactoryid');
+        $fyardDustTemp->material_type = $_POST['materialType'];
+        $fyardDustTemp->moisture_materia = $_POST['moistureMateria'];
+        $fyardDustTemp->material_capacity = $_POST['materialCapacity'];
+        $fyardDustTemp->loading_count = $_POST['loadingCount'];
+
+        $fyardDustTemp->loading_capacity = $_POST['loadingCapacity'];
+        $fyardDustTemp->heap_covered = $_POST['heapCovered'];
+        $fyardDustTemp->heap_area = $_POST['heapArea'];
+        $fyardDustTemp->heap_heigh = $_POST['heapHeigh'];
+        //$fyardDustTemp->loading_start = $_POST['loadingStart'];
+        //$fyardDustTemp->loading_time = $_POST['loadingTime'];
+        $fyardDustTemp->control_measures1 = $_POST['controlMeasures1'];
+        $fyardDustTemp->control_measures = $_POST['controlMeasures'];
+        $fyardDustTemp->scccode = '1603004002';
+        $fyardDustTemp->save();
+        return 1;
     }
     public  function tobaresoil(Request $request){
         $clientfactoryid = $request->session()->get("clientfactoryid");
@@ -224,5 +264,23 @@ class XjjczController extends Controller
             'workshop_area' => $_POST['workshopArea']));
         $a = $state;
         return $state;
+    }
+    public  function savenoOrganpageadd(Request $request){
+        $fnoOrganizationTemp = new  FnoOrganizationTemp();
+        $fnoOrganizationTemp->factoryid = $request->session()->get('clientfactoryid');
+        $fnoOrganizationTemp->workshopid = $_POST['workshopid'];
+        $fnoOrganizationTemp->longitude = $_POST['longitude'];
+        $fnoOrganizationTemp->latitude = $_POST['latitude'];
+        $fnoOrganizationTemp->production_use = $_POST['productionUse'];
+        $fnoOrganizationTemp->workshop_area = $_POST['workshopArea'];
+        $fnoOrganizationTemp->save();
+        return 1;
+    }
+    public function  savepagesoiladd(Request $request){
+        $fbaresoilDustTemp = new FbaresoilDustTemp();
+        $fbaresoilDustTemp->factoryid = $request->session()->get("clientfactoryid");
+        $fbaresoilDustTemp->bare_soil_area = $_POST['barearea'];
+        $fbaresoilDustTemp->save();
+        return 1;
     }
 }
