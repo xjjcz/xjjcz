@@ -10,6 +10,7 @@
     var alertadd = "对不起！您有新增页面没有保存或当前页面必填项未填写完,请保存或填写完再添加！";
     $(document)
         .ready(function () {
+            //exhuast
             var totalexhuast = {!! session("totalexhaust") !!};
             var exhaust_temps = {!! json_encode(session("exhaust_temps"))  !!};
 
@@ -30,6 +31,25 @@
                     + "'><a onclick='getnewexhaust()'><i class='icon-double-angle-right'></i>"
                     + i + "号烟囱/排气筒 </a></li>";
             }
+            //device
+            var device_num = {!! session("device_num") !!};
+            var total_productraw_temp = {!! json_encode(session("total_productraw_temp"))  !!};
+            var real_device_num = total_productraw_temp[0].device_num;
+            var i = 1;
+
+            for (; i <= real_device_num; i++) {
+
+                document.getElementById("deviceul").innerHTML += "<li id='deviceli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getdevice("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + i + "号设备</a></li>";
+            }
+            if(device_num>real_device_num){
+                document.getElementById("deviceul").innerHTML += "<li id='deviceli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewdevice()'><i class='icon-double-angle-right'></i>"
+                    + i + "号设备</a></li>";
+            }
 
 
         });
@@ -38,6 +58,12 @@
     }
     function getnewexhaust(i){
         window.location.href = '{{ url("/exhaust") }}'+'/new';
+    }
+    function getdevice(i){
+        window.location.href = '{{ url("/device") }}'+'/'+i;
+    }
+    function getnewdevice(i){
+        window.location.href = '{{ url("/device") }}'+'/new';
     }
 
     function addyaolukiln() {
@@ -173,7 +199,7 @@
 
 
     function adddevice() {
-
+        var device_num = {!! session("device_num") !!};
         if (!checkvalue(1)) {
             alert(alertadd);
             return;
@@ -185,19 +211,20 @@
         } else {
 
             var number = 0;
-            if ('${totaldevice.deviceNum}' != null) {
-                if ('${totaldevice.deviceNum}' == "") {
+            if (device_num != null) {
+                if (device_num == "") {
                     number = 1;
                 } else {
-                    number = parseInt('${totaldevice.deviceNum}') + 1;
+                    number = parseInt(device_num) + 1;
                 }
             } else {
                 number++;
             }
             var m_newdevice = 1;
             document.getElementById("deviceul").innerHTML += "<li id='deviceli" + number + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + number + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号设备</a></li>";
-
+            window.location.href = '{{ url("/adddevice") }}';
         }
+
     }
 
 

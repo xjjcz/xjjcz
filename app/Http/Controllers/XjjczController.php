@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Device_temp;
 use App\Model\Exhaust_temp;
 use App\Model\FbaresoilDustTemp;
 use App\Model\FconstructionDustTemp;
@@ -9,6 +10,7 @@ use App\Model\FnoOrganizationTemp;
 use App\Model\FroadDustSourceTemp;
 use App\Model\FyardDustTemp;
 use App\Model\Information;
+use App\Model\Total_productraw_temp;
 use App\Model\Xie;
 use Illuminate\Http\Request;
 use DB;
@@ -31,6 +33,19 @@ class XjjczController extends Controller
         $totalexhaust = count($exhaust_temps);
         $request->session()->put("totalexhaust", $totalexhaust);
         $request->session()->put("exhaust_temps", $exhaust_temps);
+        //find product
+        $total_productraw_temp = Total_productraw_temp::where("FACTORY_ID",$clientfactoryid)->get()->toArray();
+        $request->session()->put("total_productraw_temp",$total_productraw_temp);
+        $request->session()->put("device_num",$total_productraw_temp[0]["device_num"]);
+        //find device by exhaust
+        $device_temps = array();
+        foreach($exhaust_temps as $exhaust_temp){
+            $devices = Device_temp::where("EXHUST_ID",$exhaust_temp["EXF_ID"])->get()->toArray();
+            foreach($devices as $device){
+                array_push($device_temps,$device);
+            }
+        }
+        $request->session()->put("device_temps",$device_temps);
         return view("layouts.companyinfo");
     }
     public function roadlist(Request $request)
