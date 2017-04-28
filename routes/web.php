@@ -50,6 +50,20 @@ Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$inde
         return view('layouts.exhuast',["exhaust_temps"=>$exhaust_temps[$index],"NUM"=>($index+1)]);
     }
 });
+Route::any('/adddevice', function (\Illuminate\Http\Request $request){
+    $device_num = $request->session()->get("device_num");
+    $request->session()->put(["device_num"=>intval($device_num)+1]);
+    return redirect("/device/new");
+});
+
+Route::get('/device/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.device',["NUM"=>$request->session()->get("device_num")]);
+    }else {
+        $device_temps = $request->session()->get("device_temps");
+        return view('layouts.device',["device_temp"=>$device_temps[$index],"NUM"=>($index+1)]);
+    }
+});
 
 Route::get('/tolistRoad',"XjjczController@roadlist");
 Route::get('/toconstruction',"XjjczController@toconstruction");

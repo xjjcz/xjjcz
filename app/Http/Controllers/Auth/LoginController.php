@@ -57,6 +57,7 @@ class LoginController extends Controller
             $request->session()->put("factory",$factory);
             $request->session()->put("clientfactoryid",$factory["factory_id"]);
             return redirect('/home');
+            //return view("layouts.companyinfo");
         }else{
             return redirect('/');
         }
