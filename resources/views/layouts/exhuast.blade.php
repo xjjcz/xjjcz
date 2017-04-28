@@ -40,22 +40,12 @@
     <link rel="stylesheet" href="{{ asset("/css/ace.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/ace-rtl.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/ace-skins.min.css") }}" />
-    <script src="{{ asset("/js/client.js") }}">
-    </script>
-    <script src="{{ asset("/js/savehelp.js") }}">
-    </script>
-
+    <script src="{{ asset("/js/client.js") }}"></script>
+    <script src="{{ asset("/js/savehelp.js") }}"></script>
     <link rel="stylesheet" href="{{ asset("/js/ace-ie.min.css") }}" />
-
-
-    <script src="{{ asset("/js/ace-extra.min.js") }}">
-    </script>
-
-
+    <script src="{{ asset("/js/ace-extra.min.js") }}"></script>
     <script src="{{ asset("/js/html5shiv.js") }}"></script>
     <script src="{{ asset("/js/respond.min.js") }}"></script>
-
-    <!-- fonts -->
 
     <link rel="stylesheet"
           href="http://fonts.googleapis.com/css?family=Open+Sans:400,300"/>
@@ -76,7 +66,13 @@
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function (){
+            var bool = '{!! $exhaust_temps['EXF_LATITUDE'] or 0 !!}';
+            if(bool==0){
+                alert(123);
+                }else {
+                    alert(456);
+                };
             //alert(document.getElementById(material_name1).innerHTML);
             document.getElementById("NUM").innerHTML = "<b>" + {{ $NUM }}
                 + "号烟囱</b>";
@@ -376,65 +372,49 @@
          * 2015/5/24
          * */
 
-        function justsaveinfo(page, source) {
-            if (!checkvalue()) {
-                return;
-            }
-            /* var malert=document.getElementById("malert").value;
-             if(malert==0){
-             alert("提交数据库成功!");
-             var m_alert=parseInt(document.getElementById("malert").value);
-             if(m_alert==0){
-             m_alert='${alert}';
-             }
-             saveinfo(page,source,'exhaust',m_alert);
-             }
-             }  */
-            var fabriexfno = document.getElementById("fabriexfno").value;
+        function ExhaustTempsaveevery() {
+
+
+            var fabriexfno = {!! $NUM !!};
             var material = document.getElementById("material").value;
             var exfheight = document.getElementById("exfheight").value;
-            var smoke_outtem = document.getElementById("smoke_outtem").value;
             var smoke_outd = document.getElementById("smoke_outd").value;
+            var smoke_outtem = document.getElementById("smoke_outtem").value;
+
             var smoke_outv = document.getElementById("smoke_outv").value;
+            var smokeOuta = document.getElementById("smokeOuta").value;
             var longitude = document.getElementById("longitude").value;
             var latitude = document.getElementById("latitude").value;
-            var smokeOuta = document.getElementById("smokeOuta").value;
-            var m_pages = parseInt(document.getElementById("page").value);
-            var gnnub = m_pages;//表示保存设备m_pages
+            //var m_pages = parseInt(document.getElementById("page").value);
+            //var gnnub = m_pages;//表示保存设备m_pages
             var malert = parseInt(document.getElementById("malert").value); //0表示未改变，1表示改变
+            if(1){
 
-            $
-                .post("ajax/ExhaustTemp/saveevery.do", {
-                    exfNo: fabriexfno,
+            $.post("{{ url('ExhaustTempsaveevery') }}", {
+                    '_token': '{{csrf_token()}}',
+                    fabriexfno:fabriexfno,
                     exfMaterial: material,
-                    smokeOuta: smokeOuta,
                     exfHeight: exfheight,
                     smokeOutd: smoke_outd,
                     smokeOutteM: smoke_outtem,
                     smokeOutv: smoke_outv,
+                    smokeOuta: smokeOuta,
                     exfLongitude: longitude,
-                    exfLatitude: latitude,
-                    gnnub: gnnub,
-                    alert: malert,
-                    page: page
-                }, function (data) {
-                    var json = eval("(" + data + ")");
-                    //alert(json.sys_code);
-                    if (json.sys_code == "suc") {
-                        alert("保存成功");
-                        var m_alert = parseInt(document
-                            .getElementById("malert").value);
-                        if (m_alert == 0) {
-                            m_alert = '${alert}';
-                        }
-                        saveinfo(page, source, 'exhaust', m_alert);
+                    exfLatitude: latitude
+                },   function (state) {
+                    if (state == 1) {
+                        alert("施工扬尘源保存成功！");
+                        window.location.href = '{{ url("/exhaust") }}' + '/' + '{!! $NUM-1 !!}';
+                    } else {
+                        alert("施工扬尘源保存失败！");
                     }
-
                 });
+            }else {
+
+            }
         }
 
         function jumpsave(source) {
-
             var m_alert = parseInt(document.getElementById("malert").value);
             if (m_alert == 0) {
                 m_alert = '${alert}';
@@ -477,7 +457,6 @@
 <body>
 @include("layouts.header")
 
-
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -514,7 +493,7 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
-                        <a href="#">${item.factoryName}</a>
+                        <a href="#"></a>
                     </li>
 
                     <li>
@@ -551,7 +530,7 @@
                                 <div class="col-md-8">
                                     <label id='factoryName'
                                            style="font-size: 16px; font-family: '楷体'; font-weight: bold; margin-top: 2px;">
-                                        ${item.factoryName}
+                                        {{ session('factory')['factory_name'] }}
                                     </label>
                                 </div>
                             </div>
@@ -566,7 +545,7 @@
                                 <div class="col-md-8">
                                     <label id='factotyno'
                                            style="font-size: 16px; font-family: '楷体';; font-weight: bold; margin-top: 2px;">
-                                        ${item.factoryNo1}
+                                        {{ session('factory')['factory_no1'] }}
                                     </label>
                                 </div>
                             </div>
@@ -584,7 +563,7 @@
                                 <div class="col-md-8">
                                     <label id='factotyAddress'
                                            style="font-size: 16px; font-family: '楷体';; font-weight: bold; margin-top: 2px;">
-                                        ${item.address}
+                                        {{ session('factory')['address'] }}
                                     </label>
                                 </div>
                             </div>
@@ -637,7 +616,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="material" name="material"
-                                           value="{{ $exhaust_temps["EXF_MATERIAL"] or '' }}"
+                                           value="{{ $exhaust_temps["EXF_MATERIAL"] or ''}}"
                                            Onchange="ischanged('material')"
                                            onblur="TestLen(this.id,10)"/>
                                 </div>
@@ -659,7 +638,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="exfheight"
-                                           value="${cur_exhuast.exfHeight}"
+                                           value="{{ $exhaust_temps["EXF_HEIGHT"] or ''}}"
                                            Onchange="ischanged('exfheight')" alt="p4x3p3s"
                                            class="check1" onkeyup="checkNum(this);"/>
                                 </div>
@@ -679,7 +658,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="smoke_outd"
-                                           value="${cur_exhuast.smokeOutd}" alt="p2x3p3s"
+                                           value="{{ $exhaust_temps["SMOKE_OUTD"] or ''}}" alt="p2x3p3s"
                                            class="check1" Onchange="ischanged('smoke_outd')"
                                            onkeyup="checkNum(this);"/>
                                 </div>
@@ -700,7 +679,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="smoke_outtem"
-                                           value="${cur_exhuast.smokeOutteM}" alt="p7x3p3s"
+                                           value="{{ $exhaust_temps["SMOKE_O_UTTE_M"] or ''}}" alt="p7x3p3s"
                                            class="check1" Onchange="ischanged('smoke_outtem')"
                                            onkeyup="checkNum(this);"/>
                                 </div>
@@ -716,7 +695,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="smoke_outv"
-                                           value="${cur_exhuast.smokeOutv}" alt="p3x3p2s"
+                                           value="{{ $exhaust_temps["SMOKE_OUTV"] or ''}}" alt="p3x3p2s"
                                            class="check1" Onchange="ischanged('smoke_outv')"
                                            onkeyup="checkNum(this);"/>
                                 </div>
@@ -741,7 +720,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="smokeOuta"
-                                           value="${cur_exhuast.smokeOuta}" alt="p8x3p3s"
+                                           value="{{ $exhaust_temps["SMOKE_OUTA"] or ''}}" alt="p8x3p3s"
                                            class="check1" Onchange="ischanged('smoke_outv')"
                                            onkeyup="checkNum(this);"/>
                                 </div>
@@ -758,7 +737,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="longitude"
-                                           value="${cur_exhuast.exfLongitude}" alt="p3x3p6s"
+                                           value="{{ $exhaust_temps["EXF_LONGITUDE"] or ''}}" alt="p3x3p6s"
                                            class="check1" onkeyup="if(isNaN(value))execCommand('undo')"
                                            onblur="checklon(this.id);"
                                            onafterpaste="if(isNaN(value))execCommand('undo')"
@@ -783,7 +762,7 @@
 
                                 <div class="col-md-7">
                                     <input type="text" id="latitude"
-                                           value="${cur_exhuast.exfLatitude}" alt="p3x3p6s"
+                                           value="{{ $exhaust_temps["EXF_LATITUDE"] or ''}}" alt="p3x3p6s"
                                            class="check1" onkeyup="if(isNaN(value))execCommand('undo')"
                                            onblur="checklat(this.id);"
                                            onafterpaste="if(isNaN(value))execCommand('undo')"
@@ -811,14 +790,16 @@
                             </li>
                             <div class="col-md-3">
                                 <li>
-                                    <a href="javascript:void(0);" onclick="updatedata();">&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    <a href="javascript:void(0);" onclick="ExhaustTempsaveevery();">&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                 </li>
                             </div>
+
                             <div class="col-md-3">
                                 <li>
                                     <a href="javascript:void(0);" onclick="cancel();">放弃当前页面</a>
                                 </li>
                             </div>
+
                             <li class="col-md-3">
                                 <a href="javascript:void(0);" id="nextpage" onclick="next();">填报下一个
                                     &rarr;</a>

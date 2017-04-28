@@ -3,24 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Model\Device_temp;
+use App\Model\City;
 use App\Model\Exhaust_temp;
 use App\Model\FbaresoilDustTemp;
 use App\Model\FconstructionDustTemp;
 use App\Model\FnoOrganizationTemp;
 use App\Model\FroadDustSourceTemp;
 use App\Model\FyardDustTemp;
+use App\Model\IndustryBig;
+use App\Model\IndustrySmall;
 use App\Model\Information;
 use App\Model\Total_productraw_temp;
 use App\Model\Xie;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use DB;
 
 class XjjczController extends Controller
 {
-    public function show(){
-        $a = $_POST["id"];
+    public function show()
+    {
+        //$a = $_POST["id"];
         //$information = Information::all()->first()->toArray();
-        $information = Information::where('id','=',2)->first();
+        $information = Xie::all();
         var_dump($information->information);
         return $information;
     }
@@ -46,8 +51,11 @@ class XjjczController extends Controller
             }
         }
         $request->session()->put("device_temps",$device_temps);
-        return view("layouts.companyinfo");
+        $industry_big = IndustryBig::all();
+        $city = City::all();
+        return view("layouts.companyinfo", ["industry_big" => $industry_big]);
     }
+
     public function roadlist(Request $request)
     {
         $clientfactoryid = $request->session()->get("clientfactoryid");
@@ -61,15 +69,17 @@ class XjjczController extends Controller
         $fconstructionsourcetemp = FconstructionDustTemp::where("factoryid", $clientfactoryid)->get();
         return view('layouts.constructionDust', ['fconstructionsourcetemp' => $fconstructionsourcetemp]);
     }
-    public function toyarddustlist(Request $request){
+
+    public function toyarddustlist(Request $request)
+    {
         $clientfactoryid = $request->session()->get("clientfactoryid");
-        $fyarddust = FyardDustTemp::where("factoryid",$clientfactoryid)->get();
-        return view('layouts.FyardDust',['fyarddust'=>$fyarddust]);
+        $fyarddust = FyardDustTemp::where("factoryid", $clientfactoryid)->get();
+        return view('layouts.FyardDust', ['fyarddust' => $fyarddust]);
     }
 
     public function Roadlistsave_update(Request $request)
     {
-        $a=1;
+        $a = 1;
         $state = FroadDustSourceTemp::where('road_dustid', $_POST['roadDustid'])->update(array(
             'company_name' => $_POST['companyName'],
             'path_length' => $_POST['pathLength'],
@@ -116,6 +126,7 @@ class XjjczController extends Controller
             return 0;
         }
     }
+
     public function deleteYard()
     {
         $state = FyardDustTemp::where('wind_dustid', $_POST['windDustid'])->delete();
@@ -184,8 +195,11 @@ class XjjczController extends Controller
         $fconstructionDustTemp->construct_state = $_POST['constructState'];
         $fconstructionDustTemp->construct_area = $_POST['constructArea'];
         $a = $_POST['nowkgarea'];
-        if($a == ""){$fconstructionDustTemp->nowkgarea = 0;}else{
-        $fconstructionDustTemp->nowkgarea = $_POST['nowkgarea'];}
+        if ($a == "") {
+            $fconstructionDustTemp->nowkgarea = 0;
+        } else {
+            $fconstructionDustTemp->nowkgarea = $_POST['nowkgarea'];
+        }
         //$fconstructionDustTemp->startdate = $_POST['startdate'];
         //$fconstructionDustTemp->finishdate = $_POST['finishdate'];
         $fconstructionDustTemp->construct_months = $_POST['constructMonths'];
@@ -193,20 +207,22 @@ class XjjczController extends Controller
         $fconstructionDustTemp->scccode = '1603004002';
         $fconstructionDustTemp->save();
         return 1;
-       /* $state = FconstructionDustTemp::create(array(
+        /* $state = FconstructionDustTemp::create(array(
 
-            'factoryid' => $request->session()->get('clientfactoryid'),
-            'construction_type' => $_POST['constructionType'],
-            'construct_state' => $_POST['constructState'],
-            'construct_area' => $_POST['constructArea'],
-            'nowkgarea' => $_POST['nowkgarea'],
-            'startdate' => $_POST['startdate'],
-            'finishdate' => $_POST['finishdate'],
-            'construct_months' => $_POST['constructMonths'],
-            'control_measures' => $_POST['controlMeasures']
-        ));*/
+             'factoryid' => $request->session()->get('clientfactoryid'),
+             'construction_type' => $_POST['constructionType'],
+             'construct_state' => $_POST['constructState'],
+             'construct_area' => $_POST['constructArea'],
+             'nowkgarea' => $_POST['nowkgarea'],
+             'startdate' => $_POST['startdate'],
+             'finishdate' => $_POST['finishdate'],
+             'construct_months' => $_POST['constructMonths'],
+             'control_measures' => $_POST['controlMeasures']
+         ));*/
     }
-    public function updateYard(){
+
+    public function updateYard()
+    {
         $state = FyardDustTemp::where('wind_dustid', $_POST['windDustid'])->update(array(
             'material_type' => $_POST['materialType'],
             'moisture_materia' => $_POST['moistureMateria'],
@@ -227,51 +243,64 @@ class XjjczController extends Controller
             return 0;
         }
     }
-    public function addYardDust(Request $request){
+
+    public function addYardDust(Request $request)
+    {
         $fyardDustTemp = new FyardDustTemp();
         $fyardDustTemp->factoryid = $request->session()->get('clientfactoryid');
         $fyardDustTemp->material_type = $_POST['materialType'];
         $fyardDustTemp->moisture_materia = $_POST['moistureMateria'];
         $fyardDustTemp->material_capacity = $_POST['materialCapacity'];
         $fyardDustTemp->loading_count = $_POST['loadingCount'];
-
         $fyardDustTemp->loading_capacity = $_POST['loadingCapacity'];
         $fyardDustTemp->heap_covered = $_POST['heapCovered'];
         $fyardDustTemp->heap_area = $_POST['heapArea'];
         $fyardDustTemp->heap_heigh = $_POST['heapHeigh'];
-        //$fyardDustTemp->loading_start = $_POST['loadingStart'];
-        //$fyardDustTemp->loading_time = $_POST['loadingTime'];
+        $fyardDustTemp->loading_start = $_POST['loadingStart'];
+        $fyardDustTemp->loading_time = $_POST['loadingTime'];
         $fyardDustTemp->control_measures1 = $_POST['controlMeasures1'];
         $fyardDustTemp->control_measures = $_POST['controlMeasures'];
         $fyardDustTemp->scccode = '1603004002';
         $fyardDustTemp->save();
         return 1;
     }
-    public  function tobaresoil(Request $request){
+
+    public function tobaresoil(Request $request)
+    {
         $clientfactoryid = $request->session()->get("clientfactoryid");
-        $fbaresoil = FbaresoilDustTemp::where("factoryid",$clientfactoryid)->get();
-        return view('layouts.FbareSoilDust',['fbaresoil'=>$fbaresoil]);
+        $fbaresoil = FbaresoilDustTemp::where("factoryid", $clientfactoryid)->get();
+        return view('layouts.FbareSoilDust', ['fbaresoil' => $fbaresoil]);
     }
-    public function deleteSoil(Request $request){
-        $state = FbaresoilDustTemp::where('bare_soilid',$_POST['baresoilid'])->delete();
+
+    public function deleteSoil(Request $request)
+    {
+        $state = FbaresoilDustTemp::where('bare_soilid', $_POST['baresoilid'])->delete();
         return $state;
     }
-    public function updatebareinfo(Request $request){
-        $state = FbaresoilDustTemp::where('bare_soilid',$_POST['bareSoilid'])->update(array('bare_soil_area'=>$_POST['bareSoilArea']));
+
+    public function updatebareinfo(Request $request)
+    {
+        $state = FbaresoilDustTemp::where('bare_soilid', $_POST['bareSoilid'])->update(array('bare_soil_area' => $_POST['bareSoilArea']));
         return $state;
     }
-    public function tonoOrganizationWorkshop(Request $request){
+
+    public function tonoOrganizationWorkshop(Request $request)
+    {
         $clientfactoryid = $request->session()->get("clientfactoryid");
-        $fnoOrganizationWorkshop = FnoOrganizationTemp::where('factoryid',$clientfactoryid)->get();
-        return view('layouts.noOrganizationWorkshop',['fnoOrganizationWorkshop'=>$fnoOrganizationWorkshop]);
+        $fnoOrganizationWorkshop = FnoOrganizationTemp::where('factoryid', $clientfactoryid)->get();
+        return view('layouts.noOrganizationWorkshop', ['fnoOrganizationWorkshop' => $fnoOrganizationWorkshop]);
     }
-    public function noOrganizationdelete(){
-        $state = FnoOrganizationTemp::where('wsid',$_POST['wsid'])->delete();
+
+    public function noOrganizationdelete()
+    {
+        $state = FnoOrganizationTemp::where('wsid', $_POST['wsid'])->delete();
         return $state;
 
     }
-    public function  FnoOrganizationWorkshopDischargeTempupdate(){
-        $state = FnoOrganizationTemp::where('wsid',$_POST['wsid'])->update(array(
+
+    public function FnoOrganizationWorkshopDischargeTempupdate()
+    {
+        $state = FnoOrganizationTemp::where('wsid', $_POST['wsid'])->update(array(
             'workshopid' => $_POST['workshopid'],
             'longitude' => $_POST['longitude'],
             'latitude' => $_POST['latitude'],
@@ -280,7 +309,9 @@ class XjjczController extends Controller
         $a = $state;
         return $state;
     }
-    public  function savenoOrganpageadd(Request $request){
+
+    public function savenoOrganpageadd(Request $request)
+    {
         $fnoOrganizationTemp = new  FnoOrganizationTemp();
         $fnoOrganizationTemp->factoryid = $request->session()->get('clientfactoryid');
         $fnoOrganizationTemp->workshopid = $_POST['workshopid'];
@@ -291,11 +322,47 @@ class XjjczController extends Controller
         $fnoOrganizationTemp->save();
         return 1;
     }
-    public function  savepagesoiladd(Request $request){
+
+    public function savepagesoiladd(Request $request)
+    {
         $fbaresoilDustTemp = new FbaresoilDustTemp();
         $fbaresoilDustTemp->factoryid = $request->session()->get("clientfactoryid");
         $fbaresoilDustTemp->bare_soil_area = $_POST['barearea'];
         $fbaresoilDustTemp->save();
         return 1;
+    }
+
+    public function ExhaustTempsaveevery(Request $request)
+    {
+        $exhaust_temp = new Exhaust_temp();
+        $exhaust_temp->FACTORY_ID = $request->session()->get('clientfactoryid');
+        $exhaust_temp->NK_NO = $_POST['fabriexfno'];
+        $exhaust_temp->EXF_MATERIAL = $_POST['exfMaterial'];
+        $exhaust_temp->EXF_HEIGHT = $_POST['exfHeight'];
+        $exhaust_temp->SMOKE_OUTD = $_POST['smokeOutd'];
+        $exhaust_temp->SMOKE_O_UTTE_M = $_POST['smokeOutteM'];
+        $exhaust_temp->SMOKE_OUTV = $_POST['smokeOutv'];
+        $exhaust_temp->SMOKE_OUTA = $_POST['smokeOuta'];
+        $exhaust_temp->EXF_LONGITUDE = $_POST['exfLongitude'];
+        $exhaust_temp->EXF_LATITUDE = $_POST['exfLatitude'];
+        $exhaust_temp->save();
+
+        if (1) {
+            $clientfactoryid = $request->session()->get("clientfactoryid");
+            //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+            $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+            $totalexhaust = count($exhaust_temps);
+            $request->session()->put("totalexhaust", $totalexhaust);
+            $request->session()->put("exhaust_temps", $exhaust_temps);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function GetindustrySmallId()
+    {
+        $getindustrySmallId = IndustrySmall::where('industry_big', $_POST['industrybigid'])->get();
+        return $getindustrySmallId;
     }
 }

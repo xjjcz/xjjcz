@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset("/css/font-awesome.min.css") }}"/>
 
 
-
     <!-- page specific plugin styles -->
 
     <link rel="stylesheet" href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}"/>
@@ -57,7 +56,323 @@
 
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            var datatime = new Date();
 
+
+            //alert(document.getElementById(material_name1).innerHTML);
+            //加载排气筒信息
+            //var m_status = '${item.status}';
+
+            /*if (m_status == '') {
+             m_status = 0;
+             }*/
+            /*$.post("ajax/Status/getStatus.do", {
+             mstatus : m_status
+             }, function(data) {
+
+             var jsonObj = eval("(" + data + ")");
+             //alert(jsonObj.sys_status);
+             document.getElementById("status").value = jsonObj.sys_status;
+             });
+             industry_big
+             */
+//行业规模
+            alert(123);
+            var factorySize = {!! session('factory')['factory_size'] !!};
+            document.getElementById("factorySize").val = factorySize;
+            $("#factorySize option[value='" + factorySize + "']").attr("selected", true);
+            //行业大分类
+            var industry_big = {!! $industry_big !!};
+            //alert(industry_big[0].industry_name);
+            for (var i = 0; i < industry_big.length; i++) {
+                var $option = $("<option></option>");
+                $option.attr("value", industry_big[i].industry_code);
+                $option.text(industry_big[i].industry_name);
+                $("#industryBigid").append($option);
+
+            }
+            var m_indutryBig ={!! session('factory')['industry_bigid'] !!};
+            $("#industryBigid option[value='" + m_indutryBig + "']").attr("selected", true);
+            //注册城市
+            var m_countyRegisterCity = {!! session('factory')['county_register_city'] !!};
+            var allcity = {!! $city or '' !!};
+            for (var i = 0; i < allcity.length; i++) {
+                var $option = $("<option></option>");
+                $option.attr("value", allcity[i].city_code);
+                $option.text(allcity[i].city_name);
+                $("#countyRegisterCity").append($option);
+            }
+            $("#countyRegisterCity option[vlaue ='" + m_countyRegisterCity + "']").attr("selected", true);
+
+            //  污染源类型
+            var abc = "${item.sourceType}";
+            $("#sourceType").val(abc);
+            $("#sourceType option[value='" + abc + "']").attr("selected", true);
+            //$("#industryBigid").value("${item.industryBigid}");
+            //var a = $("#industryBigid");
+            //alert(a);
+
+            var ace = "${item.industryBigid}";
+            if (ace != '') {
+                industrysmall('${item.industryBigid}');
+            }
+            var m_countyCity = '${item.countyCity}';
+            $.post("ajax/City/getCityId.do", function (data) {
+                var jsonObj = eval("(" + data + ")");
+                for (var i = 0; i < jsonObj.length; i++) {
+                    var $option = $("<option></option>");
+                    $option.attr("value", jsonObj[i].cityId);
+                    $option.text(jsonObj[i].cityName);
+                    //$("#RcountyId").append($option);
+                    $("#countyCity").append($option);
+                }
+                $("#countyCity option[value='" + m_countyCity + "']").attr("selected", true);
+
+
+            });
+
+            if (m_countyCity != '') {
+                var m_countyCode = '${item.countyId}';
+                changeCity(m_countyCity, 'countyId', m_countyCode);
+            }
+            //注册城市
+            /* var m_countyRegisterCity='${item.countyRegisterCity}';
+             $.post("ajax/City/getCityId.do", function(data) {
+             var jsonObj = eval("(" + data + ")");
+             for ( var i = 0; i < jsonObj.length; i++) {
+             var $option = $("<option></option>");
+             $option.attr("value", jsonObj[i].cityId);
+             $option.text(jsonObj[i].cityName);
+             //$("#RcountyId").append($option);
+             $("#countyRegisterCity").append($option);
+             }
+             $("#countyRegisterCity option[value='"+m_countyRegisterCity+"']").attr("selected", true);
+             });
+             if(m_countyRegisterCity!=''){
+             var m_countyidRegister='${item.countyidRegister}';
+             //changeCity(countyRegisterCity,'countyidRegister',countyidRegister);
+             changeCity(m_countyRegisterCity,'countyidRegister',m_countyidRegister);
+             }*/
+
+
+            //alert(document.getElementById(material_name1).innerHTML);
+            /*$.post("ajax/FabricationproTemp/loadallinfo.do",{
+             },function(data){
+
+             var json = eval("(" + data + ")");
+             });
+
+
+             //alert(document.getElementById(material_name1).innerHTML);
+             $.post("ajax/SolventEquTemp/loadallinfo.do",{
+             },function(data){
+             var json = eval("(" + data + ")");
+
+
+             });
+
+
+             //alert(document.getElementById(material_name1).innerHTML);
+             $.post("ajax/BoilerTemp/loadallinfo.do",{
+             },function(data){
+
+             var json = eval("(" + data + ")");
+             });*/
+
+            //34.3700~49.55"
+        }
+        function industrysmall(m_value) {
+            $("#industryId").empty();
+            var $option = $("<option></option>");
+            $option.attr("value", "");
+            $option.text("请选择");
+            $("#industryId").append($option);
+            $.post("{{url("GetindustrySmallId")}}", {
+                '_token': '{{ csrf_token() }}',
+                industrybigid: m_value
+            }, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var $option = $("<option></option>");
+                    $option.attr("value", data[i].industry_small);
+                    $option.text(data[i].industry_name);
+                    $("#industryId").append($option);
+
+                }
+                var m_indutrySmall ={!! session('factory')['industry_id'] !!};
+                $("#industryId option[value='" + m_indutrySmall + "']").attr("selected", true);
+
+            });
+        }
+
+        function addsaveinfo(page, target) {
+            var m_alert = 0;
+
+            $.post("ajax/ExhaustTemp/getinfo.do", {
+                target: target
+            }, function (data) {
+                var json = eval("(" + data + ")");
+                //alert(json.result);
+
+                saveinfo(page, target, 'all', json.result);
+
+            });
+
+        }
+
+        function ischanged(name) {
+            document.getElementById("malert").value = 1;
+            $('#m_alert').show();
+        }
+        function cleaSec(objID) {
+            var selectObj = document.getElementById(objID);
+            var length = selectObj.options.length;
+            for (var i = 1; i <= length; i++) {
+                selectObj.options[0] = null;
+            }
+        }
+
+        function changeCity(m_value, next, m_countyCode) {
+            cleaSec(next);
+            var $option = $("<option></option>");
+            $option.attr("value", "");
+            $option.text("请选择");
+            $("#" + next).append($option);
+            $.post("ajax/County/getCountyId.do", {citycode: m_value}, function (data) {
+                var jsonObj = eval("(" + data + ")");
+                for (var i = 0; i < jsonObj.length; i++) {
+                    var $option = $("<option></option>");
+                    $option.attr("value", jsonObj[i].countyId);
+                    $option.text(jsonObj[i].countyName);
+                    //$("#RcountyId").append($option);
+                    $("#" + next).append($option);
+
+                }
+                $("#" + next + " option[value='" + m_countyCode + "']").attr("selected", true);
+            });
+
+        }
+        function checkvalue(witch) {
+            var ids = new Array("sourceType", "industryBigid", "industryId", "legalperson", "factorySize", "countyRegisterCity", "countyidRegister", "addressRegister", "countyCity", "countyId", "address", "factoryLongitude", "factoryLatitude", "totalOutput", "yearDays", "daysHours", "principalName", "principalMobile", "principalEmail");
+            var contents = new Array("污染源类型", "行业大分类", "行业小分类", "法定代表人", "企业规模", "注册城市", "注册行政区", "注册详细地址", "实际城市", "实际行政区", "实际详细地址", "企业经度", "企业纬度", "生产总值", "年生产天数", "日生产小时数", "统计负责人", "移动电话", "电子邮箱");
+            return checkall(witch, ids, contents);
+
+        }
+        function addFactory() {
+
+
+            if (!checkvalue(1)) {
+                return;
+            }
+            var malert = document.getElementById("malert").value;
+            if (malert == 0) {
+                alert("提交数据库成功!");
+                return;
+            }
+            var factoryName = document.getElementById("factoryName").value;
+            var factoryUsedname = document.getElementById("factoryUsedname").value;
+            var sourceType = document.getElementById("sourceType").value;
+            var industryBigid = document.getElementById("industryBigid").value;
+            var industryBigname = $("#industryBigid").find("option:selected").text();
+            var industryId = document.getElementById("industryId").value;
+            var industryName = $("#industryId").find("option:selected").text();
+            var legalperson = document.getElementById("legalperson").value;
+            var factorySize = document.getElementById("factorySize").value;
+            var countyRegisterCity = document.getElementById("countyRegisterCity").value;
+            var countyidRegister = document.getElementById("countyidRegister").value;//注册城市
+            var addressRegister = document.getElementById("addressRegister").value;//注册区县
+            var countyCity = document.getElementById("countyCity").value;
+            var cityName = $("#countyCity").find("option:selected").text();//城市名称
+            var countyRegisterCityDec = $("#countyRegisterCity").find("option:selected").text();//注册城市名称
+            var countyidRegisterDec = $("#countyidRegister").find("option:selected").text();//注册区县名称
+            var countyId = document.getElementById("countyId").value;
+            var countyName = $("#countyId").find("option:selected").text();//区县名称
+            var address = document.getElementById("address").value;
+            var factoryLongitude = document.getElementById("factoryLongitude").value;
+            var factoryLatitude = document.getElementById("factoryLatitude").value;
+            var totalOutput = document.getElementById("totalOutput").value;
+            var yearDays = document.getElementById("yearDays").value;
+            var daysHours = document.getElementById("daysHours").value;
+            var principalName = document.getElementById("principalName").value;
+            var principalPhone = document.getElementById("principalPhone").value;
+            var principalMobile = document.getElementById("principalMobile").value;
+            var principalEmail = document.getElementById("principalEmail").value;
+            var powerAmount = document.getElementById("powerAmount").value;
+            var lon1 = document.getElementById("lon1").value;
+            var lon2 = document.getElementById("lon2").value;
+            var lon3 = document.getElementById("lon3").value;
+            var lon4 = document.getElementById("lon4").value;
+            var lon5 = document.getElementById("lon5").value;
+            var lon6 = document.getElementById("lon6").value;
+            var lon7 = document.getElementById("lon7").value;
+            var lat1 = document.getElementById("lat1").value;
+            var lat2 = document.getElementById("lat2").value;
+            var lat3 = document.getElementById("lat3").value;
+            var lat4 = document.getElementById("lat4").value;
+            var lat5 = document.getElementById("lat5").value;
+            var lat6 = document.getElementById("lat6").value;
+            var lat7 = document.getElementById("lat7").value;
+
+            //alert(1);
+            $.post("ajax/Factory/updateFac.do", {
+                cityName: cityName,
+                industryName: industryName,
+                factoryName: factoryName,
+                countyName: countyName,
+                industryBigname: industryBigname,
+                factoryUsedname: factoryUsedname,
+                cityName: cityName,
+                powerAmount: powerAmount,
+                sourceType: sourceType,
+                industryBigid: industryBigid,
+                industryId: industryId,
+                legalperson: legalperson,
+                factorySize: factorySize,
+                countyRegisterCity: countyRegisterCity,
+                countyidRegister: countyidRegister,
+                countyRegisterCityDec: countyRegisterCityDec,
+                countyidRegisterDec: countyidRegisterDec,
+                addressRegister: addressRegister,
+                countyCity: countyCity,
+                countyId: countyId,
+                address: address,
+                factoryLongitude: factoryLongitude,
+                factoryLatitude: factoryLatitude,
+                totalOutput: totalOutput,
+                yearDays: yearDays,
+                daysHours: daysHours,
+                principalName: principalName,
+                principalPhone: principalPhone,
+                principalMobile: principalMobile,
+                principalEmail: principalEmail,
+                lon1: lon1,
+                lat1: lat1,
+                lon2: lon2,
+                lat2: lat2,
+                lon3: lon3,
+                lat3: lat3,
+                lon4: lon4,
+                lat4: lat4,
+                lon5: lon5,
+                lat5: lat5,
+                lon6: lon6,
+                lat6: lat6,
+                lon7: lon7,
+                lat7: lat7
+            }, function (data) {
+                var json = eval("(" + data + ")");
+                if (json.status == 1) {
+                    alert("企业信息保存成功！");
+                } else {
+                    if (json.status == 0) {
+                        alert("登录超时,企业信息保存失败！");
+                    } else {
+                        alert("存在数据格式错误,企业信息保存失败！");
+                    }
+                }
+
+            });
+        }
 
 
         function addsaveinfo(page, target) {
@@ -267,7 +582,8 @@
 
                                         <input type="text" id="factoryUsedname"
                                                name="factoryUsedname" class="form-control"
-                                               style="height: 25px; width: 170px;" value=""
+                                               style="height: 25px; width: 170px;"
+                                               value="{{ session("factory")["factory_name"] }}"
                                                Onchange="ischanged('kilnuse')"/>
 
                                     </div>
@@ -327,7 +643,6 @@
                                         <select name="industryId" id="industryId" class="form-control"
                                                 style="width: 173px; height: 30px;" value=""
                                                 Onchange="ischanged('kilnuse')">
-                                            <option value="">请选择</option>
 
                                         </select>
 
@@ -349,7 +664,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="legalperson" class="form-control"
                                                style="height: 25px; width: 170px;"
-                                               value="" Onchange="ischanged('kilnuse')"/>
+                                               value="{{ session("factory")["legalperson"] }}"
+                                               Onchange="ischanged('kilnuse')"/>
 
                                     </div>
                                 </div>
@@ -430,7 +746,7 @@
                                         <select name="countyidRegister" id="countyidRegister"
                                                 class="form-control"
                                                 style="width: 173px; height: 30px;" Onchange="ischanged('kilnuse')">
-                                            <option value="">
+                                            <option value="{{ session("factory")["factory_name"] }}">
                                                 请选择
                                             </option>
                                         </select>
@@ -449,7 +765,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="addressRegister" class="form-control"
                                                style="height: 25px; width: 170px;"
-                                               value="" Onchange="ischanged('kilnuse')"/>
+                                               value="{{ session("factory")["address_register"] }}"
+                                               Onchange="ischanged('kilnuse')"/>
                                     </div>
                                 </div>
                             </div>
@@ -526,7 +843,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="address" class="form-control"
                                                style="height: 25px; width: 170px;"
-                                               value="" Onchange="ischanged('kilnuse')"/>
+                                               value="{{ session("factory")["address"] }}"
+                                               Onchange="ischanged('kilnuse')"/>
                                     </div>
                                 </div>
                             </div>
@@ -542,7 +860,7 @@
                                         企业经度<a style="color:red">*</a>
                                     </label>
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["factory_longitude"] }}" type="text"
                                                id="factoryLongitude" class="check1" alt="p3x3p6s"
                                                onblur="checklon(this.id)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -560,7 +878,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["factory_latitude"] }}" type="text"
                                                onblur="checklat(this.id)" id="factoryLatitude" class="check1"
                                                alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -582,7 +900,7 @@
                                         填报内容的年份
                                     </label>
                                     <div class="col-md-8">
-                                        <a style="color:red"></a>
+                                        <a style="color:red">2015</a>
                                     </div>
                                 </div>
                             </div>
@@ -593,7 +911,7 @@
                                         生产总值(万元)<a style="color:red">*</a>
                                     </label>
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["total_output"] }}" type="text"
                                                id="totalOutput" class="check1" alt="p0x3p4s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -614,7 +932,7 @@
                                         年生产天数(整数)<a style="color:red">*</a>
                                     </label>
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["Year_days"] }}" type="text"
                                                id="yearDays" class="check1" alt="p3x3p0s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -631,7 +949,7 @@
                                         日生产小时数(整数)<a style="color:red">*</a>
                                     </label>
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["Days_hours"] }}" type="text"
                                                id="daysHours" class="check1" alt="p3x3p0s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -654,7 +972,7 @@
                                         年用电量(万千瓦时)<a style="color:red">*</a>
                                     </label>
                                     <div class="col-md-8">
-                                        <input value="" type="text"
+                                        <input value="{{ session("factory")["power_amount"] }}" type="text"
                                                id="powerAmount" class="check1" alt="p0x3p4s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -682,7 +1000,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="principalName" class="form-control"
                                                Onchange="ischanged('kilnuse')"
-                                               value="" style="height: 25px; width: 170px;"/>
+                                               value="{{ session("factory")["principal_name"] }}"
+                                               style="height: 25px; width: 170px;"/>
                                     </div>
                                 </div>
                             </div>
@@ -697,7 +1016,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="principalPhone" class="form-control"
                                                Onchange="ischanged('kilnuse')"
-                                               style="height: 25px; width: 170px;" value=""
+                                               style="height: 25px; width: 170px;"
+                                               value="{{ session("factory")["principal_phone"] }}"
                                                onblur="checkpphone(this.id);"/>
                                     </div>
                                 </div>
@@ -716,7 +1036,8 @@
                                     <div class="col-md-8">
                                         <input type="text" id="principalMobile" class="form-control"
                                                Onchange="ischanged('kilnuse')"
-                                               style="height: 25px; width: 170px;" value=""
+                                               style="height: 25px; width: 170px;"
+                                               value="{{ session("factory")["principal_mobile"] }}"
                                                onblur="checkpmobile(this.id);"/>
                                     </div>
                                 </div>
@@ -730,7 +1051,8 @@
 
                                     <div class="col-md-8">
                                         <input type="text" id="principalEmail" class="form-control"
-                                               style="height: 25px; width: 170px;" value=""
+                                               style="height: 25px; width: 170px;"
+                                               value="{{ session("factory")["principal_email"] }}"
                                                onblur="checkpemail(this.id);" Onchange="ischanged('kilnuse')"/>
 
                                     </div>
@@ -758,7 +1080,8 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon1" value="" class="check1" alt="p3x3p6s"
+                                        <input type="text" id="lon1" value="{{ session("factory")["lon1"] }}"
+                                               class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,0)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -778,7 +1101,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat1" value=""
+                                        <input type="text" id="lat1" value="{{ session("factory")["lat1"] }}"
                                                onblur="checklatfour1(this.id,0)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -801,7 +1124,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon2" value=""
+                                        <input type="text" id="lon2" value="{{ session("factory")["lon2"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,1)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -820,7 +1143,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat2" value=""
+                                        <input type="text" id="lat2" value="{{ session("factory")["lat2"] }}"
                                                onblur="checklatfour1(this.id,1)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -843,7 +1166,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon3" value=""
+                                        <input type="text" id="lon3" value="{{ session("factory")["lon3"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,2)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -862,7 +1185,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat3" value=""
+                                        <input type="text" id="lat3" value="{{ session("factory")["lat3"] }}"
                                                onblur="checklatfour1(this.id,2)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -885,7 +1208,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon4" value=""
+                                        <input type="text" id="lon4" value="{{ session("factory")["lon4"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,3)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -904,7 +1227,8 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat4" class="form-control" value=""
+                                        <input type="text" id="lat4" class="form-control"
+                                               value="{{ session("factory")["lat4"] }}"
                                                onblur="checklatfour1(this.id,3)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -929,7 +1253,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon5" value=""
+                                        <input type="text" id="lon5" value="{{ session("factory")["lon5"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,4)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -948,7 +1272,8 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat5" class="form-control" value=""
+                                        <input type="text" id="lat5" class="form-control"
+                                               value="{{ session("factory")["lat5"] }}"
                                                onblur="checklatfour1(this.id,4)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -971,7 +1296,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon6" value=""
+                                        <input type="text" id="lon6" value="{{ session("factory")["lon6"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,5)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -991,7 +1316,8 @@
 
                                     <div class="col-md-8">
                                         <input type="text" id="lat6" class="form-control"
-                                               style="height: 25px; width: 170px;" value=""
+                                               style="height: 25px; width: 170px;"
+                                               value="{{ session("factory")["lat6"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklatfour1(this.id,5);"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -1015,7 +1341,7 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lon7" value=""
+                                        <input type="text" id="lon7" value="{{ session("factory")["lon7"] }}"
                                                class="check1" alt="p3x3p6s"
                                                onblur="checklonfour1(this.id,6)"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
@@ -1034,7 +1360,8 @@
                                     </label>
 
                                     <div class="col-md-8">
-                                        <input type="text" id="lat7" class="form-control" value=""
+                                        <input type="text" id="lat7" class="form-control"
+                                               value="{{ session("factory")["lat7"] }}"
                                                onblur="checklatfour1(this.id,6)" class="check1" alt="p3x3p6s"
                                                style="height: 25px; margin-top: 3px; width: 170px;"
                                                onkeyup="if(isNaN(value))execCommand('undo')"
@@ -1158,14 +1485,14 @@
 
 
     <script type="text/javascript">
-        jQuery(function($) {
+        jQuery(function ($) {
             $.mask.definitions['~'] = '[+-]';
             $('.input-mask-date').mask('9999/99/99');
             $('.input-mask-phone').mask('(999) 999-9999');//可以校验电话
             $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
             $(".input-mask-product").mask("a*-999-a999", {
-                placeholder : " ",
-                completed : function() {
+                placeholder: " ",
+                completed: function () {
                     alert("You typed the following: " + this.val());
                 }
             });

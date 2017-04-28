@@ -16,12 +16,14 @@
             var id = 122;
             $.post("{{ url("information") }}",{'_token':'{{ csrf_token() }}','id':id},function (data) {
                 console.log(data);
-                $("#information").val(data.information);
+                alert(123);
+                $("#information").val(data[0].scc);
             });
         });
     </script>
 </head>
 <body>
+aaa
 <div class="control-group">
     <input name="information" id="information" />
 </div>
