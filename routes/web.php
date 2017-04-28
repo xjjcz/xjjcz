@@ -33,6 +33,7 @@ Route::get('/changepsd', function (){
 });
 Route::post('/changepsddo', "UserController@dochange");
 Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
+
     $totalexhaust = $request->session()->get("totalexhaust");
     $request->session()->put(["totalexhaust"=>intval($totalexhaust)+1]);
     return redirect("/exhaust/new");
@@ -40,9 +41,12 @@ Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
 
 Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$index){
     if($index=="new"){
+        $a = 1234;
+        $b = 345;
         return view('layouts.exhuast',["NUM"=>$request->session()->get("totalexhaust")]);
-    }else {
+    }else{
         $exhaust_temps = $request->session()->get("exhaust_temps");
+        $a = $exhaust_temps[0];
         return view('layouts.exhuast',["exhaust_temps"=>$exhaust_temps[$index],"NUM"=>($index+1)]);
     }
 });
@@ -52,7 +56,7 @@ Route::get('/toconstruction',"XjjczController@toconstruction");
 Route::get('/toyarddust',"XjjczController@toyarddustlist");
 Route::any('/tonoOrganizationWorkshop',"XjjczController@tonoOrganizationWorkshop");
 Route::get('/zhanmentest',function (){
-    return view('layouts.a');
+    return view('layouts.test');
 });
 
 Route::any('/Roadlistsave_update',"XjjczController@Roadlistsave_update");
@@ -71,3 +75,5 @@ Route::any('/deleteSoil',"XjjczController@deleteSoil");
 Route::any('/updatebareinfo',"XjjczController@updatebareinfo");
 Route::any('/noOrganizationdelete',"XjjczController@noOrganizationdelete");
 Route::any('/FnoOrganizationWorkshopDischargeTempupdate','XjjczController@FnoOrganizationWorkshopDischargeTempupdate');
+Route::any('/ExhaustTempsaveevery','XjjczController@ExhaustTempsaveevery');
+Route::any('/GetindustrySmallId','XjjczController@GetindustrySmallId');

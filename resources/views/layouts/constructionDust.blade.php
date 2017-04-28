@@ -12,8 +12,9 @@ $itemroaddusti = 0;
     <meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <link href="{{ asset("/wuzuzhi/css/bootstrap.css") }}" rel="stylesheet"/>
+    <link href="{{ asset("/wuzuzhi/css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet" media="screen"/>
 
-    <link href="{{ asset("/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
@@ -74,8 +75,7 @@ $itemroaddusti = 0;
     </script>
     <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
     </script>
-    <script src="{{ asset("/js/date-time/bootstrap-timepicker.min.js") }}">
-    </script>
+
     <script src="{{ asset("/js/date-time/moment.min.js") }}">
     </script>
     <script src="{{ asset("/js/date-time/daterangepicker.min.js") }}">
@@ -110,6 +110,7 @@ $itemroaddusti = 0;
     </script>
     <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
     </script>
+    <script src="{{ asset("/wuzuzhi/js/bootstrap-datepicker.min.js") }}"></script>
     <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}"/>
     {{--<script type="text/javascript" src="<c:url value="/widgets/simpletable/simpletable.js"/>"></script>--}}
 
@@ -1018,7 +1019,21 @@ $itemroaddusti = 0;
 </div>
 <!-- /.main-container -->
 
-
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.js") }}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.zh-CN.js") }}" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
 <script type="text/javascript">
     $("#set2").toggle();
     document.getElementById("condust").setAttribute("class", "active");
@@ -1039,6 +1054,7 @@ $itemroaddusti = 0;
 </script>
 
 
+
 <!-- inline scripts related to this page -->
 <div style="display:none">
     <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
@@ -1053,7 +1069,6 @@ $itemroaddusti = 0;
         /*for(i=0;i<str.length;i++){
             alert(str[i]['scccode']);
         }   */
-
         console.log(str.length);
         if(str.length==0)
         {

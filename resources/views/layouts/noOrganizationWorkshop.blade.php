@@ -555,9 +555,7 @@ $itemroaddusti = 0;
 
 
 <body onLoad="javascript:document.queryForm.reset()">
-{{$fnoOrganizationWorkshop}}
 @include("layouts.leftnav")
-
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -578,9 +576,6 @@ $itemroaddusti = 0;
                 企业车间信息
             </li>
         </ul>
-        <!-- .breadcrumb -->
-
-
     </div>
 
     <form id="queryForm" name="queryForm"

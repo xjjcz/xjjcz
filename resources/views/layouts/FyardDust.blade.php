@@ -107,8 +107,7 @@ $itemroaddusti = 0;
     </script>
 
 
-    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
-    </script>
+    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}"></script>
     <script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
     </script>
     <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
@@ -1487,9 +1486,20 @@ $itemroaddusti = 0;
     $(document).ready(function () {
 
         //装卸控制措施
-        var num = "<?php echo "{$itemroaddusti}" ?>";
-        //alert(num);
-        for (var cur = 1; cur <= num; cur++) {
+        /*for(i=0;i<str.length;i++){
+         alert(str[i]['scccode']);
+         }   */
+        var str = {!! $fyarddust !!};
+
+        console.log(str.length);
+        if(str.length==0)
+        {
+            document.getElementById("yihao").style.display = 'block';
+            addTable();
+        }else{
+        }
+        var num = {!! $itemroaddusti !!};
+        for (var cur = 1; cur <= num; cur++){
             //alert("controlMeasures" + cur);
             var conn1 = document.getElementById("dcontrolMeasures1" + cur).value;
 

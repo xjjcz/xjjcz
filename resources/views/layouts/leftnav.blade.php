@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
     try {
         ace.settings.check('sidebar', 'fixed')
@@ -20,10 +19,10 @@
                 document
                     .getElementById("exhaustul").innerHTML += "<li id='exhaustli"
                     + i
-                    + "'><a onclick='getexhaust("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + "'><a onclick='getexhaust(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>"
                     + i + "号烟囱/排气筒 </a></li>";
             }
-            if(totalexhuast>realtotalexhuast){
+            if (totalexhuast > realtotalexhuast) {
                 document
                     .getElementById("exhaustul").innerHTML += "<li id='exhaustli"
                     + i
@@ -33,11 +32,11 @@
 
 
         });
-    function getexhaust(i){
-        window.location.href = '{{ url("/exhaust") }}'+'/'+i;
+    function getexhaust(i) {
+        window.location.href = '{{ url("/exhaust") }}' + '/' + i;
     }
-    function getnewexhaust(i){
-        window.location.href = '{{ url("/exhaust") }}'+'/new';
+    function getnewexhaust(i) {
+        window.location.href = '{{ url("/exhaust") }}' + '/new';
     }
 
     function addyaolukiln() {
@@ -434,7 +433,7 @@
                         </i> <span class="menu-text"> 总信息 </span> </a>
                 </li>
 
-                <!--li>
+            <!--li>
                                     <a href="#" class="dropdown-toggle">
                                         <i class=""><img src="{{ asset("/img/yantong.png") }}" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
                                         <span class="menu-text">烟囱/排气筒管理</span>
@@ -481,7 +480,7 @@
                         </i> <span class="menu-text">总信息 </span> </a>
                 </li>
 
-                <!-- <li>
+            <!-- <li>
                                     <a href="#" class="dropdown-toggle">
                                         <i class=""><img src="{{ asset("/img/yantong.png") }}" style="width:20px;height:20px;margin-top:-5px;margin-left:8px;margin-right:5px;"></i>
                                         <span class="menu-text">烟囱/排气筒管理</span>
