@@ -56,32 +56,36 @@
 
 
     <script type="text/javascript">
+        //alert(document.getElementById(material_name1).innerHTML);
+        //加载排气筒信息
+        //var m_status = '${item.status}';
+
+        /*if (m_status == '') {
+         m_status = 0;
+         }*/
+        /*$.post("ajax/Status/getStatus.do", {
+         mstatus : m_status
+         }, function(data) {
+
+         var jsonObj = eval("(" + data + ")");
+         //alert(jsonObj.sys_status);
+         document.getElementById("status").value = jsonObj.sys_status;
+         });
+         industry_big
+
+         //注册城市
+
+         */
         $(document).ready(function () {
             var datatime = new Date();
 
 
-            //alert(document.getElementById(material_name1).innerHTML);
-            //加载排气筒信息
-            //var m_status = '${item.status}';
-
-            /*if (m_status == '') {
-             m_status = 0;
-             }*/
-            /*$.post("ajax/Status/getStatus.do", {
-             mstatus : m_status
-             }, function(data) {
-
-             var jsonObj = eval("(" + data + ")");
-             //alert(jsonObj.sys_status);
-             document.getElementById("status").value = jsonObj.sys_status;
-             });
-             industry_big
-             */
-//行业规模
-            alert(123);
+            //行业规模
             var factorySize = {!! session('factory')['factory_size'] !!};
             document.getElementById("factorySize").val = factorySize;
             $("#factorySize option[value='" + factorySize + "']").attr("selected", true);
+
+
             //行业大分类
             var industry_big = {!! $industry_big !!};
             //alert(industry_big[0].industry_name);
@@ -90,98 +94,120 @@
                 $option.attr("value", industry_big[i].industry_code);
                 $option.text(industry_big[i].industry_name);
                 $("#industryBigid").append($option);
-
             }
-            var m_indutryBig ={!! session('factory')['industry_bigid'] !!};
-            $("#industryBigid option[value='" + m_indutryBig + "']").attr("selected", true);
-            //注册城市
-            var m_countyRegisterCity = {!! session('factory')['county_register_city'] !!};
-            var allcity = {!! $city or '' !!};
+            //让数据库中的值在下拉框中选中；
+            var big = {!! session('factory')['industry_bigid'] !!} ;
+            $("#industryBigid option[value='" + big + "']").attr("selected", true);
+            if($("#industryBigid").val()!=''){industrysmall($("#industryBigid").val());}
+            //alert($("#industryBigid").val());
+
+
+            //列出注册城市
+
+            var allcity ={!! $city !!};
             for (var i = 0; i < allcity.length; i++) {
                 var $option = $("<option></option>");
                 $option.attr("value", allcity[i].city_code);
                 $option.text(allcity[i].city_name);
                 $("#countyRegisterCity").append($option);
             }
-            $("#countyRegisterCity option[vlaue ='" + m_countyRegisterCity + "']").attr("selected", true);
-
-            //  污染源类型
-            var abc = "${item.sourceType}";
-            $("#sourceType").val(abc);
-            $("#sourceType option[value='" + abc + "']").attr("selected", true);
-            //$("#industryBigid").value("${item.industryBigid}");
-            //var a = $("#industryBigid");
-            //alert(a);
-
-            var ace = "${item.industryBigid}";
-            if (ace != '') {
-                industrysmall('${item.industryBigid}');
+            //列出世纪城市
+            for (var i = 0; i < allcity.length; i++) {
+                var $option = $("<option></option>");
+                $option.attr("value", allcity[i].city_code);
+                $option.text(allcity[i].city_name);
+                $("#countyCity").append($option);
             }
-            var m_countyCity = '${item.countyCity}';
-            $.post("ajax/City/getCityId.do", function (data) {
-                var jsonObj = eval("(" + data + ")");
-                for (var i = 0; i < jsonObj.length; i++) {
-                    var $option = $("<option></option>");
-                    $option.attr("value", jsonObj[i].cityId);
-                    $option.text(jsonObj[i].cityName);
-                    //$("#RcountyId").append($option);
-                    $("#countyCity").append($option);
-                }
-                $("#countyCity option[value='" + m_countyCity + "']").attr("selected", true);
+            var m_countyRegisterCity =  '{!! session('factory')['county_register_city'] !!}' ;
+            var actualcity = '{!! session('factory')['county_register_city'] !!}';
+            $("#countyRegisterCity option[value='"+m_countyRegisterCity+"']").attr("selected", true);
+            $("#countyCity option[value='"+actualcity+"']").attr("selected", true);
 
-
-            });
-
-            if (m_countyCity != '') {
-                var m_countyCode = '${item.countyId}';
-                changeCity(m_countyCity, 'countyId', m_countyCode);
+            if($("#countyRegisterCity").val()!=''){
+                changeCity($("#countyRegisterCity").val(),'countyidRegister',{!! session('factory')['countyid_register'] !!});
             }
-            //注册城市
-            /* var m_countyRegisterCity='${item.countyRegisterCity}';
-             $.post("ajax/City/getCityId.do", function(data) {
-             var jsonObj = eval("(" + data + ")");
-             for ( var i = 0; i < jsonObj.length; i++) {
-             var $option = $("<option></option>");
-             $option.attr("value", jsonObj[i].cityId);
-             $option.text(jsonObj[i].cityName);
-             //$("#RcountyId").append($option);
-             $("#countyRegisterCity").append($option);
-             }
-             $("#countyRegisterCity option[value='"+m_countyRegisterCity+"']").attr("selected", true);
-             });
-             if(m_countyRegisterCity!=''){
-             var m_countyidRegister='${item.countyidRegister}';
-             //changeCity(countyRegisterCity,'countyidRegister',countyidRegister);
-             changeCity(m_countyRegisterCity,'countyidRegister',m_countyidRegister);
-             }*/
+            if($("#countyCity").val()!=''){
+                changeCity($("#countyRegisterCity").val(),'countyId',{!! session('factory')['county_id'] !!});
+            }
+            //$("#countyRegisterCity option[vlaue ='" + m_countyRegisterCity + "']").attr("selected", true);
+        });
+
+        //  污染源类型
+        //var abc = "${item.sourceType}";
+        //$("#sourceType").val(abc);
+        //$("#sourceType option[value='" + abc + "']").attr("selected", true);
+
+        //注册城市
+
+        /*
+         var ace = "${item.industryBigid}";
+         if (ace != '') {
+         industrysmall('${item.industryBigid}');
+         }
+         var m_countyCity = '${item.countyCity}';
+         $.post("ajax/City/getCityId.do", function (data) {
+         var jsonObj = eval("(" + data + ")");
+         for (var i = 0; i < jsonObj.length; i++) {
+         var $option = $("<option></option>");
+         $option.attr("value", jsonObj[i].cityId);
+         $option.text(jsonObj[i].cityName);
+         //$("#RcountyId").append($option);
+         $("#countyCity").append($option);
+         }
+         $("#countyCity option[value='" + m_countyCity + "']").attr("selected", true);
 
 
-            //alert(document.getElementById(material_name1).innerHTML);
-            /*$.post("ajax/FabricationproTemp/loadallinfo.do",{
-             },function(data){
+         });
 
-             var json = eval("(" + data + ")");
-             });
+         if (m_countyCity != '') {
+         var m_countyCode = '${item.countyId}';
+         changeCity(m_countyCity, 'countyId', m_countyCode);
+         }
+         var m_countyRegisterCity='${item.countyRegisterCity}';
+         $.post("ajax/City/getCityId.do", function(data) {
+         var jsonObj = eval("(" + data + ")");
+         for ( var i = 0; i < jsonObj.length; i++) {
+         var $option = $("<option></option>");
+         $option.attr("value", jsonObj[i].cityId);
+         $option.text(jsonObj[i].cityName);
+         //$("#RcountyId").append($option);
+         $("#countyRegisterCity").append($option);
+         }
+         $("#countyRegisterCity option[value='"+m_countyRegisterCity+"']").attr("selected", true);
+         });
+         if(m_countyRegisterCity!=''){
+         var m_countyidRegister='${item.countyidRegister}';
+         //changeCity(countyRegisterCity,'countyidRegister',countyidRegister);
+         changeCity(m_countyRegisterCity,'countyidRegister',m_countyidRegister);
+         }*/
 
 
-             //alert(document.getElementById(material_name1).innerHTML);
-             $.post("ajax/SolventEquTemp/loadallinfo.do",{
-             },function(data){
-             var json = eval("(" + data + ")");
+        //alert(document.getElementById(material_name1).innerHTML);
+        /*$.post("ajax/FabricationproTemp/loadallinfo.do",{
+         },function(data){
+
+         var json = eval("(" + data + ")");
+         });
 
 
-             });
+         //alert(document.getElementById(material_name1).innerHTML);
+         $.post("ajax/SolventEquTemp/loadallinfo.do",{
+         },function(data){
+         var json = eval("(" + data + ")");
 
 
-             //alert(document.getElementById(material_name1).innerHTML);
-             $.post("ajax/BoilerTemp/loadallinfo.do",{
-             },function(data){
+         });
 
-             var json = eval("(" + data + ")");
-             });*/
 
-            //34.3700~49.55"
-        }
+         //alert(document.getElementById(material_name1).innerHTML);
+         $.post("ajax/BoilerTemp/loadallinfo.do",{
+         },function(data){
+
+         var json = eval("(" + data + ")");
+         });*/
+
+        //34.3700~49.55"
+
         function industrysmall(m_value) {
             $("#industryId").empty();
             var $option = $("<option></option>");
@@ -233,18 +259,16 @@
         }
 
         function changeCity(m_value, next, m_countyCode) {
-            cleaSec(next);
+            $("#"+next).empty();
             var $option = $("<option></option>");
             $option.attr("value", "");
             $option.text("请选择");
             $("#" + next).append($option);
-            $.post("ajax/County/getCountyId.do", {citycode: m_value}, function (data) {
-                var jsonObj = eval("(" + data + ")");
-                for (var i = 0; i < jsonObj.length; i++) {
+            $.post("{{url('GetCounty')}}", { '_token': '{{ csrf_token() }}',citycode: m_value}, function (data) {
+                for (var i = 0; i < data.length; i++) {
                     var $option = $("<option></option>");
-                    $option.attr("value", jsonObj[i].countyId);
-                    $option.text(jsonObj[i].countyName);
-                    //$("#RcountyId").append($option);
+                    $option.attr("value", data[i].COUNTY_ID);
+                    $option.text(data[i].COUNTY_NAME);
                     $("#" + next).append($option);
 
                 }
@@ -280,13 +304,14 @@
             var factorySize = document.getElementById("factorySize").value;
             var countyRegisterCity = document.getElementById("countyRegisterCity").value;
             var countyidRegister = document.getElementById("countyidRegister").value;//注册城市
-            var addressRegister = document.getElementById("addressRegister").value;//注册区县
-            var countyCity = document.getElementById("countyCity").value;
-            var cityName = $("#countyCity").find("option:selected").text();//城市名称
             var countyRegisterCityDec = $("#countyRegisterCity").find("option:selected").text();//注册城市名称
             var countyidRegisterDec = $("#countyidRegister").find("option:selected").text();//注册区县名称
+            var addressRegister = document.getElementById("addressRegister").value;//注册详细地址
+            var countyCity = document.getElementById("countyCity").value;
+            var cityName = $("#countyCity").find("option:selected").text();//城市名称
             var countyId = document.getElementById("countyId").value;
             var countyName = $("#countyId").find("option:selected").text();//区县名称
+
             var address = document.getElementById("address").value;
             var factoryLongitude = document.getElementById("factoryLongitude").value;
             var factoryLatitude = document.getElementById("factoryLatitude").value;

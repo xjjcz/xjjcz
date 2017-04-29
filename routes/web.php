@@ -91,3 +91,7 @@ Route::any('/noOrganizationdelete',"XjjczController@noOrganizationdelete");
 Route::any('/FnoOrganizationWorkshopDischargeTempupdate','XjjczController@FnoOrganizationWorkshopDischargeTempupdate');
 Route::any('/ExhaustTempsaveevery','XjjczController@ExhaustTempsaveevery');
 Route::any('/GetindustrySmallId','XjjczController@GetindustrySmallId');
+Route::any('/Exhaustupdate','XjjczController@Exhaustupdate');
+Route::any('/ExhaustTempdetele',"XjjczController@ExhaustTempdetele");
+Route::any('/GetindustrySmallId',"XjjczController@GetindustrySmallId");
+Route::any('/GetCounty',"XjjczController@GetCounty");
