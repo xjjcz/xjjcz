@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Device_product_temp;
+use App\Model\Device_raw_temp;
 use App\Model\Device_temp;
 use App\Model\City;
 use App\Model\Exhaust_temp;
@@ -43,6 +45,8 @@ class XjjczController extends Controller
         $total_productraw_temp = Total_productraw_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
         $request->session()->put("total_productraw_temp", $total_productraw_temp);
         $request->session()->put("device_num", $total_productraw_temp[0]["device_num"]);
+        $request->session()->put("raw_num", $total_productraw_temp[0]["raw_num"]);
+        $request->session()->put("product_num", $total_productraw_temp[0]["product_num"]);
         //find device by exhaust
         $device_temps = array();
         foreach ($exhaust_temps as $exhaust_temp) {
@@ -52,6 +56,24 @@ class XjjczController extends Controller
             }
         }
         $request->session()->put("device_temps", $device_temps);
+        //find raw by device
+        $device_raw_temps = array();
+        foreach ($device_temps as $device_temp){
+            $raws = Device_raw_temp::where("device_id",$device_temp["id"])->get()->toArray();
+            foreach ($raws as $raw){
+                array_push($device_raw_temps,$raw);
+            }
+        }
+        $request->session()->put("device_raw_temps",$device_raw_temps);
+        //find product by device
+        $device_product_temps = array();
+        foreach ($device_temps as $device_temp){
+            $products = Device_product_temp::where("device_id",$device_temp["id"])->get()->toArray();
+            foreach ($products as $product){
+                array_push($device_product_temps,$product);
+            }
+        }
+        $request->session()->put("device_product_temps",$device_product_temps);
         $industry_big = IndustryBig::all();
         $city = City::all();
         return view("layouts.companyinfo", ["industry_big" => $industry_big,"city"=>$city]);

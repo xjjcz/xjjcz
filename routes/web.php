@@ -64,6 +64,34 @@ Route::get('/device/{index}', function (\Illuminate\Http\Request $request,$index
         return view('layouts.device',["device_temp"=>$device_temps[$index],"NUM"=>($index+1)]);
     }
 });
+Route::any('/addraw', function (\Illuminate\Http\Request $request){
+    $raw_num = $request->session()->get("raw_num");
+    $request->session()->put(["raw_num"=>intval($raw_num)+1]);
+    return redirect("/raw/new");
+});
+
+Route::get('/raw/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.raw',["NUM"=>$request->session()->get("raw_num")]);
+    }else {
+        $raw_temps = $request->session()->get("raw_temps");
+        return view('layouts.raw',["raw_temp"=>$raw_temps[$index],"NUM"=>($index+1)]);
+    }
+});
+Route::any('/addproduct', function (\Illuminate\Http\Request $request){
+    $product_num = $request->session()->get("product_num");
+    $request->session()->put(["product_num"=>intval($product_num)+1]);
+    return redirect("/product/new");
+});
+
+Route::get('/product/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.product',["NUM"=>$request->session()->get("product_num")]);
+    }else {
+        $product_temps = $request->session()->get("product_temps");
+        return view('layouts.product',["product_temp"=>$product_temps[$index],"NUM"=>($index+1)]);
+    }
+});
 
 Route::get('/tolistRoad',"XjjczController@roadlist");
 Route::get('/toconstruction',"XjjczController@toconstruction");
