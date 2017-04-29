@@ -67,12 +67,7 @@
 
     <script type="text/javascript">
         $(document).ready(function (){
-            var bool = '{!! $exhaust_temps['EXF_LATITUDE'] or 0 !!}';
-            if(bool==0){
-                alert(123);
-                }else {
-                    alert(456);
-                };
+
             //alert(document.getElementById(material_name1).innerHTML);
             document.getElementById("NUM").innerHTML = "<b>" + {{ $NUM }}
                 + "号烟囱</b>";
@@ -179,17 +174,17 @@
 
         }
         function cjdetele() {
-            var cjexfid = document.getElementById("mId").value;
-            $.post("ajax/ExhaustTemp/cjdetele.do", {
+            var cjexfid = document.getElementById("EXF_ID").value;
+            $.post("{{ url('ExhaustTempdetele') }}", {
+                '_token': '{{csrf_token()}}',
                 cjexfid: cjexfid
-            }, function (data) {
-                var json = eval("(" + data + ")");
-                //alert(json.sys_code);
-                alert(json.value);
-                if (json.suc == 1) {
-                    jumptopage(json.nub);
+            }, function (state) {
+                if (state == 1) {
+                    alert("删除成功");
+                    window.location.href = '{{ url("/exhaust") }}' + '/' + '{!! $NUM-2 !!}';
+                }else {
+                    alert("删除失败");
                 }
-
             });
 
         }
@@ -373,8 +368,6 @@
          * */
 
         function ExhaustTempsaveevery() {
-
-
             var fabriexfno = {!! $NUM !!};
             var material = document.getElementById("material").value;
             var exfheight = document.getElementById("exfheight").value;
@@ -388,7 +381,6 @@
             //var m_pages = parseInt(document.getElementById("page").value);
             //var gnnub = m_pages;//表示保存设备m_pages
             var malert = parseInt(document.getElementById("malert").value); //0表示未改变，1表示改变
-            if(1){
 
             $.post("{{ url('ExhaustTempsaveevery') }}", {
                     '_token': '{{csrf_token()}}',
@@ -409,9 +401,45 @@
                         alert("施工扬尘源保存失败！");
                     }
                 });
-            }else {
 
-            }
+        }
+        function Exhaustupdate() {
+            var fabriexfno = {!! $NUM !!};
+            var EXF_ID = $("#EXF_ID").val();
+            var material = document.getElementById("material").value;
+            var exfheight = document.getElementById("exfheight").value;
+            var smoke_outd = document.getElementById("smoke_outd").value;
+            var smoke_outtem = document.getElementById("smoke_outtem").value;
+
+            var smoke_outv = document.getElementById("smoke_outv").value;
+            var smokeOuta = document.getElementById("smokeOuta").value;
+            var longitude = document.getElementById("longitude").value;
+            var latitude = document.getElementById("latitude").value;
+            //var m_pages = parseInt(document.getElementById("page").value);
+            //var gnnub = m_pages;//表示保存设备m_pages
+            var malert = parseInt(document.getElementById("malert").value); //0表示未改变，1表示改变
+
+            $.post("{{ url('Exhaustupdate') }}", {
+                '_token': '{{csrf_token()}}',
+                EXF_ID:EXF_ID,
+                fabriexfno:fabriexfno,
+                exfMaterial: material,
+                exfHeight: exfheight,
+                smokeOutd: smoke_outd,
+                smokeOutteM: smoke_outtem,
+                smokeOutv: smoke_outv,
+                smokeOuta: smokeOuta,
+                exfLongitude: longitude,
+                exfLatitude: latitude
+            },   function (state) {
+                if (state < 0) {
+                    alert("施工扬尘源更新失败！");
+                } else {
+                    alert("施工扬尘源更新成功！");
+                    window.location.href = '{{ url("/exhaust") }}' + '/' + '{!! $NUM-1 !!}';
+                }
+            });
+
         }
 
         function jumpsave(source) {
@@ -469,7 +497,6 @@
         <a class="menu-toggler" id="menu-toggler" href="#"> <span
                     class="menu-text"></span> </a>
         @include("layouts.leftnav")
-
         <div class="main-content">
             <div id="m_alert">
                 <ul class="breadcrumb">
@@ -775,6 +802,7 @@
                     </div>
                 </div>
 
+
                 <div class="page-header"></div>
                 <!-- /.page-header -->
                 <div class="row"
@@ -788,17 +816,20 @@
                                 <a href="javascript:void(0);" id="prepage" onclick="pre();">&larr;
                                     填报上一个</a>
                             </li>
-                            <div class="col-md-3">
-                                <li>
-                                    <a href="javascript:void(0);" onclick="ExhaustTempsaveevery();">&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                </li>
-                            </div>
+
 
                             <div class="col-md-3">
                                 <li>
-                                    <a href="javascript:void(0);" onclick="cancel();">放弃当前页面</a>
+                                    <a href="javascript:void(0);" onclick="Exhaustupdate();">更新</a>
                                 </li>
                             </div>
+
+                                <div class="col-md-3">
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="ExhaustTempsaveevery();">&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </li>
+                                </div>
+
 
                             <li class="col-md-3">
                                 <a href="javascript:void(0);" id="nextpage" onclick="next();">填报下一个
@@ -810,6 +841,7 @@
                             </li>
                             <input type="hidden" name="page" id="page" value='0'>
                             <input type="hidden" name="malert" id="malert" value='0'>
+                            <input type="hidden" name="EXF_ID" id="EXF_ID" value='{{ $exhaust_temps["EXF_ID"] or ''}}'>
                             <input type="hidden" name="mId" id="mId"
                                    value='${cur_exhuast.exfId}'>
                         </ul>

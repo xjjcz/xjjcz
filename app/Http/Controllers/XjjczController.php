@@ -10,6 +10,7 @@ use App\Model\FconstructionDustTemp;
 use App\Model\FnoOrganizationTemp;
 use App\Model\FroadDustSourceTemp;
 use App\Model\FyardDustTemp;
+use App\Model\GetCounty;
 use App\Model\IndustryBig;
 use App\Model\IndustrySmall;
 use App\Model\Information;
@@ -39,21 +40,21 @@ class XjjczController extends Controller
         $request->session()->put("totalexhaust", $totalexhaust);
         $request->session()->put("exhaust_temps", $exhaust_temps);
         //find product
-        $total_productraw_temp = Total_productraw_temp::where("FACTORY_ID",$clientfactoryid)->get()->toArray();
-        $request->session()->put("total_productraw_temp",$total_productraw_temp);
-        $request->session()->put("device_num",$total_productraw_temp[0]["device_num"]);
+        $total_productraw_temp = Total_productraw_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+        $request->session()->put("total_productraw_temp", $total_productraw_temp);
+        $request->session()->put("device_num", $total_productraw_temp[0]["device_num"]);
         //find device by exhaust
         $device_temps = array();
-        foreach($exhaust_temps as $exhaust_temp){
-            $devices = Device_temp::where("EXHUST_ID",$exhaust_temp["EXF_ID"])->get()->toArray();
-            foreach($devices as $device){
-                array_push($device_temps,$device);
+        foreach ($exhaust_temps as $exhaust_temp) {
+            $devices = Device_temp::where("EXHUST_ID", $exhaust_temp["EXF_ID"])->get()->toArray();
+            foreach ($devices as $device) {
+                array_push($device_temps, $device);
             }
         }
-        $request->session()->put("device_temps",$device_temps);
+        $request->session()->put("device_temps", $device_temps);
         $industry_big = IndustryBig::all();
         $city = City::all();
-        return view("layouts.companyinfo", ["industry_big" => $industry_big]);
+        return view("layouts.companyinfo", ["industry_big" => $industry_big,"city"=>$city]);
     }
 
     public function roadlist(Request $request)
@@ -364,5 +365,46 @@ class XjjczController extends Controller
     {
         $getindustrySmallId = IndustrySmall::where('industry_big', $_POST['industrybigid'])->get();
         return $getindustrySmallId;
+    }
+    public  function GetCounty(){
+        $getCounty = GetCounty::where('city_code',$_POST['citycode'])->get();
+        return $getCounty;
+    }
+
+    public function Exhaustupdate(Request $request)
+    {
+        $state = Exhaust_temp::where('EXF_ID', $_POST['EXF_ID'])->update(array(
+            'FACTORY_ID' => $request->session()->get('clientfactoryid'),
+            'NK_NO' => $_POST['fabriexfno'],
+            'EXF_MATERIAL' => $_POST['exfMaterial'],
+            'EXF_HEIGHT' => $_POST['exfHeight'],
+            'SMOKE_OUTD' => $_POST['smokeOutd'],
+            'SMOKE_O_UTTE_M' => $_POST['smokeOutteM'],
+            'SMOKE_OUTV' => $_POST['smokeOutv'],
+            'SMOKE_OUTA' => $_POST['smokeOuta'],
+            'EXF_LONGITUDE' => $_POST['exfLongitude'],
+            'EXF_LATITUDE' => $_POST['exfLatitude']
+        ));
+        if (1) {
+            $clientfactoryid = $request->session()->get("clientfactoryid");
+            //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+            $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+            $totalexhaust = count($exhaust_temps);
+            $request->session()->put("totalexhaust", $totalexhaust);
+            $request->session()->put("exhaust_temps", $exhaust_temps);
+        }
+        return $state;
+    }
+
+    public function ExhaustTempdetele(Request $request)
+    {
+        $state = Exhaust_temp::where('EXF_ID', $_POST['cjexfid'])->delete();
+        $clientfactoryid = $request->session()->get("clientfactoryid");
+        //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+        $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+        $totalexhaust = count($exhaust_temps);
+        $request->session()->put("totalexhaust", $totalexhaust);
+        $request->session()->put("exhaust_temps", $exhaust_temps);$a = 1;
+        return $state;
     }
 }
