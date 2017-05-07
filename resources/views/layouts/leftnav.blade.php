@@ -35,7 +35,6 @@
             var total_productraw_temp = {!! json_encode(session("total_productraw_temp"))  !!};
             var real_device_num = total_productraw_temp[0].device_num;
             var i = 1;
-
             for (; i <= real_device_num; i++) {
 
                 document.getElementById("deviceul").innerHTML += "<li id='deviceli"
@@ -50,6 +49,7 @@
                     + i + "号设备</a></li>";
             }
             //raw
+
             var raw_num = {!! session("raw_num") !!};
             var real_raw_num = total_productraw_temp[0].raw_num;
             var i = 1;
@@ -86,6 +86,7 @@
                     + "'><a href='javascript:void(0)' onclick='getnewproduct()'><i class='icon-double-angle-right'></i>"
                     + i + "号产品</a></li>";
             }
+
             //boilder
             var boiler_num ={!! session('boiler_num') !!};
             var real_boiler_num = {!! session('boiler_realnum') !!};

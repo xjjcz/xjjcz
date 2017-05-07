@@ -53,6 +53,8 @@ class XjjczController extends Controller
         $total_productraw_temp = Total_productraw_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
         $request->session()->put("total_productraw_temp", $total_productraw_temp);
         $request->session()->put("device_num", $total_productraw_temp[0]["device_num"]);
+        $request->session()->put("raw_num", $total_productraw_temp[0]["raw_num"]);
+        $request->session()->put("product_num", $total_productraw_temp[0]["product_num"]);
         //find device by exhaust
         $device_temps = array();
         foreach ($exhaust_temps as $exhaust_temp) {
@@ -70,6 +72,7 @@ class XjjczController extends Controller
         $request->session()->put("boiler_num",count($boiler_temps));
         //guolu real count
         $request->session()->put("boiler_realnum",count($boiler_temps));
+
         //find raw by device
         $device_raw_temps = array();
 
