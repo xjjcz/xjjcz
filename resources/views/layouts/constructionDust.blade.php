@@ -284,10 +284,10 @@ $itemroaddusti = 0;
                             controlMeasures : controlMeasures
                         },
                         function(state) {
-                            if (state == 0) {
-                                alert("施工扬尘源更新成功！");
-                            } else {
+                            if (state < 0) {
                                 alert("施工扬尘源更新失败！");
+                            } else {
+                                alert("施工扬尘源更新成功！");
                             }
                         });
 

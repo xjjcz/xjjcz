@@ -86,6 +86,35 @@
                     + "'><a href='javascript:void(0)' onclick='getnewproduct()'><i class='icon-double-angle-right'></i>"
                     + i + "号产品</a></li>";
             }
+            //boilder
+            var boiler_num ={!! session('boiler_num') !!};
+            var real_boiler_num = {!! session('boiler_realnum') !!};
+            var i = 1;
+            for (; i <= real_boiler_num; i++) {
+                document.getElementById("sguoluul").innerHTML += "<li id='boilerli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getboiler(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
+            }
+            if (boiler_num > real_boiler_num) {
+                document.getElementById("sguoluul").innerHTML += "<li id='boilerli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewboiler()'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
+            }
+            //feiqi
+            var feiqi_num = {!! session('feiqi_num') !!};
+            var feiqi_realnum = {!! session('feiqi_realnum') !!};
+            var i = 1;
+            for (;i<=feiqi_realnum;i++){
+                document.getElementById("feiqiul").innerHTML += "<li id='feiqili" + i + "'><a href='javascript:void(0)' onclick='getfeiqi(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>" + i + "号设备</a></li>";
+            }
+            if(feiqi_num>feiqi_realnum){
+                document.getElementById("feiqiul").innerHTML += "<li id='feiqili"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewfeiqi()'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
+            }
 
         });
     function getexhaust(i) {
@@ -111,6 +140,18 @@
     }
     function getnewproduct(i){
         window.location.href = '{{ url("/product") }}'+'/new';
+    }
+    function getboiler(i) {
+        window.location.href = '{{ url("/boiler") }}' + '/' + i;
+    }
+    function getnewboiler(i) {
+        window.location.href = '{{ url("/boiler") }}' + '/new';
+    }
+    function getfeiqi(i) {
+        window.location.href = '{{ url("/feiqi") }}'  +'/'+i;
+    }
+    function getnewfeiqi(i) {
+        windwo.location.href = '{{url("/feiqi")}}' +'/new';
     }
 
     function addyaolukiln() {
@@ -273,13 +314,44 @@
         }
 
     }
+    function addsguolu() {
+        var boiler_num = {!! session('boiler_num') !!};
+        if (!checkvalue(1)) {
+            alert(alertadd);
+            return;
+        }
+        if (!checkvalue()) {
+            alert(alertadd);
+        } else {
+            var number = 0;
+            if (boiler_num != null) {
+                if (boiler_num == "") {
+                    number = 1;
+                } else {
+                    number = parseInt(boiler_num) + 1;
+                }
+            }else
+            {
+                number++;
+            }
+            window.location.href = '{{ url("/addboiler") }}';
+
+        }
+    }
 
 
     function addproduct() {
-        var product_num = {!! session("product_num") !!};
-        var device_num = {!! session("device_num") !!};
+        //if ('${totalexhaust}' == null ||'${totalexhaust}' == ""||'${totalexhaust}'==0) {
+        //alert("企业填报次序是\"烟囱/排气筒\"->\"设备\"->\"产品\"");
+        //var is = confirm("点击\"确定\"系统将为您跳转到烟囱/排气筒信息填报界面，否则产品页面无法保存！");
 
-        if (device_num == null || device_num == "" || device_num == 0) {
+        //if (is == true) {
+        //addchimney();
+        //return;
+        //}
+        //}
+
+        if ('${totaldevice.deviceNum}' == null || '${totaldevice.deviceNum}' == "" || '${totaldevice.deviceNum}' == 0) {
             alert("企业填报次序是\"设备\"->\"产品\"");
             var is = confirm("点击\"确定\"系统将为您跳转到设备信息填报界面，否则产品页面无法保存！");
 
@@ -294,26 +366,33 @@
         } else {
 
             var number = 0;
-            if (product_num != null) {
-                if (product_num == "") {
+            if ('${totaldevice.productNum}' != null) {
+                if ('${totaldevice.productNum}' == "") {
                     number = 1;
                 } else {
-                    number = parseInt(product_num) + 1;
+                    number = parseInt('${totaldevice.productNum}') + 1;
                 }
             } else {
                 number++;
             }
             var page = number + 200;
-            document.getElementById("productul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-            //alert("wan");
-            window.location.href = '{{ url("/addproduct") }}';
+            document.getElementById("deviceul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
+
 
         }
     }
     function addraw() {
-        var raw_num = {!! session("raw_num") !!};
-        var device_num = {!! session("device_num") !!};
-        if (device_num == null || device_num == "" || device_num == 0) {
+        //if ('${totalexhaust}' == null ||'${totalexhaust}' == ""||'${totalexhaust}'==0) {
+        //alert("企业填报次序是\"烟囱/排气筒\"->\"设备\"->\"原料\"");
+        ////var is = confirm("点击\"确定\"系统将为您跳转到烟囱/排气筒信息填报界面，否则原料页面无法保存！");
+
+        //if (is == true) {
+        //addchimney();
+        //return;
+        //}
+        //}
+
+        if ('${totaldevice.deviceNum}' == null || '${totaldevice.deviceNum}' == "" || '${totaldevice.deviceNum}' == 0) {
             alert("企业填报次序是\"设备\"->\"原料\"");
             var is = confirm("点击\"确定\"系统将为您跳转到设备信息填报界面，否则原料页面无法保存！");
 
@@ -332,18 +411,18 @@
         } else {
 
             var number = 0;
-            if (raw_num != null) {
-                if (raw_num == "") {
+            if ('${totaldevice.rawNum}' != null) {
+                if ('${totaldevice.rawNum}' == "") {
                     number = 1;
                 } else {
-                    number = parseInt(raw_num) + 1;
+                    number = parseInt('${totaldevice.rawNum}') + 1;
                 }
             } else {
                 number++;
             }
             var page = number + 100;
             document.getElementById("rawul").innerHTML += "<li id='rawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
-            window.location.href = '{{ url("/addraw") }}';
+
 
         }
     }

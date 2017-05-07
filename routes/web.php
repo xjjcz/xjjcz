@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Model\Dustremove;
+use App\Model\Scc2;
 //Route::get('/', function () {
 //    return view('welcome')11;
 //});
@@ -92,6 +93,39 @@ Route::get('/product/{index}', function (\Illuminate\Http\Request $request,$inde
         return view('layouts.product',["product_temp"=>$product_temps[$index],"NUM"=>($index+1)]);
     }
 });
+Route::any('/addboiler',function (\Illuminate\Http\Request $request){
+    $boiler_num = $request->session()->get("boiler_num");
+    $request->session()->put(["boiler_num"=>intval($boiler_num)+1]);
+    return redirect("/boiler/new");
+});
+Route::any('/boiler/{index}',function (\Illuminate\Http\Request $request,$index){
+    $dustremove = Dustremove::all();
+    $nitreremove = \App\Model\Nitreremove::all();
+    $sulphuremove = \App\Model\Sulphurremove::all();
+    if ($index == "new"){
+        $scc2 = Scc2::where('scc_1','10')->get();
+        return view('layouts.boiler',["NUM"=>$request->session()->get("boiler_num"),'dustremove'=>$dustremove,'nitreremove'=>$nitreremove,
+            'sulphuremove'=>$sulphuremove,"scc2"=>$scc2]);
+    }else{
+        $boiler_timps = $request->session()->get("boiler_temps");
+        $scc2 = Scc2::where('scc_1','10')->get();
+        return view('layouts.boiler',["boiler_temp"=>$boiler_timps[$index],"NUM"=>($index+1),'dustremove'=>$dustremove,'nitreremove'=>$nitreremove,
+            'sulphuremove'=>$sulphuremove,"scc2"=>$scc2]);
+    }
+});
+Route::any('/addfeiqi',function (\Illuminate\Http\Request $request){
+    $feiqi_num = $request->session()->get("feiqi_num");
+    $request->session()->put(["feiqi_num"=>intval($feiqi_num)+1]);
+    return redirect("/feiqi/new");
+});
+Route::any('/feiqi/{index}',function (\Illuminate\Http\Request $request,$index){
+    if($index == "new"){
+        return view('layouts.feiqi',['NUM'=>$request->session()->get("feiqi_num")]);
+    }else{
+        $feiqi = $request->session()->get("feiqi");
+        return view('layouts.feiqi',["feiqi"=>$feiqi[$index],"NUM"=>($index+1)]);
+    }
+});
 
 Route::get('/tolistRoad',"XjjczController@roadlist");
 Route::get('/toconstruction',"XjjczController@toconstruction");
@@ -123,3 +157,9 @@ Route::any('/Exhaustupdate','XjjczController@Exhaustupdate');
 Route::any('/ExhaustTempdetele',"XjjczController@ExhaustTempdetele");
 Route::any('/GetindustrySmallId',"XjjczController@GetindustrySmallId");
 Route::any('/GetCounty',"XjjczController@GetCounty");
+Route::any('/FactoryupdateFac','XjjczController@FactoryupdateFac');
+Route::post('/SCC2','XjjczController@SCC2');
+Route::any('/SCC3','XjjczController@SCC3');
+Route::any('/SCC4','XjjczController@SCC4');
+Route::any('/BoilerTempcjdetele','XjjczController@BoilerTempcjdetele');
+Route::any('/BoilerTempupdatedb','XjjczController@BoilerTempupdatedb');

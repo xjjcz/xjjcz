@@ -18,7 +18,7 @@
 
 					<div class="col-md-7">
 						<label id='factotyno' style="font-size:15px; margin-top:3px;">
-							${item.factoryNo1} </label>
+							{!! session('factory')['factory_no1'] !!} </label>
 					</div>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 					<label class="col-md-4 control-label no-padding-right" for="form-field-1"> 企业名称： </label>
 					<div class="col-md-8">
 						<label id='factoryName' style="font-size:15px; margin-top:3px;">
-							${item.factoryName}</label>
+							{!! session('factory')['factory_name'] !!}</label>
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 
 					<div class="col-md-7">
 						<label id='sourceType' style="font-size:15px; margin-top:3px;">
-							${item.sourceType} </label>
+							{!! session('factory')['source_type'] !!} </label>
 					</div>
 				</div>
 			</div>
