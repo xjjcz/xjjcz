@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Boiler;
 use App\Model\Device_temp;
 use App\Model\City;
 use App\Model\Exhaust_temp;
+use App\Model\Factory;
 use App\Model\FbaresoilDustTemp;
 use App\Model\FconstructionDustTemp;
+use App\Model\Feiqi;
 use App\Model\FnoOrganizationTemp;
 use App\Model\FroadDustSourceTemp;
 use App\Model\FyardDustTemp;
@@ -14,11 +17,16 @@ use App\Model\GetCounty;
 use App\Model\IndustryBig;
 use App\Model\IndustrySmall;
 use App\Model\Information;
+use App\Model\Scc2;
+use App\Model\Scc3;
+use App\Model\Scc4;
 use App\Model\Total_productraw_temp;
+use App\Model\TotalBoiler;
 use App\Model\Xie;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use DB;
+use function Sodium\add;
 
 class XjjczController extends Controller
 {
@@ -52,8 +60,23 @@ class XjjczController extends Controller
             }
         }
         $request->session()->put("device_temps", $device_temps);
+        //find total guolu count by total_boiler
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->get();
+        $boiler_temps = Boiler::where('TBOILER_ID',$totalboiler[0]['TBOILER_ID'])->get();
+        $request->session()->put("boiler_temps",$boiler_temps);
+        //guolu count
+        $request->session()->put("boiler_num",count($boiler_temps));
+        //guolu real count
+        $request->session()->put("boiler_realnum",count($boiler_temps));
+
         $industry_big = IndustryBig::all();
         $city = City::all();
+        //session about feiqi
+        $feiqi = Feiqi::where('factory_id',$clientfactoryid)->get();
+        $request->session()->put("feiqi",$feiqi);
+        $request->session()->put("feiqi_num",count($feiqi));
+        $request->session()->put("feiqi_realnum",count($feiqi));
+
         return view("layouts.companyinfo", ["industry_big" => $industry_big,"city"=>$city]);
     }
 
@@ -385,14 +408,13 @@ class XjjczController extends Controller
             'EXF_LONGITUDE' => $_POST['exfLongitude'],
             'EXF_LATITUDE' => $_POST['exfLatitude']
         ));
-        if (1) {
-            $clientfactoryid = $request->session()->get("clientfactoryid");
-            //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
-            $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
-            $totalexhaust = count($exhaust_temps);
-            $request->session()->put("totalexhaust", $totalexhaust);
-            $request->session()->put("exhaust_temps", $exhaust_temps);
-        }
+
+        $clientfactoryid = $request->session()->get("clientfactoryid");
+        //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+        $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+        $totalexhaust = count($exhaust_temps);
+        $request->session()->put("totalexhaust", $totalexhaust);
+        $request->session()->put("exhaust_temps", $exhaust_temps);
         return $state;
     }
 
@@ -404,7 +426,139 @@ class XjjczController extends Controller
         $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
         $totalexhaust = count($exhaust_temps);
         $request->session()->put("totalexhaust", $totalexhaust);
-        $request->session()->put("exhaust_temps", $exhaust_temps);$a = 1;
+        $request->session()->put("exhaust_temps", $exhaust_temps);
         return $state;
+    }
+    public function FactoryupdateFac(Request $request){
+        $state = Factory::where('factory_id',$request->session()->get("clientfactoryid"))->update(array(
+            'factory_usedname' => $_POST['factoryUsedname'],
+            'source_type' => $_POST['sourceType'],
+            'industry_bigid' => $_POST['industryBigid'],
+            'industry_id' => $_POST['industryId'],
+            'legalperson' => $_POST['legalperson'],
+            'factory_size' => $_POST['factorySize'],
+            'county_register_city' => $_POST['countyRegisterCity'],
+            'countyid_register' => $_POST['countyidRegister'],
+            'address_register' => $_POST['addressRegister'],
+            'county_city' => $_POST['countyCity'],
+            'county_id' => $_POST['countyId'],
+            'address' => $_POST['address'],
+            'factory_longitude' => $_POST['factoryLongitude'],
+            'factory_latitude' => $_POST['factoryLatitude'],
+            'total_output' => $_POST['totalOutput'],
+            'Year_days' => $_POST['yearDays'],
+            'Days_hours' => $_POST['daysHours'],
+            'power_amount' => $_POST['powerAmount'],
+            'principal_name' => $_POST['principalName'],
+            'principal_phone' => $_POST['principalPhone'],
+            'principal_mobile' => $_POST['principalMobile'],
+            'principal_email' => $_POST['principalEmail'],
+            'lon1' => $_POST['lon1'],
+            'lat1' => $_POST['lat1'],
+            'lon2' => $_POST['lon2'],
+            'lat2' => $_POST['lat2'],
+            'lon3' => $_POST['lon3'],
+            'lat3' => $_POST['lat3'],
+            'lon4' => $_POST['lon4'],
+            'lat4' => $_POST['lat4'],
+            'lon5' => $_POST['lon5'],
+            'lat5' => $_POST['lat5'],
+            'lon6' => $_POST['lon6'],
+            'lat6' => $_POST['lat6'],
+            'lon7' => $_POST['lon7'],
+            'lat7' => $_POST['lat7']
+        ));
+        $factory = Factory::where('factory_id',$request->session()->get("clientfactoryid"))->first()->toArray();
+        //$factory = Factory::where("factory_no1",'0102G001-1')->first()->toArray();
+        $request->session()->put("factory",$factory);
+        return $state;
+    }
+    function SCC2(){
+        $scc2 = Scc2::where('scc_1','10')->get();
+        return $scc2;
+    }
+    function SCC3(){
+        $scc3 = Scc3::where(['scc_1'=>'10','scc_2'=>$_POST['scc2']])->get();
+        $a = 1;
+        return $scc3;
+}
+    function SCC4(){
+        $scc4 = Scc4::where(['scc_1'=>'10','scc_2'=>$_POST['scc2'],'scc_3'=>$_POST['scc3']])->get();
+        return $scc4;
+    }
+    function BoilerTempcjdetele(Request $request){
+        $state = Boiler::where('ID',$_POST['cjexfid'])->delete();
+        $clientfactoryid = $request->session()->get("clientfactoryid");
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->get();
+
+        $num = $totalboiler[0]['TBOILER_NUM']-1;
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->update(['TBOILER_NUM'=>$num]);
+        //find total guolu count by total_boiler
+        $clientfactoryid = $request->session()->get("clientfactoryid");
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->get();
+        $boiler_temps = Boiler::where('TBOILER_ID',$totalboiler[0]['TBOILER_ID'])->get();
+        $request->session()->put("boiler_temps",$boiler_temps);
+        //guolu count
+        $request->session()->put("boiler_num",count($boiler_temps));
+        //guolu real count
+        $request->session()->put("boiler_realnum",count($boiler_temps));
+        return $state;
+    }
+    function BoilerTempupdatedb(Request $request){
+        $clientfactoryid = $request->session()->get("clientfactoryid");
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->get();
+
+        $boiler = new Boiler();
+        $boiler->TBOILER_ID = $totalboiler[0]['TBOILER_ID'];
+        $boiler->FUNCTIO = $_POST['functio'];
+        $boiler->FUELTYPE = $_POST['fueltype'];
+        $boiler->MODEL = $_POST['model'];
+        $boiler->installed_capacity = $_POST['installedCapacity'];
+        $boiler->version = $_POST['version'];
+        $boiler->machine_no = $_POST['machineNo'];
+        $boiler->NO = $_POST['no'];
+        $boiler->TONS = $_POST['tons'];
+        $boiler->NK_NO = $_POST['exfNo'];
+        $boiler->COALASH = $_POST['coalash'];
+        $boiler->COALSULFUR = $_POST['coalsulfur'];
+        $boiler->coal_volatilisation = $_POST['coalVolatilisation'];
+        $boiler->COMBUSTIONSYSTEM = $_POST['combustionsystem'];
+        $boiler->FUEL_AUSAGE = $_POST['fuelAusage'];
+        $boiler->FUEL_AUSAGEUNIT = $_POST['fuelAusageunit'];
+        $boiler->feiqiti = $_POST['feiqiti'];
+        $boiler->so2out = $_POST['so2out'];
+        $boiler->noxout = $_POST['noxout'];
+        $boiler->pmout = $_POST['pmout'];
+        $boiler->Jan_useamount = $_POST['janUseamount'];
+        $boiler->Feb_useamount = $_POST['febUseamount'];
+        $boiler->Mar_useamount = $_POST['marUseamount'];
+        $boiler->Apr_useamount = $_POST['aprUseamount'];
+        $boiler->May_useamount = $_POST['mayUseamount'];
+        $boiler->June_useamount = $_POST['juneUseamount'];
+        $boiler->July_useamount = $_POST['julyUseamount'];
+        $boiler->aug_useamount = $_POST['augUseamount'];
+        $boiler->sept_useamount = $_POST['septUseamount'];
+        $boiler->oct_use_amount = $_POST['octUseAmount'];
+        $boiler->nov_useamount = $_POST['novUseamount'];
+        $boiler->dec_useamount = $_POST['decUseamount'];
+        $boiler->dustremove_id = $_POST['dustremoveId'];
+        $boiler->nitreremove_id = $_POST['nitreremoveId'];
+        $boiler->sulphurremove_id = $_POST['sulphurremoveId'];
+        $boiler->save();
+        //update total_boiler
+
+        $num = $totalboiler[0]['TBOILER_NUM']+1;
+        $totalboiler->TBOILER_NUM = $num;
+        $totalboiler->save();
+
+        //find total guolu count by total_boiler;update session
+        $totalboiler = TotalBoiler::where('FACTORY_ID',$clientfactoryid)->get();
+        $boiler_temps = Boiler::where('TBOILER_ID',$totalboiler[0]['TBOILER_ID'])->get();
+        $request->session()->put("boiler_temps",$boiler_temps);
+        //guolu count
+        $request->session()->put("boiler_num",count($boiler_temps));
+        //guolu real count
+        $request->session()->put("boiler_realnum",count($boiler_temps));
+        if($boiler){ return 1;}else{return 0;}
     }
 }

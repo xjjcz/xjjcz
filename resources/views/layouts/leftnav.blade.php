@@ -40,14 +40,43 @@
 
                 document.getElementById("deviceul").innerHTML += "<li id='deviceli"
                     + i
-                    + "'><a href='javascript:void(0)' onclick='getdevice("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + "'><a href='javascript:void(0)' onclick='getdevice(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>"
                     + i + "号设备</a></li>";
             }
-            if(device_num>real_device_num){
+            if (device_num > real_device_num) {
                 document.getElementById("deviceul").innerHTML += "<li id='deviceli"
                     + i
                     + "'><a href='javascript:void(0)' onclick='getnewdevice()'><i class='icon-double-angle-right'></i>"
                     + i + "号设备</a></li>";
+            }
+            //boilder
+            var boiler_num ={!! session('boiler_num') !!};
+            var real_boiler_num = {!! session('boiler_realnum') !!};
+            var i = 1;
+            for (; i <= real_boiler_num; i++) {
+                document.getElementById("sguoluul").innerHTML += "<li id='boilerli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getboiler(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
+            }
+            if (boiler_num > real_boiler_num) {
+                document.getElementById("sguoluul").innerHTML += "<li id='boilerli"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewboiler()'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
+            }
+            //feiqi
+            var feiqi_num = {!! session('feiqi_num') !!};
+            var feiqi_realnum = {!! session('feiqi_realnum') !!};
+            var i = 1;
+            for (;i<=feiqi_realnum;i++){
+                document.getElementById("feiqiul").innerHTML += "<li id='feiqili" + i + "'><a href='javascript:void(0)' onclick='getfeiqi(" + (i - 1) + ")'><i class='icon-double-angle-right'></i>" + i + "号设备</a></li>";
+            }
+            if(feiqi_num>feiqi_realnum){
+                document.getElementById("feiqiul").innerHTML += "<li id='feiqili"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewfeiqi()'><i class='icon-double-angle-right'></i>"
+                    + i + "号锅炉</a></li>";
             }
 
 
@@ -58,11 +87,23 @@
     function getnewexhaust(i) {
         window.location.href = '{{ url("/exhaust") }}' + '/new';
     }
-    function getdevice(i){
-        window.location.href = '{{ url("/device") }}'+'/'+i;
+    function getdevice(i) {
+        window.location.href = '{{ url("/device") }}' + '/' + i;
     }
-    function getnewdevice(i){
-        window.location.href = '{{ url("/device") }}'+'/new';
+    function getnewdevice(i) {
+        window.location.href = '{{ url("/device") }}' + '/new';
+    }
+    function getboiler(i) {
+        window.location.href = '{{ url("/boiler") }}' + '/' + i;
+    }
+    function getnewboiler(i) {
+        window.location.href = '{{ url("/boiler") }}' + '/new';
+    }
+    function getfeiqi(i) {
+        window.location.href = '{{ url("/feiqi") }}'  +'/'+i;
+    }
+    function getnewfeiqi(i) {
+        windwo.location.href = '{{url("/feiqi")}}' +'/new';
     }
 
     function addyaolukiln() {
@@ -99,36 +140,7 @@
     //var m_number=number+1;
     //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+m_number+")'><i class='icon-double-angle-right'></i>+</a></li>";
 
-    function addsguolu() {
-        if (!checkvalue(1)) {
-            alert(alertadd);
-            return;
-        }
-        if ('${totalexhaust}' == null || '${totalexhaust}' == "" || '${totalexhaust}' == 0) {
 
-            alert("企业填报次序是\"烟囱/排气筒\"->\"锅炉\"");
-            var is = confirm("点击\"确定\"系统将为您跳转到烟囱/排气筒信息填报界面，否则锅炉页面无法保存！");
-            if (is == true) {
-                addchimney();
-                return;
-            }
-        }
-        var number = 0;
-        if ('${totalpagesboiler}' != null) {
-            if ('${totalpagesboiler}' == "") {
-
-            } else {
-                number = parseInt('${totalpagesboiler}') + 1;
-            }
-        } else {
-            number++;
-        }
-
-        var m_newpageboiler = 1;
-        document.getElementById("sguoluul").innerHTML += "<li id='sguoluli" + number + "'>" + "<a href='javascript:void(0)' onclick='addsaveinfo(" + number + ",\"stationary\")'><i class='icon-double-angle-right'></i>" + number + "号锅炉</a></li>";
-
-
-    }
     function addchimney() {
         if (!checkvalue(1)) {
             alert(alertadd);
@@ -148,7 +160,6 @@
             document.getElementById("exhaustul").innerHTML += "<li id='exhaustli" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + i + ",\"exhaust\")'><i class='icon-double-angle-right'></i>" + i + "号烟囱/排气筒</a></li>";
             //document.getElementById("exhaustul").innerHTML+="<li id='exhaustli"+i+"'><a onclick='addsaveinfo("+i+",\"exhaust\")'><i class='icon-double-angle-right'></i>"+i+"号烟囱/排气筒 </a></li>";
             //修改中的个数
-
             //alert(ii);
             //跳转到新增页面
             window.location.href = '{{ url("/addexhaust") }}';
@@ -163,37 +174,32 @@
     }
     function addfeiqi() {
         /*if(!jumpsave('exhaust')){
-         return ;
-         }	*/
+
+
+        //var m_number=number+1;
+        //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+m_number+")'><i class='icon-double-angle-right'></i>+</a></li>";*/
+        var feiqi_num = {!! session('feiqi_num') !!};
         if (!checkvalue(1)) {
             alert(alertadd);
             return;
         }
-        if (true) {
-            var i = 0;
-            if ('${totalfeiqi}' != null) {
-                if ('${totalfeiqi}' == "") {
-                    i = 1;
+        if (!checkvalue()) {
+            alert(alertadd);
+        } else {
+            var number = 0;
+            if (feiqi_num != null) {
+                if (feiqi_num == "") {
+                    number = 1;
                 } else {
-                    i = parseInt('${totalfeiqi}') + 1;
+                    number = parseInt(feiqi_num) + 1;
                 }
-            } else {
-                i++;
+            }else
+            {
+                number++;
             }
-            document.getElementById("feiqiul").innerHTML += "<li id='feiqili" + i + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + i + ",\"feiqi\")'><i class='icon-double-angle-right'></i>" + i + "号设备</a></li>";
-            //document.getElementById("exhaustul").innerHTML+="<li id='exhaustli"+i+"'><a onclick='addsaveinfo("+i+",\"exhaust\")'><i class='icon-double-angle-right'></i>"+i+"号烟囱/排气筒 </a></li>";
-            //修改中的个数
-
-            //alert(ii);
-            //跳转到新增页面
-
+            window.location.href = '{{ url("/addfeiqi") }}';
 
         }
-        else {
-            alert("您已有新增的设备，请先填写");
-        }
-        //var m_number=number+1;
-        //document.getElementById("solventul").innerHTML+="<li id='m_addpage'><a onclick='addpage("+m_number+")'><i class='icon-double-angle-right'></i>+</a></li>";
     }
 
 
@@ -224,6 +230,30 @@
             window.location.href = '{{ url("/adddevice") }}';
         }
 
+    }
+    function addsguolu() {
+        var boiler_num = {!! session('boiler_num') !!};
+        if (!checkvalue(1)) {
+            alert(alertadd);
+            return;
+        }
+        if (!checkvalue()) {
+            alert(alertadd);
+        } else {
+            var number = 0;
+            if (boiler_num != null) {
+                if (boiler_num == "") {
+                    number = 1;
+                } else {
+                    number = parseInt(boiler_num) + 1;
+                }
+            }else
+            {
+                number++;
+            }
+            window.location.href = '{{ url("/addboiler") }}';
+
+        }
     }
 
 
@@ -435,7 +465,7 @@
                                     style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                         </i> <span class="menu-text">锅炉列表</span> <b
                                 class="arrow icon-angle-down"></b> </a>
-                    <ul class="submenu" id=sguoluul>
+                    <ul class="submenu" id="sguoluul">
                         <li>
                             <a href="javascript:void(0)" onclick='addsguolu()'> <i
                                         class='icon-double-angle-right'></i> 增加锅炉+ </a>

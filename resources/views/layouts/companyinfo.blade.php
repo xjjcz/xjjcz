@@ -98,7 +98,9 @@
             //让数据库中的值在下拉框中选中；
             var big = {!! session('factory')['industry_bigid'] !!} ;
             $("#industryBigid option[value='" + big + "']").attr("selected", true);
-            if($("#industryBigid").val()!=''){industrysmall($("#industryBigid").val());}
+            if ($("#industryBigid").val() != '') {
+                industrysmall($("#industryBigid").val());
+            }
             //alert($("#industryBigid").val());
 
 
@@ -118,17 +120,21 @@
                 $option.text(allcity[i].city_name);
                 $("#countyCity").append($option);
             }
-            var m_countyRegisterCity =  '{!! session('factory')['county_register_city'] !!}' ;
+            var m_countyRegisterCity = '{!! session('factory')['county_register_city'] !!}';
             var actualcity = '{!! session('factory')['county_register_city'] !!}';
-            $("#countyRegisterCity option[value='"+m_countyRegisterCity+"']").attr("selected", true);
-            $("#countyCity option[value='"+actualcity+"']").attr("selected", true);
+            $("#countyRegisterCity option[value='" + m_countyRegisterCity + "']").attr("selected", true);
+            $("#countyCity option[value='" + actualcity + "']").attr("selected", true);
 
-            if($("#countyRegisterCity").val()!=''){
-                changeCity($("#countyRegisterCity").val(),'countyidRegister',{!! session('factory')['countyid_register'] !!});
+            if ($("#countyRegisterCity").val() != '') {
+                changeCity($("#countyRegisterCity").val(), 'countyidRegister',{!! session('factory')['countyid_register'] !!});
             }
-            if($("#countyCity").val()!=''){
-                changeCity($("#countyRegisterCity").val(),'countyId',{!! session('factory')['county_id'] !!});
+            if ($("#countyCity").val() != '') {
+                changeCity($("#countyRegisterCity").val(), 'countyId',{!! session('factory')['county_id'] !!});
             }
+            //  污染源类型
+            var abc = '{!! session('factory')['source_type'] !!}';
+            //$("#sourceType").val(abc);
+            $("#sourceType option[value='" + abc + "']").attr("selected", true);
             //$("#countyRegisterCity option[vlaue ='" + m_countyRegisterCity + "']").attr("selected", true);
         });
 
@@ -259,12 +265,12 @@
         }
 
         function changeCity(m_value, next, m_countyCode) {
-            $("#"+next).empty();
+            $("#" + next).empty();
             var $option = $("<option></option>");
             $option.attr("value", "");
             $option.text("请选择");
             $("#" + next).append($option);
-            $.post("{{url('GetCounty')}}", { '_token': '{{ csrf_token() }}',citycode: m_value}, function (data) {
+            $.post("{{url('GetCounty')}}", {'_token': '{{ csrf_token() }}', citycode: m_value}, function (data) {
                 for (var i = 0; i < data.length; i++) {
                     var $option = $("<option></option>");
                     $option.attr("value", data[i].COUNTY_ID);
@@ -284,15 +290,6 @@
         }
         function addFactory() {
 
-
-            if (!checkvalue(1)) {
-                return;
-            }
-            var malert = document.getElementById("malert").value;
-            if (malert == 0) {
-                alert("提交数据库成功!");
-                return;
-            }
             var factoryName = document.getElementById("factoryName").value;
             var factoryUsedname = document.getElementById("factoryUsedname").value;
             var sourceType = document.getElementById("sourceType").value;
@@ -338,15 +335,15 @@
             var lat6 = document.getElementById("lat6").value;
             var lat7 = document.getElementById("lat7").value;
 
-            //alert(1);
-            $.post("ajax/Factory/updateFac.do", {
+
+            $.post("{{ url('FactoryupdateFac') }}", {
+                '_token': '{{csrf_token()}}',
                 cityName: cityName,
                 industryName: industryName,
                 factoryName: factoryName,
                 countyName: countyName,
                 industryBigname: industryBigname,
                 factoryUsedname: factoryUsedname,
-                cityName: cityName,
                 powerAmount: powerAmount,
                 sourceType: sourceType,
                 industryBigid: industryBigid,
@@ -384,19 +381,14 @@
                 lat6: lat6,
                 lon7: lon7,
                 lat7: lat7
-            }, function (data) {
-                var json = eval("(" + data + ")");
-                if (json.status == 1) {
-                    alert("企业信息保存成功！");
+            }, function (state) {
+                if (state < 0) {
+                    alert("企业信息更新失败！");
                 } else {
-                    if (json.status == 0) {
-                        alert("登录超时,企业信息保存失败！");
-                    } else {
-                        alert("存在数据格式错误,企业信息保存失败！");
-                    }
+                    alert("企业信息更新成功！");
                 }
-
             });
+            location.reload();
         }
 
 
@@ -424,7 +416,7 @@
             return checkall(witch, ids, contents);
 
         }
-        function addFactory() {
+        function addFactory111() {
 
 
             if (!checkvalue(1)) {
@@ -510,7 +502,6 @@
 
 <body>
 @include("layouts.header")
-
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -627,8 +618,8 @@
                                             <option value="">请选择</option>
                                             <option value="废气国控">废气国控</option>
                                             <option value="废气市控">废气市控</option>
-                                            <option value="废气市控">废气省控</option>
-                                            <option value="废气市控">废气其它</option>
+                                            <option value="废气省控">废气省控</option>
+                                            <option value="废气其它">废气其它</option>
                                         </select>
                                     </div>
                                 </div>
