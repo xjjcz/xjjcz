@@ -42,6 +42,8 @@ Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
 
 Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$index){
     if($index=="new"){
+        $a = 1234;
+        $b = 345;
         return view('layouts.exhuast',["NUM"=>$request->session()->get("totalexhaust")]);
     }else{
         $exhaust_temps = $request->session()->get("exhaust_temps");
@@ -61,6 +63,34 @@ Route::get('/device/{index}', function (\Illuminate\Http\Request $request,$index
     }else {
         $device_temps = $request->session()->get("device_temps");
         return view('layouts.device',["device_temp"=>$device_temps[$index],"NUM"=>($index+1)]);
+    }
+});
+Route::any('/addraw', function (\Illuminate\Http\Request $request){
+    $raw_num = $request->session()->get("raw_num");
+    $request->session()->put(["raw_num"=>intval($raw_num)+1]);
+    return redirect("/raw/new");
+});
+
+Route::get('/raw/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.raw',["NUM"=>$request->session()->get("raw_num")]);
+    }else {
+        $raw_temps = $request->session()->get("raw_temps");
+        return view('layouts.raw',["raw_temp"=>$raw_temps[$index],"NUM"=>($index+1)]);
+    }
+});
+Route::any('/addproduct', function (\Illuminate\Http\Request $request){
+    $product_num = $request->session()->get("product_num");
+    $request->session()->put(["product_num"=>intval($product_num)+1]);
+    return redirect("/product/new");
+});
+
+Route::get('/product/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.product',["NUM"=>$request->session()->get("product_num")]);
+    }else {
+        $product_temps = $request->session()->get("product_temps");
+        return view('layouts.product',["product_temp"=>$product_temps[$index],"NUM"=>($index+1)]);
     }
 });
 Route::any('/addboiler',function (\Illuminate\Http\Request $request){
@@ -104,6 +134,7 @@ Route::any('/tonoOrganizationWorkshop',"XjjczController@tonoOrganizationWorkshop
 Route::get('/zhanmentest',function (){
     return view('layouts.test');
 });
+
 Route::any('/Roadlistsave_update',"XjjczController@Roadlistsave_update");
 Route::any('/Roadlistdelete',"XjjczController@Roadlistdelete");
 Route::any('/Conlistdelete',"XjjczController@Conlistdelete");

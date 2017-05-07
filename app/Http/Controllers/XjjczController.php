@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\Boiler;
+use App\Model\Device_product_temp;
+use App\Model\Device_raw_temp;
 use App\Model\Device_temp;
 use App\Model\City;
 use App\Model\Exhaust_temp;
@@ -68,7 +70,25 @@ class XjjczController extends Controller
         $request->session()->put("boiler_num",count($boiler_temps));
         //guolu real count
         $request->session()->put("boiler_realnum",count($boiler_temps));
+        //find raw by device
+        $device_raw_temps = array();
 
+        foreach ($device_temps as $device_temp){
+            $raws = Device_raw_temp::where("device_id",$device_temp["id"])->get()->toArray();
+            foreach ($raws as $raw){
+                array_push($device_raw_temps,$raw);
+            }
+        }
+        $request->session()->put("device_raw_temps",$device_raw_temps);
+        //find product by device
+        $device_product_temps = array();
+        foreach ($device_temps as $device_temp){
+            $products = Device_product_temp::where("device_id",$device_temp["id"])->get()->toArray();
+            foreach ($products as $product){
+                array_push($device_product_temps,$product);
+            }
+        }
+        $request->session()->put("device_product_temps",$device_product_temps);
         $industry_big = IndustryBig::all();
         $city = City::all();
         //session about feiqi
@@ -408,13 +428,14 @@ class XjjczController extends Controller
             'EXF_LONGITUDE' => $_POST['exfLongitude'],
             'EXF_LATITUDE' => $_POST['exfLatitude']
         ));
-
-        $clientfactoryid = $request->session()->get("clientfactoryid");
-        //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
-        $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
-        $totalexhaust = count($exhaust_temps);
-        $request->session()->put("totalexhaust", $totalexhaust);
-        $request->session()->put("exhaust_temps", $exhaust_temps);
+        if (1) {
+            $clientfactoryid = $request->session()->get("clientfactoryid");
+            //$exhaust_temps = DB::select("select * from exhaust_temp where FACTORY_ID=?",[20087]);
+            $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+            $totalexhaust = count($exhaust_temps);
+            $request->session()->put("totalexhaust", $totalexhaust);
+            $request->session()->put("exhaust_temps", $exhaust_temps);
+        }
         return $state;
     }
 
@@ -426,7 +447,7 @@ class XjjczController extends Controller
         $exhaust_temps = Exhaust_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
         $totalexhaust = count($exhaust_temps);
         $request->session()->put("totalexhaust", $totalexhaust);
-        $request->session()->put("exhaust_temps", $exhaust_temps);
+        $request->session()->put("exhaust_temps", $exhaust_temps);$a = 1;
         return $state;
     }
     public function FactoryupdateFac(Request $request){
