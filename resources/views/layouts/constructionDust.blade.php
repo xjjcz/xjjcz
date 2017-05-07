@@ -12,11 +12,12 @@ $itemroaddusti = 0;
     <meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
-    <link href="{{ asset("/wuzuzhi/css/bootstrap.css") }}" rel="stylesheet"/>
-    <link href="{{ asset("/wuzuzhi/css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet" media="screen"/>
-
+    <link href="{{ asset("/wuzuzhi/css/bootstrap.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/font-awesome-ie7.min.css") }}" rel="stylesheet"/>
+
+    <link href="{{ asset("/wuzuzhi/css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet" media="screen"/>
+
     <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
     <link href="{{ asset("/css/jquery-ui-1.10.3.custom.min.css") }}" rel="stylesheet"/>
     <link href="{{ asset("/css/chosen.css") }}" rel="stylesheet"/>
@@ -75,7 +76,8 @@ $itemroaddusti = 0;
     </script>
     <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
     </script>
-
+    <script src="{{ asset("/js/date-time/bootstrap-timepicker.min.js") }}">
+    </script>
     <script src="{{ asset("/js/date-time/moment.min.js") }}">
     </script>
     <script src="{{ asset("/js/date-time/daterangepicker.min.js") }}">
@@ -104,13 +106,11 @@ $itemroaddusti = 0;
     </script>
 
 
-    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}">
-    </script>
+    <script src="{{ asset("/js/date-time/bootstrap-datepicker.min.js") }}"></script>
     <script src="{{ asset("/js/jqGrid/jquery.jqGrid.min.js") }}">
     </script>
     <script src="{{ asset("/js/jqGrid/i18n/grid.locale-en.js") }}">
     </script>
-    <script src="{{ asset("/wuzuzhi/js/bootstrap-datepicker.min.js") }}"></script>
     <link rel="stylesheet" href="{{ asset("http://fonts.googleapis.com/css?family=Open+Sans:400,300") }}"/>
     {{--<script type="text/javascript" src="<c:url value="/widgets/simpletable/simpletable.js"/>"></script>--}}
 
@@ -127,7 +127,6 @@ $itemroaddusti = 0;
         $(document).ready(function () {
 
 
-            
             $.post("{{ url("listRoadlist") }}", {'_token': '{{ csrf_token() }}'}, function (data) {
                 $froaddustsourcetemp = 1;
             });
@@ -135,20 +134,20 @@ $itemroaddusti = 0;
     </script>
     <script type="text/javascript">
         function addCon() {
-            var numm=document.getElementById("itemcondusti").value;
+            var numm = document.getElementById("itemcondusti").value;
             //alert(numm);
             //alert("890");
             //var companyName= document.getElementById("companyName").value;
-           /* var confactoryid = document.getElementById("confactoryid").value;
-            var longitude1 = document.getElementById("nlongitude1").value;
-            var longitude2 = document.getElementById("nlongitude2").value;
-            var longitude3 = document.getElementById("nlongitude3").value;
-            var longitude4 = document.getElementById("nlongitude4").value;
+            /* var confactoryid = document.getElementById("confactoryid").value;
+             var longitude1 = document.getElementById("nlongitude1").value;
+             var longitude2 = document.getElementById("nlongitude2").value;
+             var longitude3 = document.getElementById("nlongitude3").value;
+             var longitude4 = document.getElementById("nlongitude4").value;
 
-            var latitude1 = document.getElementById("nlatitude1").value;
-            var latitude2 = document.getElementById("nlatitude2").value;
-            var latitude3 = document.getElementById("nlatitude3").value;
-            var latitude4 = document.getElementById("nlatitude4").value;*/
+             var latitude1 = document.getElementById("nlatitude1").value;
+             var latitude2 = document.getElementById("nlatitude2").value;
+             var latitude3 = document.getElementById("nlatitude3").value;
+             var latitude4 = document.getElementById("nlatitude4").value;*/
             var constructionType = document.getElementById("nconstructionType").value;
             var constructState = document.getElementById("nconstructState").value;
             var constructArea = document.getElementById("nconstructArea").value;
@@ -156,61 +155,51 @@ $itemroaddusti = 0;
             var nowkgarea = document.getElementById("nnowkgarea").value;
             var startdate = document.getElementById("nstartdate").value;
             var finishdate = document.getElementById("nfinishdate").value;
-            var strMonth=document.getElementsByName("Month");
-            var objarray=strMonth.length;
-            var chestrMonth="";
-            for (var i=0;i<objarray;i++)
-            {
-                if(strMonth[i].checked == true)
-                {
-                    chestrMonth+=strMonth[i].value+",";
+            var strMonth = document.getElementsByName("Month");
+            var objarray = strMonth.length;
+            var chestrMonth = "";
+            for (var i = 0; i < objarray; i++) {
+                if (strMonth[i].checked == true) {
+                    chestrMonth += strMonth[i].value + ",";
                 }
             }
-            if(chestrMonth==""){
-                chestrMonth="无";
+            if (chestrMonth == "") {
+                chestrMonth = "无";
             }
 
-            var str=document.getElementsByName("control");
-            var objarray=str.length;
-            var controlMeasures="";
-            for (var i=0;i<objarray;i++)
-            {
-                if(str[i].checked == true)
-                {
-                    controlMeasures+=str[i].value+",";
+            var str = document.getElementsByName("control");
+            var objarray = str.length;
+            var controlMeasures = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures += str[i].value + ",";
                 }
             }
-            if(controlMeasures==""){
-                controlMeasures="";
+            if (controlMeasures == "") {
+                controlMeasures = "";
             }
-                    $.post("{{ url('addCon')}}", {
-                            '_token': '{{csrf_token()}}',
-                            constructionType : constructionType ,
-                            constructState : constructState,
-                            constructArea  : constructArea,
-                            nowkgarea : nowkgarea,
-                            startdate : startdate,
-                            finishdate : finishdate,
-                            constructMonths : chestrMonth ,
-                            controlMeasures : controlMeasures
-                        },
-            function (state) {
-                if (state == 1) {
-                    alert("施工扬尘源保存成功！");
-                    window.location.reload();
-                } else {
-                    alert("施工扬尘源保存失败！");
-                }
-            });
-
-
+            $.post("{{ url('addCon')}}", {
+                    '_token': '{{csrf_token()}}',
+                    constructionType: constructionType,
+                    constructState: constructState,
+                    constructArea: constructArea,
+                    nowkgarea: nowkgarea,
+                    startdate: startdate,
+                    finishdate: finishdate,
+                    constructMonths: chestrMonth,
+                    controlMeasures: controlMeasures
+                },
+                function (state) {
+                    if (state == 1) {
+                        alert("施工扬尘源保存成功！");
+                        window.location.reload();
+                    } else {
+                        alert("施工扬尘源保存失败！");
+                    }
+                });
 
 
         }
-
-
-
-
 
 
     </script>
@@ -225,7 +214,7 @@ $itemroaddusti = 0;
                 }, function (state) {
                     if (state == 1) {
                         alert("删除成功");
-                    }else {
+                    } else {
                         alert("删除失败");
                     }
                 });
@@ -233,64 +222,58 @@ $itemroaddusti = 0;
             }
         }
         function updateCon(dustitem) {
-            var constructDustid = document.getElementById("conDustid"+dustitem).value;
-            var constructionType = document.getElementById("constructionType"+dustitem).value;
-            var constructState = document.getElementById("constructState"+dustitem).value;
-            var constructArea = document.getElementById("constructArea"+dustitem).value;
-            var nowkgarea = document.getElementById("nowkgarea"+dustitem).value;
-            var startdate = document.getElementById("startdate"+dustitem).value;
-            var finishdate = document.getElementById("finishdate"+dustitem).value;
+            var constructDustid = document.getElementById("conDustid" + dustitem).value;
+            var constructionType = document.getElementById("constructionType" + dustitem).value;
+            var constructState = document.getElementById("constructState" + dustitem).value;
+            var constructArea = document.getElementById("constructArea" + dustitem).value;
+            var nowkgarea = document.getElementById("nowkgarea" + dustitem).value;
+            var startdate = document.getElementById("startdate" + dustitem).value;
+            var finishdate = document.getElementById("finishdate" + dustitem).value;
             //月份复选框
-            var strMonth=document.getElementsByName("Month"+dustitem);
-            var objarray=strMonth.length;
-            var chestrMonth="";
-            for (var i=0;i<objarray;i++)
-            {
-                if(strMonth[i].checked == true)
-                {
-                    chestrMonth+=strMonth[i].value+",";
+            var strMonth = document.getElementsByName("Month" + dustitem);
+            var objarray = strMonth.length;
+            var chestrMonth = "";
+            for (var i = 0; i < objarray; i++) {
+                if (strMonth[i].checked == true) {
+                    chestrMonth += strMonth[i].value + ",";
                 }
             }
-            if(chestrMonth==""){
-                chestrMonth="无";
+            if (chestrMonth == "") {
+                chestrMonth = "无";
             }
             //控制措施
-            var str=document.getElementsByName("control"+dustitem);
-            var objarray=str.length;
-            var controlMeasures="";
-            for (var i=0;i<objarray;i++)
-            {
-                if(str[i].checked == true)
-                {
-                    controlMeasures+=str[i].value+",";
+            var str = document.getElementsByName("control" + dustitem);
+            var objarray = str.length;
+            var controlMeasures = "";
+            for (var i = 0; i < objarray; i++) {
+                if (str[i].checked == true) {
+                    controlMeasures += str[i].value + ",";
                 }
             }
-            if(controlMeasures==""){
-                controlMeasures="";
+            if (controlMeasures == "") {
+                controlMeasures = "";
             }
 
 
-
-                    $.post("{{url('updateCon')}}", {
-                            '_token': '{{csrf_token()}}',
-                            constructDustid:constructDustid,
-                            constructionType : constructionType ,
-                            constructState : constructState,
-                            constructArea  : constructArea,
-                            nowkgarea : nowkgarea,
-                            startdate : startdate,
-                            finishdate : finishdate,
-                            constructMonths : chestrMonth ,
-                            controlMeasures : controlMeasures
-                        },
-                        function(state) {
-                            if (state < 0) {
-                                alert("施工扬尘源更新失败！");
-                            } else {
-                                alert("施工扬尘源更新成功！");
-                            }
-                        });
-
+            $.post("{{url('updateCon')}}", {
+                    '_token': '{{csrf_token()}}',
+                    constructDustid: constructDustid,
+                    constructionType: constructionType,
+                    constructState: constructState,
+                    constructArea: constructArea,
+                    nowkgarea: nowkgarea,
+                    startdate: startdate,
+                    finishdate: finishdate,
+                    constructMonths: chestrMonth,
+                    controlMeasures: controlMeasures
+                },
+                function (state) {
+                    if (state < 0) {
+                        alert("施工扬尘源更新失败！");
+                    } else {
+                        alert("施工扬尘源更新成功！");
+                    }
+                });
 
 
         }
@@ -352,12 +335,12 @@ $itemroaddusti = 0;
                                     {{ $itemroaddusti }}号施工扬尘源信息
                                 </p>
                             </div>
-                                <input id="conDustid{{ $itemroaddusti }}" class="form-control"
-                                       style="height: 30px; width: 170px;"
-                                       value='{{ $item['construct_dustid'] }}' type="hidden"/>
-                                <input id="confactoryid{{ $itemroaddusti }}" class="form-control"
-                                       style="height: 30px; width: 170px;" value='{{ $item['factoryid'] }}'
-                                       type="hidden"/>
+                            <input id="conDustid{{ $itemroaddusti }}" class="form-control"
+                                   style="height: 30px; width: 170px;"
+                                   value='{{ $item['construct_dustid'] }}' type="hidden"/>
+                            <input id="confactoryid{{ $itemroaddusti }}" class="form-control"
+                                   style="height: 30px; width: 170px;" value='{{ $item['factoryid'] }}'
+                                   type="hidden"/>
                             <div class="col-md-12" style="height: 40px">
                                 <div class="col-md-6" style="height: 35px">
                                     <div class="form-group">
@@ -507,10 +490,10 @@ $itemroaddusti = 0;
                                         </label>
                                         <div class="input-group date form_date "
                                              style="width: 200px" data-date="" data-date-format=""
-                                             data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                             data-link-field="dtp_input2" data-link-format="yyyy-MM-dd">
                                             <input id="startdate{{ $itemroaddusti }}" class="form-control"
                                                    style="height: 30px; width: 170px;" size="16" type="text"
-                                                   value='{{$item['startdate']}}' readonly>
+                                                   value='{{$item['startdate']}}' readonly="readonly"/>
                                             <span class="input-group-addon"><span
                                                         class="glyphicon glyphicon-remove"></span> </span>
                                             <span class="input-group-addon"><span
@@ -763,8 +746,8 @@ $itemroaddusti = 0;
 
                                         <div class="col-md-8">
                                             <select name="constructStage" id="nconstructState"
-                                                       class="form-control"
-                                                       style="width:170px;height:30px;">
+                                                    class="form-control"
+                                                    style="width:170px;height:30px;">
                                                 <option value=""></option>
                                                 <option value="未分类">未分类</option>
                                                 <option value="土方开挖">土方开挖</option>
@@ -946,16 +929,18 @@ $itemroaddusti = 0;
 
                                         </label>
                                         <div class="input-group date form_date "
-                                             style="width: 200px" data-date="" data-date-format=""
+                                             style="width: 200px" data-date="" data-date-format="yyyy-mm-dd"
                                              data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                            <input id="nstartdate" class="form-control"
-                                                   style="height: 30px; width: 170px;" size="16" type="text"
-                                                   value="" readonly>
+                                            <input type="text" id="nstartdate"
+                                                   class="form-control"
+                                                   style="height: 30px; width: 170px;"
+                                                   value="" readonly="readonly"/>
                                             <span class="input-group-addon"><span
                                                         class="glyphicon glyphicon-remove"></span> </span>
                                             <span class="input-group-addon"><span
                                                         class="glyphicon glyphicon-calendar"></span> </span>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -1018,14 +1003,18 @@ $itemroaddusti = 0;
 
 </div>
 <!-- /.main-container -->
-
-<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.js") }}" charset="UTF-8"></script>
-<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.zh-CN.js") }}" charset="UTF-8"></script>
 <script type="text/javascript">
-    $('.form_time').datetimepicker({
-        language:  'fr',
+    $("#set2").toggle();
+    document.getElementById("condust").setAttribute("class", "active");
+</script>
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.js") }}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ asset("/wuzuzhi/js/bootstrap-datetimepicker.zh-CN.js") }}"
+        charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_date').datetimepicker({
+        language: 'fr',
         weekStart: 1,
-        todayBtn:  1,
+        todayBtn: 1,
         autoclose: 1,
         todayHighlight: 1,
         startView: 1,
@@ -1034,10 +1023,7 @@ $itemroaddusti = 0;
         forceParse: 0
     });
 </script>
-<script type="text/javascript">
-    $("#set2").toggle();
-    document.getElementById("condust").setAttribute("class", "active");
-</script>
+
 <script type="text/javascript">
     window.jQuery
     || document
@@ -1054,7 +1040,6 @@ $itemroaddusti = 0;
 </script>
 
 
-
 <!-- inline scripts related to this page -->
 <div style="display:none">
     <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540'
@@ -1062,22 +1047,21 @@ $itemroaddusti = 0;
 </div>
 <script type="text/javascript">
     //glh 加载option中的内容
-    $(document).ready(function() {
+    $(document).ready(function () {
         //判断如果page的result为空。直接调用add方法
         //alert(1);
         var str ={!! $fconstructionsourcetemp !!};
         /*for(i=0;i<str.length;i++){
-            alert(str[i]['scccode']);
-        }   */
+         alert(str[i]['scccode']);
+         }   */
         console.log(str.length);
-        if(str.length==0)
-        {
+        if (str.length == 0) {
             document.getElementById("yihao").style.display = 'block';
             addTable();
-        }else{
+        } else {
         }
         var num = "<?php echo "{$itemroaddusti}" ?>";
-        for ( var cur = 1; cur <= num; cur++) {
+        for (var cur = 1; cur <= num; cur++) {
             var conn = document.getElementById("controlMeasures" + cur).value;
             if (conn.charAt(conn.length - 1) == "、"
                 || conn.charAt(conn.length - 1) == ",") {
@@ -1089,27 +1073,33 @@ $itemroaddusti = 0;
             //alert(strs.length);
             var i = 0;
             for (i = 0; i < strs.length; i++) {
-                if(strs!=""){
+                if (strs != "") {
                     if (strs[i] == "A1") {
                         $("input[name='control" + cur + "'][value='A1']").attr(
                             'checked', true);
                         //$("[control=A1]").attr('checked',true);
-                    }  if (strs[i] == "A2") {
+                    }
+                    if (strs[i] == "A2") {
                         $("input[name='control" + cur + "'][value='A2']").attr(
                             'checked', true);
-                    } if (strs[i] == "B") {
+                    }
+                    if (strs[i] == "B") {
                         $("input[name='control" + cur + "'][value='B']").attr(
                             'checked', true);
-                    } if (strs[i] == "C") {
+                    }
+                    if (strs[i] == "C") {
                         $("input[name='control" + cur + "'][value='C']").attr(
                             'checked', true);
-                    } if (strs[i] == "D") {
+                    }
+                    if (strs[i] == "D") {
                         $("input[name='control" + cur + "'][value='D']").attr(
                             'checked', true);
-                    }  if (strs[i] == "E") {
+                    }
+                    if (strs[i] == "E") {
                         $("input[name='control" + cur + "'][value='E']").attr(
                             'checked', true);
-                    }  if (strs[i] == "F") {
+                    }
+                    if (strs[i] == "F") {
                         $("input[name='control" + cur + "'][value='F']").attr(
                             'checked', true);
                     }
@@ -1127,47 +1117,58 @@ $itemroaddusti = 0;
         }
 
         //加载月份复选框情况信息
-        for ( var cur = 1; cur <= num; cur++) {
+        for (var cur = 1; cur <= num; cur++) {
             var conn = document.getElementById("constructMonths" + cur).value;
             var strs = new Array(); //定义一数组
             strs = conn.split(",");
             var i = 0;
             for (i = 0; i < strs.length; i++) {
-                if(strs!=""){
+                if (strs != "") {
                     if (strs[i] == "1") {
                         $("input[name='Month" + cur + "'][value='1']").attr(
                             'checked', true);
-                    }  if (strs[i] == "2") {
+                    }
+                    if (strs[i] == "2") {
                         $("input[name='Month" + cur + "'][value='2']").attr(
                             'checked', true);
-                    } if (strs[i] == "3") {
+                    }
+                    if (strs[i] == "3") {
                         $("input[name='Month" + cur + "'][value='3']").attr(
                             'checked', true);
-                    } if (strs[i] == "4") {
+                    }
+                    if (strs[i] == "4") {
                         $("input[name='Month" + cur + "'][value='4']").attr(
                             'checked', true);
-                    } if (strs[i] == "5") {
+                    }
+                    if (strs[i] == "5") {
                         $("input[name='Month" + cur + "'][value='5']").attr(
                             'checked', true);
-                    }  if (strs[i] == "6") {
+                    }
+                    if (strs[i] == "6") {
                         $("input[name='Month" + cur + "'][value='6']").attr(
                             'checked', true);
-                    }  if (strs[i] == "7") {
+                    }
+                    if (strs[i] == "7") {
                         $("input[name='Month" + cur + "'][value='7']").attr(
                             'checked', true);
-                    }if (strs[i] == "8") {
+                    }
+                    if (strs[i] == "8") {
                         $("input[name='Month" + cur + "'][value='8']").attr(
                             'checked', true);
-                    }if (strs[i] == "9") {
+                    }
+                    if (strs[i] == "9") {
                         $("input[name='Month" + cur + "'][value='9']").attr(
                             'checked', true);
-                    }if (strs[i] == "10") {
+                    }
+                    if (strs[i] == "10") {
                         $("input[name='Month" + cur + "'][value='10']").attr(
                             'checked', true);
-                    }if (strs[i] == "11") {
+                    }
+                    if (strs[i] == "11") {
                         $("input[name='Month" + cur + "'][value='11']").attr(
                             'checked', true);
-                    }if (strs[i] == "12") {
+                    }
+                    if (strs[i] == "12") {
                         $("input[name='Month" + cur + "'][value='12']").attr(
                             'checked', true);
                     }

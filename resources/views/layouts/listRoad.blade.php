@@ -393,7 +393,7 @@ $itemroaddusti = 0;
                                             <input type="text" id="pathLength{{ $itemroaddusti }}"
                                                    onkeyup="if(isNaN(value))execCommand('undo')"
                                                    class="form-control" style="height: 30px; width: 170px;"
-                                                   value='{{ $item['path_length'] }}'/>
+                                                   value="{!! ($item['path_length']==0)?'':$item['path_length'] !!}" />
                                         </div>
                                     </div>
                                 </div>
