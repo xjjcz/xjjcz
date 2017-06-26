@@ -191,7 +191,7 @@ class XjjczController extends Controller
         $f->scccode = $_POST['scccode'];
         $f->company_name = $_POST['companyName'];
         $f->factoryid = intval($_POST['roadfactoryid']);
-        $f->path_length = $_POST['pathLength'];
+        $f->path_length = ($_POST['pathLength']==null)?0:$_POST['pathLength'];
         $f->ispave = $_POST['ispave'];
         $f->aver_width = $_POST['averWidth'];
         $f->aver_weight = $_POST['averWeight'];
