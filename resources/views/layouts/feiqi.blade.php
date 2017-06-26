@@ -119,8 +119,85 @@
         //这个其他页面没有，只有本页面有
 
         //这个其他的页面没有只有本页面有
+$(document).ready(function () {
+    // scc1=10,scc2,scc3,scc4，可移植
 
+    changescc2();
+    changescc3();
+    changescc4();
+});
+        //跳转到
+        function changescc2(){
+            var $option1 = $("<option></option>");
+            $option1.attr("value", "");
+            $option1.text('请选择');
+            $('#activitiesCategory').append($option1);
 
+            var scc2 = {!! $scc2  !!};
+            for (var i = 0; i < scc2.length; i++) {
+                var $option = $("<option></option>");
+                $option.attr("value", scc2[i].scc_2);
+                $option.text(scc2[i].description);
+                $("#activitiesCategory").append($option);
+            }
+            var scc2_selected = '{!! $boiler_temp['FUNCTIO'] or "" !!}';
+            $("#activitiesCategory option[value='" + scc2_selected + "']").attr("selected", true);
+        }
+        function changescc3() {
+            $("#nameCategory").empty();
+            var $option2 = $("<option></option>");
+            $option2.attr("value", "");
+            $option2.text('请选择');
+            $('#nameCategory').append($option2);
+            if ($("#activitiesCategory").val() == "") {
+                var scc2topost = '{!! $boiler_temp['FUNCTIO'] or "" !!}';
+            } else {
+                var scc2topost = $("#activitiesCategory").val();
+            }
+            if (scc2topost != '' && scc2topost != null) {
+                $.post("{{url('SCC3')}}", {'_token': '{{csrf_token()}}', scc2: scc2topost}, function (scc3) {
+                    for (var i = 0; i < scc3.length; i++) {
+                        var $option = $("<option></option>");
+                        $option.attr("value", scc3[i].scc_3);
+                        $option.text(scc3[i].description);
+                        $("#nameCategory").append($option);
+                    }
+                    var scc3_selected = '{!! $boiler_temp['FUELTYPE'] or "" !!}';
+                    $("#nameCategory option[value='" + scc3_selected + "']").attr("selected", true);
+                });
+            }
+        }
+        function changescc4() {
+            $("#drainageProcess").empty();
+            var $option3 = $("<option></option>");
+            $option3.attr("value", "");
+            $option3.text('请选择');
+            $('#drainageProcess').append($option3);
+            if ($("#nameCategory").val() != '') {
+                var scc2topost = $("#activitiesCategory").val();
+                var scc3topost = $("#nameCategory").val();
+            } else {
+                var scc2topost = '{!! $boiler_temp['FUNCTIO'] or "" !!}';
+                var scc3topost = '{!! $boiler_temp['FUELTYPE'] or "" !!}';
+            }
+
+            if (scc3topost != '' && scc2topost != null) {
+                $.post("{{url('SCC4')}}", {
+                    '_token': '{{csrf_token()}}',
+                    scc2: scc2topost,
+                    scc3: scc3topost
+                }, function (scc4) {
+                    for (var i = 0; i < scc4.length; i++) {
+                        var $option = $("<option></option>");
+                        $option.attr("value", scc4[i].scc_4);
+                        $option.text(scc4[i].description);
+                        $("#drainageProcess").append($option);
+                    }
+                    var scc4_selected = '{!! $boiler_temp['MODEL'] or "" !!}';
+                    $("#drainageProcess option[value='" + scc4_selected + "']").attr("selected", true);
+                });
+            }
+        }
         function exhaustModel() {
 
             var exhaustNum = document.getElementById("mchimney").value;
@@ -284,8 +361,28 @@
 
         }
 
+
     </script>
     <script type="text/javascript">
+        function cjdetele() {
+            var cjexfid = '{!! $feiqi['id'] or '' !!}';
+            $.post("{{url('FeiqiTempcjdetele')}}", {
+                    '_token': '{{csrf_token()}}',
+                    cjexfid: cjexfid
+                }, function (state) {
+                    if (state == 1) {
+                        alert("删除成功");
+                        window.location.href = '{{ url("/feiqi") }}' + '/' + '{!! $NUM-2 !!}';
+                    }else {
+                        alert("删除失败");
+                    }
+                }
+
+            );
+
+
+
+        }
         function updatedata() {
 
             if (!checkvalue(1)) {
@@ -390,25 +487,7 @@
                 }
             });
         }
-        function cjdetele() {
-            var cjexfid = '{!! $boiler_temp['ID'] or '' !!}';
-            $.post("{{url('BoilerTempcjdetele')}}", {
-                '_token': '{{csrf_token()}}',
-                cjexfid: cjexfid
-            }, function (state) {
-                if (state == 1) {
-                    alert("删除成功");
-                    window.location.href = '{{ url("/boiler") }}' + '/' + '{!! $NUM-2 !!}';
-                }else {
-                    alert("删除失败");
-                }
-            }
 
-            );
-
-
-
-        }
 
     </script>
 
@@ -540,7 +619,7 @@
 
                 <div class="page-header" style="margin-top: 15px;">
                     <h1>
-                        <b id="NUM"></b>
+                        <b id="NUM">{!! $NUM !!}号设备</b>
 
                         <small> <i class="icon-double-angle-right"></i> 基础信息 </small>
 
@@ -574,7 +653,7 @@
                             <input type="hidden" name="activitiesCategory_input"
                                    id="activitiesCategory_input" value='${cur_feiqi.scc2}' />
                             <select id="activitiesCategory" style="width: 300px;"
-                                    Onchange="clientscc3('21',this.value,'nameCategory','drainageProcess')" />
+                                    Onchange="changescc3()" />
                             </select>
                             <!--  a class="col-md-1" style="color: red;">*</a>-->
                         </div>
@@ -589,17 +668,12 @@
                             <a style="color: red;">*</a>
                         </label>
 
-                        <input type="hidden" name="nameCategory_input"
-                               id="nameCategory_input" value='${cur_feiqi.scc3}' />
+                        <input type="hidden" name="nameCategory_input" id="nameCategory_input" value='${cur_feiqi.scc3}' />
                         <div class="col-md-7">
                             <select id="nameCategory" style="width: 300px;"
-                                    Onchange="clientscc4('21','activitiesCategory',this.value,'drainageProcess')" />
+                                    Onchange="changescc4()" />
                             </select>
-
                         </div>
-
-
-
                     </div>
                     <!-- PAGE CONTENT BEGINS -->
                     <div class="col-md-6">
@@ -949,6 +1023,11 @@
                             <div class="col-md-3">
                                 <li>
                                     <a href="javascript:void(0);"  style="font-weight:bold;" onclick="updatedata();">保存</a>
+                                </li>
+                            </div>
+                            <div class="col-md-3">
+                                <li>
+                                    <a href="javascript:void(0);"  style="font-weight:bold;" onclick="cjdetele();">删除</a>
                                 </li>
                             </div>
                             <div class="col-md-3">

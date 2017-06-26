@@ -42,8 +42,6 @@ Route::any('/addexhaust', function (\Illuminate\Http\Request $request){
 
 Route::get('/exhaust/{index}', function (\Illuminate\Http\Request $request,$index){
     if($index=="new"){
-        $a = 1234;
-        $b = 345;
         return view('layouts.exhuast',["NUM"=>$request->session()->get("totalexhaust")]);
     }else{
         $exhaust_temps = $request->session()->get("exhaust_temps");
@@ -120,10 +118,12 @@ Route::any('/addfeiqi',function (\Illuminate\Http\Request $request){
 });
 Route::any('/feiqi/{index}',function (\Illuminate\Http\Request $request,$index){
     if($index == "new"){
-        return view('layouts.feiqi',['NUM'=>$request->session()->get("feiqi_num")]);
+        $scc2 = Scc2::where('scc_1','21')->get();
+        return view('layouts.feiqi',['NUM'=>$request->session()->get("feiqi_num"),"scc2"=>$scc2]);
     }else{
+        $scc2 = Scc2::where('scc_1','21')->get();
         $feiqi = $request->session()->get("feiqi");
-        return view('layouts.feiqi',["feiqi"=>$feiqi[$index],"NUM"=>($index+1)]);
+        return view('layouts.feiqi',["feiqi"=>$feiqi[$index],"NUM"=>($index+1),"scc2"=>$scc2]);
     }
 });
 
@@ -163,3 +163,4 @@ Route::any('/SCC3','XjjczController@SCC3');
 Route::any('/SCC4','XjjczController@SCC4');
 Route::any('/BoilerTempcjdetele','XjjczController@BoilerTempcjdetele');
 Route::any('/BoilerTempupdatedb','XjjczController@BoilerTempupdatedb');
+Route::any('/FeiqiTempcjdetele','XjjczController@FeiqiTempcjdetele');

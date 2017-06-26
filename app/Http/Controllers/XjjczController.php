@@ -585,4 +585,14 @@ class XjjczController extends Controller
         $request->session()->put("boiler_realnum",count($boiler_temps));
         if($boiler){ return 1;}else{return 0;}
     }
+    function FeiqiTempcjdetele(Request $request){
+        $a = $_POST['cjexfid'];
+        $state  = Feiqi::where('id',$_POST['cjexfid'])->delete();
+        //session about feiqi
+        $feiqi = Feiqi::where('factory_id',$request->session()->get('clientfactoryid'))->get();
+        $request->session()->put("feiqi",$feiqi);
+        $request->session()->put("feiqi_num",count($feiqi));
+        $request->session()->put("feiqi_realnum",count($feiqi));
+        return $state;
+    }
 }
