@@ -163,3 +163,5 @@ Route::any('/SCC3','XjjczController@SCC3');
 Route::any('/SCC4','XjjczController@SCC4');
 Route::any('/BoilerTempcjdetele','XjjczController@BoilerTempcjdetele');
 Route::any('/BoilerTempupdatedb','XjjczController@BoilerTempupdatedb');
+Route::post('/upload_fyarddust', 'XjjczController@UploadFyarddust');
+Route::get('/downloadcsv', 'XjjczController@DownloadFyarddust');
