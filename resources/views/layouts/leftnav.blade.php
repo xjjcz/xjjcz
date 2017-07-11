@@ -342,17 +342,10 @@
 
 
     function addproduct() {
-        //if ('${totalexhaust}' == null ||'${totalexhaust}' == ""||'${totalexhaust}'==0) {
-        //alert("企业填报次序是\"烟囱/排气筒\"->\"设备\"->\"产品\"");
-        //var is = confirm("点击\"确定\"系统将为您跳转到烟囱/排气筒信息填报界面，否则产品页面无法保存！");
+        var product_num = {!! session("product_num") !!};
+        var device_num = {!! session("device_num") !!};
 
-        //if (is == true) {
-        //addchimney();
-        //return;
-        //}
-        //}
-
-        if ('${totaldevice.deviceNum}' == null || '${totaldevice.deviceNum}' == "" || '${totaldevice.deviceNum}' == 0) {
+        if (device_num == null || device_num == "" || device_num == 0) {
             alert("企业填报次序是\"设备\"->\"产品\"");
             var is = confirm("点击\"确定\"系统将为您跳转到设备信息填报界面，否则产品页面无法保存！");
 
@@ -367,33 +360,26 @@
         } else {
 
             var number = 0;
-            if ('${totaldevice.productNum}' != null) {
-                if ('${totaldevice.productNum}' == "") {
+            if (product_num != null) {
+                if (product_num == "") {
                     number = 1;
                 } else {
-                    number = parseInt('${totaldevice.productNum}') + 1;
+                    number = parseInt(product_num) + 1;
                 }
             } else {
                 number++;
             }
             var page = number + 200;
-            document.getElementById("deviceul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-
+            document.getElementById("productul").innerHTML += "<li id='productli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
+            //alert("wan");
+            window.location.href = '{{ url("/addproduct") }}';
 
         }
     }
     function addraw() {
-        //if ('${totalexhaust}' == null ||'${totalexhaust}' == ""||'${totalexhaust}'==0) {
-        //alert("企业填报次序是\"烟囱/排气筒\"->\"设备\"->\"原料\"");
-        ////var is = confirm("点击\"确定\"系统将为您跳转到烟囱/排气筒信息填报界面，否则原料页面无法保存！");
-
-        //if (is == true) {
-        //addchimney();
-        //return;
-        //}
-        //}
-
-        if ('${totaldevice.deviceNum}' == null || '${totaldevice.deviceNum}' == "" || '${totaldevice.deviceNum}' == 0) {
+        var raw_num = {!! session("raw_num") !!};
+        var device_num = {!! session("device_num") !!};
+        if (device_num == null || device_num == "" || device_num == 0) {
             alert("企业填报次序是\"设备\"->\"原料\"");
             var is = confirm("点击\"确定\"系统将为您跳转到设备信息填报界面，否则原料页面无法保存！");
 
@@ -412,18 +398,18 @@
         } else {
 
             var number = 0;
-            if ('${totaldevice.rawNum}' != null) {
-                if ('${totaldevice.rawNum}' == "") {
+            if (raw_num != null) {
+                if (raw_num == "") {
                     number = 1;
                 } else {
-                    number = parseInt('${totaldevice.rawNum}') + 1;
+                    number = parseInt(raw_num) + 1;
                 }
             } else {
                 number++;
             }
             var page = number + 100;
             document.getElementById("rawul").innerHTML += "<li id='rawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"product\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
-
+            window.location.href = '{{ url("/addraw") }}';
 
         }
     }
