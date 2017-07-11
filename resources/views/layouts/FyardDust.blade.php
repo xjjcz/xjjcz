@@ -451,6 +451,10 @@ $itemroaddusti = 0;
 
 
         }
+
+        function downloadcsv(){
+            window.location.href = '{{ url("downloadcsv") }}' ;
+        }
     </script>
 
     <style type="text/css">
@@ -493,6 +497,14 @@ $itemroaddusti = 0;
             </div>
 
             <div class="page-content">
+                <form method="post" action="upload_fyarddust" enctype="multipart/form-data">
+                    <input type="hidden" name="_token"  value="{{csrf_token()}}"/>
+                <div class="col-md-12">
+                    <input type="file" name="fyarddustfile" style="display:inline-block;"/>
+                    <input type="submit" value="Upload"/>
+                    <input type="button" value="Download" onclick="downloadcsv()"/>
+                </div>
+                </form>
                 <form aid="queryForm" name="queryForm"
                       action=""
                       method="get" style="display: inline;">
@@ -959,9 +971,12 @@ $itemroaddusti = 0;
 
                         <div id="grid1" style="margin-top: 10px; display: none">
                             <div class="page-header" style="margin-top: 20px; height: 40px;">
-                                <h1>
-                                    <b>堆场扬尘源新增</b>
-                                </h1>
+                                <div class="col-md-3">
+                                    <h1>
+                                        <b>堆场扬尘源新增</b>
+                                    </h1>
+                                </div>
+
                             </div>
                             <div class="col-md-12" id="yihao" style="margin-top: 20px; height: 40px;display:none;">
                                 <p style="font-size: 20px; text-align: left; color: #32B16C">
