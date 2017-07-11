@@ -255,17 +255,19 @@
         /*if(!jumpsave('exhaust')){
          return ;
          }	*/
+        alert(123);
+        var feiqi_num = {!! session('feiqi_num') !!};
         if (!checkvalue(1)) {
             alert(alertadd);
             return;
         }
         if (true) {
             var i = 0;
-            if ('${totalfeiqi}' != null) {
-                if ('${totalfeiqi}' == "") {
+            if (feiqi_num != null) {
+                if (feiqi_num == "") {
                     i = 1;
                 } else {
-                    i = parseInt('${totalfeiqi}') + 1;
+                    i = parseInt(feiqi_num) + 1;
                 }
             } else {
                 i++;
@@ -276,7 +278,7 @@
 
             //alert(ii);
             //跳转到新增页面
-
+            window.location.href='{{url('/addfeiqi')}}';
 
         }
         else {
