@@ -160,9 +160,7 @@
             $("#sulphurremoveId option[value='" + sulphur_value + "']").attr("selected", true);
 
             // scc1=10,scc2,scc3,scc4，可移植
-            //please select
 
-            //scc2
             changescc2();
             changescc3();
             changescc4();
@@ -191,7 +189,7 @@
             var combustionsystem_value = '{!! $boiler_temp['COMBUSTIONSYSTEM']  or 0 !!}';
             $("#combustionsystem option[value='" + combustionsystem_value + "']").attr("selected", true);
             var fuelAusageunit_value = '{!! $boiler_temp['FUEL_AUSAGEUNIT'] or 0 !!}';
-            $("#fuelAusageunit option[value='"+fuelAusageunit_value+"']").attr("selected",true);
+            $("#fuelAusageunit option[value='" + fuelAusageunit_value + "']").attr("selected", true);
             /*
              $.post("ajax/BoilerTemp/loadpage.do", {}, function (data) {
              var $option1 = $("<option></option>");
@@ -297,8 +295,6 @@
             }
             var scc2_selected = '{!! $boiler_temp['FUNCTIO'] or "" !!}';
             $("#functio option[value='" + scc2_selected + "']").attr("selected", true);
-
-
         }
         function changescc3() {
             $("#fueltype").empty();
@@ -628,19 +624,17 @@
         function cjdetele() {
             var cjexfid = '{!! $boiler_temp['ID'] or '' !!}';
             $.post("{{url('BoilerTempcjdetele')}}", {
-                '_token': '{{csrf_token()}}',
-                cjexfid: cjexfid
-            }, function (state) {
-                if (state == 1) {
-                    alert("删除成功");
-                    window.location.href = '{{ url("/boiler") }}' + '/' + '{!! $NUM-2 !!}';
-                }else {
-                    alert("删除失败");
+                    '_token': '{{csrf_token()}}',
+                    cjexfid: cjexfid
+                }, function (state) {
+                    if (state == 1) {
+                        alert("删除成功");
+                        window.location.href = '{{ url("/boiler") }}' + '/' + '{!! $NUM-2 !!}';
+                    } else {
+                        alert("删除失败");
+                    }
                 }
-            }
-
             );
-
 
 
         }

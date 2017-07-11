@@ -28,7 +28,6 @@ use App\Model\Xie;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use DB;
-use Illuminate\Http\Response;
 use function Sodium\add;
 
 class XjjczController extends Controller
@@ -586,74 +585,14 @@ class XjjczController extends Controller
         $request->session()->put("boiler_realnum",count($boiler_temps));
         if($boiler){ return 1;}else{return 0;}
     }
-    function UploadFyarddust(Request $request){
-        $file = $request->file("fyarddustfile");
-        if($file->isValid()){
-            $filepath = $file->getRealPath();
-            $filename = $file->getClientOriginalName();
-            $path = $file -> move('storage/uploads',$filename);
-            $handle = fopen($path,"r");
-            while($data = fgetcsv($handle,1000,",")){
-                $num = count($data);
-                $fyardDustTemp = new FyardDustTemp();
-
-
-
-                $fyardDustTemp->factoryid = $data[3];
-                $fyardDustTemp->material_type = $data[14];
-                $fyardDustTemp->moisture_materia = $data[22];
-                $fyardDustTemp->material_capacity = $data[16];
-                $fyardDustTemp->loading_count = $data[17];
-                $fyardDustTemp->loading_capacity = $data[20];
-                $fyardDustTemp->heap_covered = $data[32];
-                $fyardDustTemp->heap_area = $data[31];
-                $fyardDustTemp->heap_heigh = $data[33];
-                $fyardDustTemp->loading_start = $data[18];
-                $fyardDustTemp->loading_time = $data[19];
-                $fyardDustTemp->control_measures1 = $data[34];
-                $fyardDustTemp->control_measures = $data[21];
-                $fyardDustTemp->scccode = $data[1];
-                $fyardDustTemp->save();
-            }
-        }
-        $clientfactoryid = $request->session()->get("clientfactoryid");
-        $fyarddust = FyardDustTemp::where("factoryid", $clientfactoryid)->get();
-        return view('layouts.FyardDust', ['fyarddust' => $fyarddust]);
-    }
-    function DownloadFyarddust(Request $request){
-        $fyarddusts = FyardDustTemp::all();
-        $time = date("Y-m-d-H-i-s");
-        if(!is_dir("storage/downloads")){
-            mkdir("storage/downloads");
-        }
-        $path = "storage/downloads/".$time.".csv";
-        $handle = fopen($path,"a");
-        for($i=0;$i<count($fyarddusts);$i++){
-            $fyarddust = $fyarddusts->get($i);
-            fwrite($handle,$fyarddust["wind_dustid"].",".$fyarddust["	scccode"].",".$fyarddust["scccode1"].","
-                .$fyarddust["factoryid"].",".$fyarddust["year"].",".$fyarddust["Company_Name"].","
-                .$fyarddust["longitude1"].",".$fyarddust["latitude1"].",".$fyarddust["longitude2"].","
-                .$fyarddust["latitude2"].",".$fyarddust["longitude3"].",".$fyarddust["latitude3"].","
-                .$fyarddust["longitude4"].",".$fyarddust["latitude4"].",".$fyarddust["material_type"].","
-                .$fyarddust["wind_speed"].",".$fyarddust["material_capacity"].",".$fyarddust["loading_count"].","
-                .$fyarddust["loading_start"].",".$fyarddust["loading_time"].",".$fyarddust["loading_capacity"].","
-                .$fyarddust["control_measures"].",".$fyarddust["moisture_materia"].",".$fyarddust["pm10_factors"].","
-                .$fyarddust["pm25_factors"].",".$fyarddust["oc_factors"].",".$fyarddust["bc_factors"].","
-                .$fyarddust["pm25_emission"].",".$fyarddust["pm10_emission"].",".$fyarddust["bc_emission"].","
-                .$fyarddust["oc_emission"].",".$fyarddust["heap_area"].",".$fyarddust["heap_covered"].","
-                .$fyarddust["heap_heigh"].",".$fyarddust["control_measures1"].",".$fyarddust["material_type1"].","
-                .$fyarddust["pm10_factors1"].",".$fyarddust["oc_factors1"].",".$fyarddust["bc_factors1"].","
-                .$fyarddust["pm10_emission1"].",".$fyarddust["pm25_factors1"].",".$fyarddust["pm25_emission1"].","
-                .$fyarddust["oc_emission1"].",".$fyarddust["bc_emission1"].",".$fyarddust["shenhe_status"].","
-                .$fyarddust["note"]
-            );
-            fwrite($handle,"\r\n");
-        }
-        fclose($handle);
-        $headers = array(
-            'Content-Type' => 'text/csv',
-        );
-        $status = response()->download($path,"file.csv",$headers);
-        return $status;
+    function FeiqiTempcjdetele(Request $request){
+        $a = $_POST['cjexfid'];
+        $state  = Feiqi::where('id',$_POST['cjexfid'])->delete();
+        //session about feiqi
+        $feiqi = Feiqi::where('factory_id',$request->session()->get('clientfactoryid'))->get();
+        $request->session()->put("feiqi",$feiqi);
+        $request->session()->put("feiqi_num",count($feiqi));
+        $request->session()->put("feiqi_realnum",count($feiqi));
+        return $state;
     }
 }
