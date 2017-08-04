@@ -91,6 +91,34 @@ Route::get('/product/{index}', function (\Illuminate\Http\Request $request,$inde
         return view('layouts.product',["product_temp"=>$product_temps[$index],"NUM"=>($index+1)]);
     }
 });
+Route::any('/addrongjiraw', function (\Illuminate\Http\Request $request){
+    $rongji_raw_num = $request->session()->get("rongji_raw_num");
+    $request->session()->put(["rongji_raw_num"=>intval($rongji_raw_num)+1]);
+    return redirect("/rongjiraw/new");
+});
+
+Route::get('/rongjiraw/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.rongjiraw',["NUM"=>$request->session()->get("rongji_raw_num")]);
+    }else {
+        $rongji_raws = $request->session()->get("rongji_raws");
+        return view('layouts.rongjiraw',["rongji_raw"=>$rongji_raws[$index],"NUM"=>($index+1)]);
+    }
+});
+Route::any('/addrongjiproduct', function (\Illuminate\Http\Request $request){
+    $rongji_product_num = $request->session()->get("rongji_product_num");
+    $request->session()->put(["rongji_product_num"=>intval($rongji_product_num)+1]);
+    return redirect("/rongjiproduct/new");
+});
+
+Route::get('/rongjiproduct/{index}', function (\Illuminate\Http\Request $request,$index){
+    if($index=="new"){
+        return view('layouts.rongjiproduct',["NUM"=>$request->session()->get("rongji_product_num")]);
+    }else {
+        $rongji_products = $request->session()->get("rongji_products");
+        return view('layouts.rongjiproduct',["rongji_product"=>$rongji_products[$index],"NUM"=>($index+1)]);
+    }
+});
 Route::any('/addboiler',function (\Illuminate\Http\Request $request){
     $boiler_num = $request->session()->get("boiler_num");
     $request->session()->put(["boiler_num"=>intval($boiler_num)+1]);

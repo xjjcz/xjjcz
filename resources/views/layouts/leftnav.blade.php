@@ -87,6 +87,48 @@
                     + i + "号产品</a></li>";
             }
 
+            var total_rongji_temp = {!! json_encode(session("total_rongji_temp"))  !!};
+
+            //rongji_raw
+
+            var rongji_raw_num = {!! session("rongji_raw_num") !!};
+
+            var real_rongji_raw_num = total_rongji_temp.length==0?0:total_rongji_temp[0]["raw_num"];
+            var i = 1;
+
+            for (; i <= real_rongji_raw_num; i++) {
+
+                document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawul"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getrongjiraw("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + i + "号原料</a></li>";
+            }
+            if(rongji_raw_num>real_rongji_raw_num){
+                document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawul"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewrongjiraw()'><i class='icon-double-angle-right'></i>"
+                    + i + "号原料</a></li>";
+            }
+            //rongji_product
+            var rongji_product_num = {!! session("rongji_product_num") !!};
+            var real_rongji_product_num = total_rongji_temp.length==0?0:total_rongji_temp[0]["product_num"];
+            var i = 1;
+            for (; i <= real_rongji_product_num; i++) {
+
+                document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductul"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getrongjiproduct("+(i-1)+")'><i class='icon-double-angle-right'></i>"
+                    + i + "号产品</a></li>";
+
+            }
+
+            if(rongji_product_num>real_rongji_product_num){
+                document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductul"
+                    + i
+                    + "'><a href='javascript:void(0)' onclick='getnewproduct()'><i class='icon-double-angle-right'></i>"
+                    + i + "号产品</a></li>";
+            }
+
             //boilder
             var boiler_num ={!! session('boiler_num') !!};
             var real_boiler_num = {!! session('boiler_realnum') !!};
@@ -153,6 +195,18 @@
     }
     function getnewfeiqi(i) {
         windwo.location.href = '{{url("/feiqi")}}' +'/new';
+    }
+    function getrongjiraw(i){
+        window.location.href = '{{ url("/rongjiraw") }}'+'/'+i;
+    }
+    function getnewrongjiraw(i){
+        window.location.href = '{{ url("/rongjiraw") }}'+'/new';
+    }
+    function getrongjiproduct(i){
+        window.location.href = '{{ url("/rongjiproduct") }}'+'/'+i;
+    }
+    function getnewrongjiproduct(i){
+        window.location.href = '{{ url("/rongjiproduct") }}'+'/new';
     }
 
     function addyaolukiln() {
@@ -416,28 +470,29 @@
         }
     }
     function addrongjiproduct() {
-
+        var rongji_product_num = {!! session("rongji_product_num") !!};
         if (!checkvalue(1)) {
             alert(alertadd);
             return;
         } else {
             var number = 0;
-            if ('${totalrongji.productNum}' != null) {
-                if ('${totalrongji.productNum}' == "") {
+            if (rongji_product_num != null) {
+                if (rongji_product_num == "") {
                     number = 1;
                 } else {
-                    number = parseInt('${totalrongji.productNum}') + 1;
+                    number = parseInt(rongji_product_num) + 1;
                 }
             } else {
                 number++;
             }
             var page = number + 100;
-            document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
-
+            document.getElementById("rongjiproductul").innerHTML += "<li id='rongjiproductli" + number + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号产品</a></li>";
+            window.location.href = '{{ url("/addrongjiproduct") }}';
 
         }
     }
     function addrongjiraw() {
+        var rongji_raw_num = {!! session("rongji_raw_num") !!};
         if (!checkvalue(1)) {
             alert(alertadd);
             return;
@@ -447,18 +502,18 @@
             alert(alertadd);
         } else {
             var number = 0;
-            if ('${totalrongji.rawNum}' != null) {
-                if ('${totalrongji.rawNum}' == "") {
+            if (rongji_raw_num != null) {
+                if (rongji_raw_num == "") {
                     number = 1;
                 } else {
-                    number = parseInt('${totalrongji.rawNum}') + 1;
+                    number = parseInt(rongji_raw_num) + 1;
                 }
             } else {
                 number++;
             }
             var page = number;
-            document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawli" + number + "'><a href='javascript:void(0)' onclick='saveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
-
+            document.getElementById("rongjirawul").innerHTML += "<li id='rongjirawli" + number + "'><a href='javascript:void(0)' onclick='addsaveinfo(" + page + ",\"rongji\")'><i class='icon-double-angle-right'></i>" + number + "号原料</a></li>";
+            window.location.href = '{{ url("/addrongjiraw") }}';
 
         }
     }
@@ -668,7 +723,7 @@
             </ul>
         </li>
         <li>
-            <a href="/" class="dropdown-toggle"> <i class=""><img
+            <a  class="dropdown-toggle"> <i class=""><img
                             src="{{ asset("/img/yaolu.png") }}"
                             style="width: 20px; height: 20px; margin-top: -5px; margin-left: 8px; margin-right: 5px;">
                 </i> <span class="menu-text">溶剂使用原料及产品</span> <b
