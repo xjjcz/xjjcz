@@ -19,10 +19,13 @@ use App\Model\GetCounty;
 use App\Model\IndustryBig;
 use App\Model\IndustrySmall;
 use App\Model\Information;
+use App\Model\Rongji_product_temp;
+use App\Model\Rongji_raw_temp;
 use App\Model\Scc2;
 use App\Model\Scc3;
 use App\Model\Scc4;
 use App\Model\Total_productraw_temp;
+use App\Model\Total_rongji_temp;
 use App\Model\TotalBoiler;
 use App\Model\Xie;
 use Illuminate\Auth\Access\Gate;
@@ -92,6 +95,21 @@ class XjjczController extends Controller
             }
         }
         $request->session()->put("device_product_temps",$device_product_temps);
+        //find rongji
+        $total_rongji_temp = Total_rongji_temp::where("FACTORY_ID", $clientfactoryid)->get()->toArray();
+        $request->session()->put("total_rongji_temp", $total_rongji_temp);
+        $request->session()->put("rongji_product_num", count($total_rongji_temp)==0?0:$total_rongji_temp[0]["product_num"]);
+        $request->session()->put("rongji_raw_num", count($total_rongji_temp)==0?0:$total_rongji_temp[0]["raw_num"]);
+        //find rongji_raw by device_id
+//需要添加本工厂的溶剂原料和产品
+        if(count($total_rongji_temp)>0) {
+            $devicetotal_id = $total_rongji_temp[0]["id"];
+            $rongji_raws = Rongji_raw_temp::where("devicetotal_id", $devicetotal_id)->get()->toArray();
+            $rongji_products = Rongji_product_temp::where("devicetotal_id", $devicetotal_id)->get()->toArray();
+            $request->session()->put("rongji_raws", $rongji_raws);
+            $request->session()->put("rongji_products", $rongji_products);
+        }
+
         $industry_big = IndustryBig::all();
         $city = City::all();
         //session about feiqi
